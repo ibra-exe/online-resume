@@ -2099,6 +2099,110 @@ body.transparent-bg .far-stars {
     background-color: var(--primary-hover);
 }
 
+/* ---- Projects: section headings + expandable cards ---- */
+.projects-section-title {
+    font-family: var(--font-special);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    text-shadow: 0 0 10px var(--glow-color);
+    width: 100%;
+    max-width: 800px;
+    margin: 10px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(183, 102, 255, 0.25);
+}
+
+.projects-section-title:not(:first-child) {
+    margin-top: 30px;
+}
+
+.projects-section-subtitle {
+    width: 100%;
+    max-width: 800px;
+    font-size: 0.9rem;
+    opacity: 0.75;
+    margin-bottom: 16px;
+}
+
+.project-card.expandable {
+    cursor: pointer;
+}
+
+.project-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.project-card-head .project-title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.expand-toggle {
+    flex-shrink: 0;
+    color: var(--glow-color);
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.3s ease;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+.project-card.expanded .expand-toggle {
+    transform: rotate(180deg);
+}
+
+.project-summary {
+    margin: 8px 0 0;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+.project-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+}
+
+.project-card.expanded .project-details {
+    grid-template-rows: 1fr;
+}
+
+.project-details-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding-top: 14px;
+}
+
+.project-points {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.6;
+}
+
+.project-points li {
+    margin-bottom: 6px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.project-tags span {
+    font-size: 0.72rem;
+    font-family: var(--font-special);
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: rgba(183, 102, 255, 0.12);
+    border: 1px solid rgba(183, 102, 255, 0.3);
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
 /* Muted, non-interactive tag for private/unavailable repos (not a button) */
 .project-tag {
     display: inline-flex;
