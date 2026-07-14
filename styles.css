@@ -388,6 +388,11 @@ header {
     text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
 }
 
+/* Nav icons are for the mobile bottom bar only; hidden on desktop */
+.navbar a i {
+    display: none;
+}
+
 .navbar a:hover {
     background-color: var(--primary-hover);
     transform: translateY(-3px);
@@ -2731,5 +2736,104 @@ body.transparent-bg .far-stars {
     }
     .skill-item {
         font-size: 0.85rem;
+    }
+}
+
+/* ============================================================
+   Mobile: bottom tab bar navigation + floating audio button
+   (replaces the top navbar and footer bar on phones; desktop
+   keeps the top nav + footer unchanged)
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    /* Reserve space for the fixed bottom tab bar instead of the footer */
+    :root {
+        --footer-height: 62px;
+    }
+
+    /* More breathing room at the top now that nav has moved down */
+    header {
+        font-size: 2rem;
+        margin: 16px 0 12px;
+        padding: 4px 0;
+    }
+
+    /* Turn the navbar into a fixed bottom tab bar */
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        padding: 4px 0;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        background: rgba(80, 37, 128, 0.92);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(183, 102, 255, 0.5);
+        z-index: 200;
+    }
+
+    .navbar a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        min-height: 54px;
+        padding: 4px 2px;
+        margin: 0;
+        background: transparent;
+        border-radius: 0;
+        font-size: 0.58rem;
+        text-shadow: none;
+    }
+
+    .navbar a i {
+        display: block;
+        font-size: 1.15rem;
+        color: var(--glow-color);
+        text-shadow: 0 0 8px var(--glow-color);
+    }
+
+    .navbar a span {
+        letter-spacing: 0.2px;
+        opacity: 0.9;
+    }
+
+    /* Strip the footer down to just the audio button, floating above the tab bar */
+    footer {
+        bottom: 68px;
+        right: 10px;
+        left: auto;
+        width: auto;
+        padding: 0;
+        background: transparent;
+        border-top: none;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        z-index: 201;
+    }
+
+    .footer-content {
+        display: block;
+        width: auto;
+        padding: 0;
+    }
+
+    /* Copyright + social icons are rehomed (socials live on About/Contact) */
+    .footer-section {
+        display: none;
+    }
+
+    #audio-controls {
+        display: flex;
+    }
+
+    #audio-toggle {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 }
