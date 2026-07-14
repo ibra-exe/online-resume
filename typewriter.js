@@ -4,7 +4,7 @@
  * @param {string} text - The text to type
  * @param {number} speed - Typing speed in milliseconds
  */
-function initTypewriter(targetId, text, speed = 50) {
+function initTypewriter(targetId, text, speed = 20) {
     const typeTarget = document.getElementById(targetId);
     if (!typeTarget) return;
     
