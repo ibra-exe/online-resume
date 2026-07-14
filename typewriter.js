@@ -29,7 +29,7 @@ function initTypewriter(targetId, text, speed = 50) {
 
 // Define text constants
 const HOME_TEXT = "Hi, I'm Ibrahim Shaheen, a Digital Transformation professional specializing in AI, people technology, and strategic digitalization. Currently at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems, achieving a 70% reduction in manual workload and earning SAP's Best HCM Innovation & Automation Award in KSA.";
-const ABOUT_TEXT = "Hello! I'm Ibrahim Shaheen (Ibra), a Saudi Software Engineer and Technology Enthusiast born on May 16th, 1993.\n\nCurrently working as a People Technology Senior Specialist at NEOM, I focus on implementing innovative digital solutions that enhance workplace experiences.\n\nI'm passionate about leveraging technology to solve complex problems and create meaningful impact through AI, automation, and digital transformation.";
+const ABOUT_TEXT = "Hello! I'm Ibrahim Shaheen (Ibra), a Saudi Digital Transformation professional focused on AI, people technology, and strategic digitalization.\n\nAs a People Technology Senior Specialist at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems, achieving a 70% reduction in manual workload and earning SAP's Best HCM Innovation & Automation Award in KSA.\n\nI'm passionate about using AI to solve real problems, from streamlining HRIS platforms like SAP SuccessFactors to building AI agents that support people around the clock.";
 
 // Auto-initialize based on page
 document.addEventListener('DOMContentLoaded', function() {

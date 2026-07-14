@@ -32,7 +32,7 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-    padding-bottom: 25px;
+    padding-bottom: var(--footer-height);
     border: none;
     outline: none;
     font-family: var(--font-main);
@@ -496,16 +496,16 @@ footer a:hover {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     overflow: visible;
-    padding: 20px 10px;
+    padding: 15px 10px 25px;
 }
 
 .home-layout {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 900px;
+    max-width: 680px;
     width: 100%;
     z-index: 2;
     gap: 20px;
@@ -628,6 +628,7 @@ footer a:hover {
     max-width: 800px;
     position: relative;
     padding-bottom: 10px;
+    line-height: 1.5;
 }
 
 .home-content::after {
@@ -685,6 +686,7 @@ footer a:hover {
 
 .cta-buttons {
     display: flex;
+    justify-content: center;
     gap: 20px;
     margin-top: 10px;
 }
@@ -693,6 +695,7 @@ footer a:hover {
     font-family: var(--font-special);
     font-size: 1rem;
     padding: 10px 20px;
+    min-width: 170px;
     background-color: var(--primary-color);
     color: var(--text-color);
     text-decoration: none;
@@ -1390,6 +1393,8 @@ footer a:hover {
     margin-bottom: 15px;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 210px;
 }
 
 #profile-pic {
@@ -1430,8 +1435,14 @@ footer a:hover {
     padding: 15px;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(183, 102, 255, 0.2);
-    max-height: 400px;
-    overflow-y: auto;
+}
+
+/* Inner scroll box only on desktop; phones/tablets scroll the whole page in the iframe */
+@media screen and (min-width: 901px) {
+    .about-info {
+        max-height: 400px;
+        overflow-y: auto;
+    }
 }
 
 /* Custom scrollbar for webkit browsers */
@@ -1517,7 +1528,7 @@ footer a:hover {
     text-align: center;
     max-width: 600px;
     margin-bottom: 5px;
-    line-height: 1.3;
+    line-height: 1.45;
 }
 
 .contact-grid {
@@ -2078,6 +2089,18 @@ body.transparent-bg .far-stars {
     background-color: var(--primary-hover);
 }
 
+/* Muted, non-interactive tag for private/unavailable repos (not a button) */
+.project-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
 /* Audio controls */
 #audio-toggle {
     background-color: rgba(80, 37, 128, 0.7);
@@ -2474,7 +2497,7 @@ body.transparent-bg .far-stars {
 
     .cta-button:active,
     .contact-card:active,
-    .project-link:active {
+    a.project-link:active {
         background-color: var(--primary-hover);
         transform: scale(0.97);
     }
@@ -2500,3 +2523,89 @@ body.transparent-bg .far-stars {
     }
 }
 
+
+/* ============================================================
+   Mobile optimization pass (placed last so these win the
+   cascade over the earlier, source-order-losing mobile rules)
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    /* Center the home hero vertically so tall phones don't leave a void below the CTAs */
+    .home-container {
+        align-items: center;
+    }
+
+    /* Section headings were rendering at full desktop size on mobile (dead 1.1rem override) */
+    .skills-heading {
+        font-size: 1.15rem;
+    }
+
+    /* Skills read better as a single column on phones (no cramped 2-col wrapping) */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Experience dates: drop the compounding italic + heavy glow, lift opacity */
+    .period {
+        font-style: normal;
+        opacity: 0.9;
+        text-shadow: none;
+    }
+
+    /* Footer text was ~8-10px; nudge to a more legible floor */
+    .copyright {
+        font-size: 0.68rem;
+    }
+    .footer-tagline,
+    .footer-credit {
+        font-size: 0.6rem;
+    }
+
+    /* Footer social icons: give them a 44px-tall tap target */
+    .social-links-footer {
+        gap: 6px;
+    }
+    .social-links-footer a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 4px;
+    }
+
+    /* Project links span the card width for an easy tap target */
+    .project-link {
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Keep all 5 nav links on one row on mainstream phones (390-393px) */
+    .navbar a {
+        padding: 8px 9px;
+        margin: 2px;
+        font-size: 0.72rem;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    /* Tighten nav further so it stays one row down to ~320px */
+    .navbar a {
+        padding: 8px 7px;
+        margin: 2px 1px;
+        font-size: 0.66rem;
+    }
+
+    /* Declutter the crammed footer on the narrowest phones */
+    .footer-tagline,
+    .footer-credit {
+        display: none;
+    }
+
+    /* Keep the smallest text legible */
+    .period {
+        font-size: 0.8rem;
+    }
+    .skill-item {
+        font-size: 0.85rem;
+    }
+}
