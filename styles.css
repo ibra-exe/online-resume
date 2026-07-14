@@ -405,6 +405,7 @@ footer {
     right: 0;
     width: 100%;
     border-top: 1px solid rgba(183, 102, 255, 0.5);
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     z-index: 100;
 }
@@ -611,6 +612,7 @@ footer a:hover {
     border: 1px solid rgba(183, 102, 255, 0.3);
     border-radius: 10px;
     padding: 20px 25px;
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     box-shadow: 0 0 20px rgba(183, 102, 255, 0.1);
     flex: 1;
@@ -660,6 +662,7 @@ footer a:hover {
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(183, 102, 255, 0.2);
     flex: 1;
@@ -726,6 +729,7 @@ footer a:hover {
     background: rgba(183, 102, 255, 0.1);
     border: 1px solid rgba(183, 102, 255, 0.3);
     border-radius: 50%;
+    -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
 }
 
@@ -1400,6 +1404,8 @@ footer a:hover {
 #profile-pic {
     width: 100%;
     max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
     display: block;
     border-radius: 5px;
     opacity: 0;
@@ -1433,6 +1439,7 @@ footer a:hover {
     background-color: rgba(80, 37, 128, 0.2);
     border-radius: 10px;
     padding: 15px;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(183, 102, 255, 0.2);
 }
@@ -1549,6 +1556,7 @@ footer a:hover {
     color: var(--text-color);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(183, 102, 255, 0.3);
     display: flex;
@@ -1830,6 +1838,7 @@ footer a:hover {
     background-color: rgba(80, 37, 128, 0.4);
     border-radius: 8px;
     padding: 20px;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(183, 102, 255, 0.3);
     transition: transform 0.3s, box-shadow 0.3s;
@@ -2053,6 +2062,7 @@ body.transparent-bg .far-stars {
     width: 100%;
     max-width: 800px;
     transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(183, 102, 255, 0.3);
 }
@@ -2115,6 +2125,7 @@ body.transparent-bg .far-stars {
     justify-content: center;
     gap: 8px;
     transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
 }
 
@@ -2584,6 +2595,15 @@ body.transparent-bg .far-stars {
         padding: 8px 9px;
         margin: 2px;
         font-size: 0.72rem;
+    }
+
+    /* Stop the heavy decorative background animations on phones (battery) */
+    .galaxy-spiral,
+    .cosmic-dust {
+        display: none;
+    }
+    .bright-star {
+        animation: none;
     }
 }
 

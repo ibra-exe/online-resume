@@ -24,10 +24,15 @@
             onload="this.onload=null;this.rel='stylesheet'"
         />
         <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"></noscript>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
         <link
-            rel="stylesheet"
+            rel="preload"
+            as="style"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            onload="this.onload=null;this.rel='stylesheet'"
         />
+        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
     </head>
 
     <body>
@@ -67,7 +72,7 @@
         <div class="shooting-star shooting-star-6"></div>
 
         <!-- Local audio file player -->
-        <audio id="audioPlayer" autoplay loop>
+        <audio id="audioPlayer" loop preload="none">
             <source src="files/Tarantulas.mp3#t=9" type="audio/mpeg" />
             Your browser does not support the audio element.
         </audio>
