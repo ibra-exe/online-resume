@@ -2156,7 +2156,6 @@ body.transparent-bg .far-stars {
 .project-card-head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 12px;
 }
 
@@ -2165,17 +2164,52 @@ body.transparent-bg .far-stars {
     font-size: 1.25rem;
 }
 
-.expand-toggle {
-    flex-shrink: 0;
-    color: var(--glow-color);
-    font-size: 1.1rem;
+/* Clear "View details" button so it's obvious the card expands */
+.expand-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 7px 14px;
+    background-color: rgba(183, 102, 255, 0.15);
+    border: 1px solid rgba(183, 102, 255, 0.45);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-family: var(--font-special);
+    font-size: 0.72rem;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.expand-btn:hover {
+    background-color: rgba(183, 102, 255, 0.28);
+    box-shadow: 0 0 12px rgba(183, 102, 255, 0.3);
+}
+
+.expand-chevron {
+    font-size: 0.9em;
     line-height: 1;
+    color: var(--glow-color);
     transition: transform 0.3s ease;
     text-shadow: 0 0 8px var(--glow-color);
 }
 
-.project-card.expanded .expand-toggle {
+.project-card.expanded .expand-chevron {
     transform: rotate(180deg);
+}
+
+/* Swap the button label based on state */
+.expand-less {
+    display: none;
+}
+
+.project-card.expanded .expand-more {
+    display: none;
+}
+
+.project-card.expanded .expand-less {
+    display: inline;
 }
 
 .project-summary {
