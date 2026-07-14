@@ -1899,6 +1899,39 @@ footer a:hover {
     margin-bottom: 12px;
 }
 
+/* Expandable experience cards (reuse the .expand-btn styling from Projects) */
+.content.expandable {
+    cursor: pointer;
+}
+
+.exp-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+}
+
+.content.expanded .exp-details {
+    grid-template-rows: 1fr;
+}
+
+.exp-details-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding-top: 14px;
+}
+
+.content.expanded .expand-chevron {
+    transform: rotate(180deg);
+}
+
+.content.expanded .expand-more {
+    display: none;
+}
+
+.content.expanded .expand-less {
+    display: inline;
+}
+
 @media screen and (max-width: 900px) {
     .timeline::before {
         left: 31px;
