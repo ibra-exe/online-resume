@@ -2,7 +2,7 @@
 
 A responsive personal portfolio website built with HTML, CSS, and Vanilla JavaScript, featuring a space/cyberpunk aesthetic.
 
-🔗 **Live:** [ibra-exe.github.io/Personal-Portfolio](https://ibra-exe.github.io/Personal-Portfolio/)
+🔗 **Live:** [ibra.technology](https://ibra.technology)
 
 ---
 
