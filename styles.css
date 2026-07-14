@@ -1876,7 +1876,27 @@ footer a:hover {
 }
 
 .description {
+    line-height: 1.55;
+    margin: 0;
+    padding-left: 1.2em;
+    list-style-type: disc;
+}
+
+.description li {
+    margin-bottom: 10px;
+}
+
+.description li:last-child {
+    margin-bottom: 0;
+}
+
+.description li::marker {
+    color: var(--glow-color);
+}
+
+.description-lead {
     line-height: 1.5;
+    margin-bottom: 12px;
 }
 
 @media screen and (max-width: 900px) {
