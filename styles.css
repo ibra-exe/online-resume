@@ -38,7 +38,6 @@ body {
     font-family: var(--font-main);
     background-color: #020004;
     color: var(--text-color);
-    text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -286,7 +285,7 @@ header {
     text-align: center;
     padding: 15px 0;
     margin: 20px 0 10px;
-    text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
     flex-shrink: 0;
 }
 
@@ -306,7 +305,6 @@ header {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.15s, transform 0.15s;
-    text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
 }
 
 /* Nav icons are for the mobile bottom bar only; hidden on desktop */
@@ -324,7 +322,6 @@ footer {
     padding: 6px 0;
     background-color: rgba(80, 37, 128, 0.8);
     color: var(--text-color);
-    text-shadow: 0 0 5px var(--glow-color);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -385,7 +382,6 @@ footer {
 .social-links-footer a:hover {
     color: var(--glow-color);
     transform: translateY(-2px);
-    text-shadow: 0 0 10px var(--glow-color);
 }
 
 .footer-credit {
@@ -407,7 +403,6 @@ footer a, footer a:hover {
 
 footer a:hover {
     color: #e0e0e0;
-    text-shadow: 0 0 10px #e0e0e0, 0 0 15px #e0e0e0;
 }
 
 .home-container {
@@ -542,7 +537,6 @@ footer a:hover {
     font-size: 1.2rem;
     color: var(--text-color);
     text-align: left;
-    text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color);
     white-space: pre-wrap;
     overflow: visible;
     min-height: 80px;
@@ -597,7 +591,6 @@ footer a:hover {
     font-size: 2rem;
     margin-bottom: 10px;
     color: var(--glow-color);
-    text-shadow: 0 0 10px var(--glow-color);
 }
 
 .highlight-text {
@@ -1217,7 +1210,7 @@ footer a:hover {
     font-size: 2.5rem;
     margin-bottom: 5px;
     text-align: center;
-    text-shadow: 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
 }
 
 .about-grid {
@@ -1277,7 +1270,6 @@ footer a:hover {
 .social-links a:hover {
     color: var(--glow-color);
     transform: translateY(-3px);
-    text-shadow: 0 0 10px var(--glow-color);
 }
 
 .about-info {
@@ -1314,7 +1306,6 @@ footer a:hover {
     font-family: var(--font-main);
     font-size: 1rem;
     color: var(--text-color);
-    text-shadow: 0 0 5px var(--glow-color);
     white-space: pre-wrap;
     line-height: 1.5;
     margin-bottom: 15px;
@@ -1330,7 +1321,6 @@ footer a:hover {
     font-weight: 700;
     font-size: 1.5rem;
     margin-bottom: 10px;
-    text-shadow: 0 0 5px var(--glow-color);
 }
 
 .skills-grid {
@@ -1373,7 +1363,7 @@ footer a:hover {
     font-size: 2.5rem;
     margin-bottom: 0px;
     text-align: center;
-    text-shadow: 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
 }
 
 .contact-intro {
@@ -1422,7 +1412,6 @@ footer a:hover {
     font-size: 2.5rem;
     margin-bottom: 15px;
     color: var(--glow-color);
-    text-shadow: 0 0 10px var(--glow-color);
 }
 
 .contact-label {
@@ -1987,7 +1976,7 @@ body.transparent-bg .far-stars {
     font-family: var(--font-special);
     font-size: 1.6rem;
     color: var(--text-color);
-    text-shadow: 0 0 10px var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
     width: 100%;
     max-width: 800px;
     margin: 10px 0 4px;
@@ -2050,7 +2039,6 @@ body.transparent-bg .far-stars {
     line-height: 1;
     color: var(--glow-color);
     transition: transform 0.3s ease;
-    text-shadow: 0 0 8px var(--glow-color);
 }
 
 .project-card.expanded .expand-chevron {
@@ -2274,7 +2262,6 @@ body.transparent-bg .far-stars {
     .period {
         font-style: normal;
         opacity: 0.9;
-        text-shadow: none;
     }
 
     /* Footer text was ~8-10px; nudge to a more legible floor */
@@ -2387,14 +2374,12 @@ body.transparent-bg .far-stars {
         background: transparent;
         border-radius: 0;
         font-size: 0.58rem;
-        text-shadow: none;
     }
 
     .navbar a i {
         display: block;
         font-size: 1.15rem;
         color: var(--glow-color);
-        text-shadow: 0 0 8px var(--glow-color);
     }
 
     .navbar a span {
