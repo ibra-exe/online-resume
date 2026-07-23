@@ -2117,9 +2117,11 @@ body.transparent-bg .star-cluster {
    cascade over the earlier, source-order-losing mobile rules)
    ============================================================ */
 @media screen and (max-width: 600px) {
-    /* Center the home hero vertically so tall phones don't leave a void below the CTAs */
+    /* Top-align the home hero so it sits just under the "Ibra" header
+       (centering pushed the typewriter box too far down on tall phones) */
     .home-container {
-        align-items: center;
+        align-items: flex-start;
+        padding-top: 6px;
     }
 
     /* Section headings were rendering at full desktop size on mobile (dead 1.1rem override) */
