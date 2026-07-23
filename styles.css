@@ -2272,3 +2272,29 @@ body.transparent-bg .star-cluster {
         display: none;
     }
 }
+
+/* ============================================================
+   Mobile: bring back the desktop timeline rail (single column)
+   — a vertical line + a node per card, sitting to the left of
+   the card-style entries. Placed last so it wins over the
+   earlier mobile rules that hid the rail.
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    .timeline::before {
+        display: block;
+        left: 18px;
+    }
+
+    .left::after,
+    .right::after {
+        display: block;
+        left: 9px;
+        top: 18px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .container {
+        padding-left: 42px;
+    }
+}
