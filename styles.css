@@ -972,7 +972,7 @@ footer a:hover {
     }
 
     .experience-container {
-        padding: 6px 4px;
+        padding: 10px;
     }
 
     .timeline {
@@ -990,9 +990,7 @@ footer a:hover {
     .container {
         width: 100%;
         padding: 0;
-        padding-left: 0;
-        padding-right: 0;
-        margin-bottom: 14px;
+        margin-bottom: 20px;
     }
 
     .right, .left {
@@ -1001,7 +999,6 @@ footer a:hover {
 
     .content {
         padding: 14px 12px;
-        border-left: 3px solid var(--glow-color);
     }
 
     .company {
@@ -1140,14 +1137,12 @@ footer a:hover {
     }
 
     .experience-container {
-        padding: 4px 2px;
+        padding: 10px;
     }
 
     .container {
         padding: 0;
-        padding-left: 0;
-        padding-right: 0;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .content {
@@ -1701,7 +1696,7 @@ footer a:hover {
 
 @media screen and (max-width: 600px) {
     .experience-container {
-        padding: 6px 4px;
+        padding: 10px;
     }
 
     .timeline {
@@ -1719,9 +1714,7 @@ footer a:hover {
     .container {
         width: 100%;
         padding: 0;
-        padding-left: 0;
-        padding-right: 0;
-        margin-bottom: 14px;
+        margin-bottom: 20px;
     }
 
     .right, .left {
@@ -1730,7 +1723,6 @@ footer a:hover {
 
     .content {
         padding: 14px 12px;
-        border-left: 3px solid var(--glow-color);
     }
 
     .company {
@@ -1753,14 +1745,12 @@ footer a:hover {
 
 @media screen and (max-width: 380px) {
     .experience-container {
-        padding: 4px 2px;
+        padding: 10px;
     }
 
     .container {
         padding: 0;
-        padding-left: 0;
-        padding-right: 0;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .content {
