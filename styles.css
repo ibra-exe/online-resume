@@ -3,7 +3,7 @@
     --primary-hover: #6f3399;
     --text-color: #e6e6f2;
     --glow-color: #b766ff;
-    --font-main: 'Arial', sans-serif;
+    --font-main: 'Chakra Petch', 'Arial', sans-serif;
     --font-special: 'Orbitron', sans-serif;
     --footer-height: 55px;
 }
@@ -443,7 +443,7 @@ footer {
 }
 
 .copyright {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
     font-size: 0.8rem;
     margin-bottom: 1px;
     text-align: left;
@@ -624,7 +624,7 @@ footer a:hover {
 }
 
 .home-content {
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: var(--font-main);
     font-size: 1.2rem;
     color: var(--text-color);
     text-align: left;
@@ -687,7 +687,8 @@ footer a:hover {
 }
 
 .highlight-text {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
+    font-weight: 500;
     font-size: 0.9rem;
     text-align: center;
 }
@@ -700,7 +701,8 @@ footer a:hover {
 }
 
 .cta-button {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
+    font-weight: 500;
     font-size: 1rem;
     padding: 10px 20px;
     min-width: 170px;
@@ -1471,7 +1473,7 @@ footer a:hover {
 }
 
 .about-text {
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: var(--font-main);
     font-size: 1rem;
     color: var(--text-color);
     text-shadow: 0 0 5px var(--glow-color);
@@ -1486,7 +1488,8 @@ footer a:hover {
 }
 
 .skills-heading {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
+    font-weight: 700;
     font-size: 1.5rem;
     margin-bottom: 10px;
     text-shadow: 0 0 5px var(--glow-color);
@@ -1583,7 +1586,8 @@ footer a:hover {
 }
 
 .contact-label {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
+    font-weight: 500;
     font-size: 1.2rem;
     margin-bottom: 5px;
 }
@@ -1855,14 +1859,15 @@ footer a:hover {
 }
 
 .company {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
     font-size: 1.4rem;
     margin-bottom: 5px;
     color: var(--text-color);
 }
 
 .position {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
+    font-weight: 500;
     font-size: 1.1rem;
     margin-bottom: 10px;
     color: var(--text-color);
@@ -2131,7 +2136,7 @@ body.transparent-bg .far-stars {
 }
 
 .project-title {
-    font-family: var(--font-special);
+    font-family: var(--font-main);
     color: var(--text-color);
     margin-top: 0;
 }
@@ -2208,7 +2213,7 @@ body.transparent-bg .far-stars {
     border: 1px solid rgba(183, 102, 255, 0.45);
     border-radius: 6px;
     color: var(--text-color);
-    font-family: var(--font-special);
+    font-family: var(--font-main);
     font-size: 0.72rem;
     letter-spacing: 0.3px;
     cursor: pointer;
@@ -2286,7 +2291,7 @@ body.transparent-bg .far-stars {
 
 .project-tags span {
     font-size: 0.72rem;
-    font-family: var(--font-special);
+    font-family: var(--font-main);
     padding: 4px 10px;
     border-radius: 999px;
     background-color: rgba(183, 102, 255, 0.12);
