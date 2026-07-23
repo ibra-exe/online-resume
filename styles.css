@@ -476,11 +476,6 @@ footer a:hover {
         width: 100%;
     }
 
-    .home-content {
-        text-align: center;
-        font-size: 1rem;
-    }
-
     .home-highlights {
         flex-direction: column;
         align-items: center;
@@ -488,14 +483,8 @@ footer a:hover {
 
     .highlight-item {
         width: 100%;
-        max-width: 320px;
-        flex-direction: row;
         gap: 12px;
         justify-content: center;
-    }
-
-    .highlight-icon {
-        margin-bottom: 0;
     }
 
     .cta-buttons {
@@ -665,17 +654,8 @@ footer a:hover {
         font-size: 1.5rem;
     }
 
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
     .profile-container {
         margin-bottom: 10px;
-    }
-
-    .profile-frame {
-        max-width: 200px;
     }
 
     .about-info {
@@ -684,81 +664,15 @@ footer a:hover {
 
     .contact-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
     }
 
-    .timeline::before {
-        left: 31px;
-    }
-
-    .container {
-        width: 100%;
-        padding-left: 55px;
-        padding-right: 15px;
-    }
-
-    .right, .left {
-        left: 0;
-    }
-
-    .right::after, .left::after {
-        left: 17px;
-    }
-
-    .company {
-        font-size: 1.2rem;
-    }
-
-    .position {
-        font-size: 0.95rem;
-    }
-
-    .description {
-        font-size: 0.9rem;
-    }
-
-    .content {
-        padding: 15px;
-    }
-
-    .container {
-        margin-bottom: 40px;
-    }
 }
 
 @media screen and (max-width: 600px) {
-    :root {
-        --footer-height: 80px;
-    }
-
-    header {
-        font-size: 1.8rem;
-        margin: 8px 0 4px;
-        padding: 6px 0;
-    }
 
     .navbar {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         gap: 0;
         margin-bottom: 8px;
-        padding: 0 5px;
-    }
-
-    .navbar a {
-        padding: 10px 14px;
-        margin: 3px 3px;
-        font-size: 0.8rem;
-        border-radius: 4px;
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    #contentFrame {
-        min-height: 250px;
     }
 
     .home-container {
@@ -814,42 +728,7 @@ footer a:hover {
         justify-content: center;
     }
 
-    .about-container {
-        padding: 10px 8px;
-    }
-
-    .about-heading {
-        font-size: 1.6rem;
-        margin-bottom: 8px;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .profile-container {
-        margin-bottom: 5px;
-    }
-
-    .profile-frame {
-        max-width: 180px;
-    }
-
-    .about-info {
-        padding: 14px;
-        max-height: none;
-        overflow-y: visible;
-    }
-
-    .about-text {
-        font-size: 0.9rem;
-        min-height: auto;
-        line-height: 1.5;
-    }
-
     .social-links a {
-        font-size: 1.3rem;
         min-width: 44px;
         min-height: 44px;
         display: inline-flex;
@@ -857,75 +736,22 @@ footer a:hover {
         justify-content: center;
     }
 
-    .skills-heading {
-        font-size: 1.1rem;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-
-    .skill-item {
-        padding: 10px;
-        font-size: 0.85rem;
-        min-height: 44px;
-    }
-
-    .contact-container {
-        padding: 8px 12px;
-    }
-
-    .contact-heading {
-        font-size: 1.6rem;
-    }
-
-    .contact-intro {
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-    }
-
     .contact-grid {
         grid-template-columns: 1fr;
-        gap: 8px;
     }
 
     .contact-card {
-        padding: 14px 12px;
         min-height: 44px;
-        flex-direction: row;
         gap: 12px;
-    }
-
-    .contact-icon {
-        font-size: 1.6rem;
-        margin-bottom: 0;
-    }
-
-    .contact-label {
-        font-size: 0.95rem;
-    }
-
-    .contact-description {
-        font-size: 0.8rem;
     }
 
     .footer-content {
         flex-direction: row;
         gap: 8px;
-        padding: 0 10px;
-    }
-
-    .copyright {
-        font-size: 0.6rem;
     }
 
     .footer-tagline {
         font-size: 0.55rem;
-    }
-
-    .social-links-footer {
-        gap: 10px;
     }
 
     .social-links-footer a {
@@ -934,10 +760,6 @@ footer a:hover {
 
     .footer-credit {
         font-size: 0.55rem;
-    }
-
-    .project-card {
-        padding: 14px 12px;
     }
 
     .project-title {
@@ -950,18 +772,10 @@ footer a:hover {
 
     .project-link {
         min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        padding: 8px 16px;
-    }
-
-    .projects-container {
-        padding: 10px;
     }
 
     footer {
         padding: 4px 8px;
-        display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
@@ -969,53 +783,6 @@ footer a:hover {
 
     .footer-content {
         padding: 0 10px;
-    }
-
-    .experience-container {
-        padding: 10px;
-    }
-
-    .timeline {
-        padding-top: 10px;
-    }
-
-    .timeline::before {
-        display: none;
-    }
-
-    .left::after, .right::after {
-        display: none;
-    }
-
-    .container {
-        width: 100%;
-        padding: 0;
-        margin-bottom: 20px;
-    }
-
-    .right, .left {
-        left: 0;
-    }
-
-    .content {
-        padding: 14px 12px;
-    }
-
-    .company {
-        font-size: 1.1rem;
-    }
-
-    .position {
-        font-size: 0.92rem;
-    }
-
-    .period {
-        font-size: 0.82rem;
-    }
-
-    .description {
-        font-size: 0.85rem;
-        line-height: 1.5;
     }
 
     .nebula {
@@ -1028,22 +795,6 @@ footer a:hover {
 }
 
 @media screen and (max-width: 380px) {
-    :root {
-        --footer-height: 80px;
-    }
-
-    header {
-        font-size: 1.5rem;
-        margin: 6px 0 3px;
-        padding: 4px 0;
-    }
-
-    .navbar a {
-        padding: 8px 10px;
-        margin: 2px 2px;
-        font-size: 0.7rem;
-        min-height: 44px;
-    }
 
     .home-content {
         font-size: 0.85rem;
@@ -1072,56 +823,8 @@ footer a:hover {
         padding: 10px 14px;
     }
 
-    .about-heading {
-        font-size: 1.4rem;
-    }
-
-    .about-text {
-        font-size: 0.84rem;
-        min-height: auto;
-        line-height: 1.45;
-    }
-
-    .profile-frame {
-        max-width: 140px;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-    }
-
-    .skill-item {
-        font-size: 0.78rem;
-        padding: 8px;
-    }
-
-    .contact-heading {
-        font-size: 1.4rem;
-    }
-
-    .contact-intro {
-        font-size: 0.82rem;
-    }
-
-    .contact-card {
-        padding: 12px 10px;
-    }
-
-    .contact-icon {
-        font-size: 1.4rem;
-    }
-
-    .contact-label {
-        font-size: 0.88rem;
-    }
-
     .footer-content {
         padding: 3px 6px;
-    }
-
-    .copyright {
-        font-size: 0.58rem;
     }
 
     .footer-tagline {
@@ -1136,36 +839,6 @@ footer a:hover {
         font-size: 0.52rem;
     }
 
-    .experience-container {
-        padding: 10px;
-    }
-
-    .container {
-        padding: 0;
-        margin-bottom: 12px;
-    }
-
-    .content {
-        padding: 12px 10px;
-    }
-
-    .company {
-        font-size: 1rem;
-    }
-
-    .position {
-        font-size: 0.85rem;
-    }
-
-    .period {
-        font-size: 0.75rem;
-    }
-
-    .description {
-        font-size: 0.8rem;
-        line-height: 1.4;
-    }
-
     .project-title {
         font-size: 0.95rem;
     }
@@ -1174,10 +847,6 @@ footer a:hover {
         font-size: 0.8rem;
     }
 
-    .project-card {
-        padding: 12px 10px;
-        margin-bottom: 12px;
-    }
 }
 
 .x-icon {
@@ -1457,7 +1126,6 @@ footer a:hover {
     }
 
     .skills-grid {
-        grid-template-columns: 1fr 1fr;
         gap: 8px;
     }
 
@@ -1484,12 +1152,10 @@ footer a:hover {
     }
 
     .skills-grid {
-        grid-template-columns: 1fr 1fr;
         gap: 6px;
     }
 
     .skill-item {
-        font-size: 0.78rem;
         padding: 8px;
     }
 }
@@ -1703,14 +1369,6 @@ footer a:hover {
         padding-top: 10px;
     }
 
-    .timeline::before {
-        display: none;
-    }
-
-    .left::after, .right::after {
-        display: none;
-    }
-
     .container {
         width: 100%;
         padding: 0;
@@ -1763,10 +1421,6 @@ footer a:hover {
 
     .position {
         font-size: 0.85rem;
-    }
-
-    .period {
-        font-size: 0.75rem;
     }
 
     .description {
@@ -2111,7 +1765,6 @@ body.transparent-bg .star-cluster {
     }
 }
 
-
 /* ============================================================
    Mobile optimization pass (placed last so these win the
    cascade over the earlier, source-order-losing mobile rules)
@@ -2135,9 +1788,6 @@ body.transparent-bg .star-cluster {
     }
 
     /* Contact cards stack full-width on phones (3 cards since X was removed) */
-    .contact-card {
-        flex: 0 0 100%;
-    }
 
     /* Experience dates: drop the compounding italic + heavy glow, lift opacity */
     .period {
@@ -2174,21 +1824,11 @@ body.transparent-bg .star-cluster {
     }
 
     /* Keep all 5 nav links on one row on mainstream phones (390-393px) */
-    .navbar a {
-        padding: 8px 9px;
-        margin: 2px;
-        font-size: 0.72rem;
-    }
 
 }
 
 @media screen and (max-width: 380px) {
     /* Tighten nav further so it stays one row down to ~320px */
-    .navbar a {
-        padding: 8px 7px;
-        margin: 2px 1px;
-        font-size: 0.66rem;
-    }
 
     /* Declutter the crammed footer on the narrowest phones */
     .footer-tagline,
