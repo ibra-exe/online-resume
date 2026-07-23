@@ -81,12 +81,6 @@
         <div class="shooting-star shooting-star-5"></div>
         <div class="shooting-star shooting-star-6"></div>
 
-        <!-- Local audio file player -->
-        <audio id="audioPlayer" loop preload="none">
-            <source src="files/Tarantulas.mp3#t=9" type="audio/mpeg" />
-            Your browser does not support the audio element.
-        </audio>
-
         <header>Ibra</header>
         <div class="navbar">
             <a href="#" onclick="loadContent('home.html')"><i class="fas fa-house"></i><span>Home</span></a>
@@ -105,21 +99,6 @@
                     <div class="footer-tagline">
                         Digital Transformation, AI &amp; People Technology
                     </div>
-                </div>
-
-                <div id="audio-controls">
-                    <button
-                        id="audio-toggle"
-                        aria-label="Play or pause background music"
-                    >
-                        <i class="fas fa-play" id="play-icon"></i>
-                        <i
-                            class="fas fa-pause"
-                            id="pause-icon"
-                            style="display: none"
-                        ></i>
-                        <i class="fas fa-music" id="music-icon"></i>
-                    </button>
                 </div>
 
                 <div class="footer-section">
@@ -184,41 +163,6 @@
                     const observer = new ResizeObserver(resizeFrame);
                     observer.observe(frame.contentDocument.body);
                 } catch(e) {}
-            });
-
-            document.addEventListener("DOMContentLoaded", function () {
-                const audioPlayer = document.getElementById("audioPlayer");
-                const audioToggle = document.getElementById("audio-toggle");
-                const playIcon = document.getElementById("play-icon");
-                const pauseIcon = document.getElementById("pause-icon");
-
-                function updateAudioButton(isPlaying) {
-                    if (isPlaying) {
-                        playIcon.style.display = "none";
-                        pauseIcon.style.display = "inline-block";
-                    } else {
-                        playIcon.style.display = "inline-block";
-                        pauseIcon.style.display = "none";
-                    }
-                }
-
-                // Click-to-play only: no autoplay attempt, no play-on-first-click
-                // fallback. Music starts only via the footer play button.
-                updateAudioButton(false);
-
-                audioToggle.addEventListener("click", function () {
-                    if (audioPlayer.paused) {
-                        audioPlayer.play();
-                        updateAudioButton(true);
-                    } else {
-                        audioPlayer.pause();
-                        updateAudioButton(false);
-                    }
-                });
-
-                audioPlayer.addEventListener("ended", () => updateAudioButton(false));
-                audioPlayer.addEventListener("pause", () => updateAudioButton(false));
-                audioPlayer.addEventListener("play", () => updateAudioButton(true));
             });
         </script>
     </body>
