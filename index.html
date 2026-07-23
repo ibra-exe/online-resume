@@ -200,17 +200,9 @@
                     }
                 }
 
-                const playPromise = audioPlayer.play();
-                if (playPromise !== undefined) {
-                    playPromise
-                        .then(() => { updateAudioButton(true); })
-                        .catch(() => {
-                            updateAudioButton(false);
-                            document.body.addEventListener("click", () => {
-                                audioPlayer.play().then(() => { updateAudioButton(true); });
-                            }, { once: true });
-                        });
-                }
+                // Click-to-play only: no autoplay attempt, no play-on-first-click
+                // fallback. Music starts only via the footer play button.
+                updateAudioButton(false);
 
                 audioToggle.addEventListener("click", function () {
                     if (audioPlayer.paused) {
