@@ -2300,3 +2300,60 @@ body.transparent-bg .star-cluster {
         padding-left: 42px;
     }
 }
+
+/* ============================================================
+   Mobile Contact: compact icon-left rows so all three channels
+   fit without scrolling. Uses a grid (icon spans both text rows)
+   so no HTML change is needed. Placed last so it wins over the
+   base card styles defined earlier in the file.
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    .contact-heading {
+        font-size: 1.6rem;
+    }
+
+    .contact-intro {
+        font-size: 0.92rem;
+        margin-bottom: 14px;
+    }
+
+    .contact-grid {
+        gap: 10px;
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .contact-card {
+        flex: 0 0 100%;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "icon label"
+            "icon desc";
+        column-gap: 14px;
+        row-gap: 2px;
+        align-items: center;
+        justify-items: start;
+        text-align: left;
+        padding: 14px 16px;
+    }
+
+    .contact-icon {
+        grid-area: icon;
+        font-size: 1.8rem;
+        margin-bottom: 0;
+    }
+
+    .contact-label {
+        grid-area: label;
+        align-self: end;
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .contact-description {
+        grid-area: desc;
+        align-self: start;
+        font-size: 0.82rem;
+    }
+}
