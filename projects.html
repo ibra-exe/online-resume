@@ -211,7 +211,7 @@
                         <span>CSS</span>
                         <span>Vanilla JS</span>
                     </div>
-                    <a href="https://github.com/ibra-exe/online-resume" class="project-link" target="_blank" rel="noopener" data-ar="الكود المصدري">Source Code</a>
+                    <span class="project-link project-link-static" data-ar="هذا الموقع">This Website</span>
                 </div>
             </div>
         </div>
@@ -333,7 +333,7 @@
             cards.forEach(function (card) {
                 card.addEventListener('click', function (e) {
                     // Don't toggle when following a link inside the card
-                    if (e.target.closest('a')) return;
+                    if (e.target.closest('a, .project-link-static')) return;
                     card.classList.toggle('expanded');
                 });
                 card.addEventListener('keydown', function (e) {

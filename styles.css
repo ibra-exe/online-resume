@@ -2085,3 +2085,14 @@ html[lang="ar"] .skills-heading {
     right: auto;
     left: 16px;
 }
+
+/* "This Website" — inert, disabled-looking pseudo-button on the Online Resume card */
+.project-link.project-link-static,
+.project-link.project-link-static:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(235, 235, 250, 0.45);
+    font-style: italic;
+    cursor: default;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+}
