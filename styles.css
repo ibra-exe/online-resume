@@ -1997,3 +1997,91 @@ body.transparent-bg .star-cluster {
         font-size: 0.82rem;
     }
 }
+
+/* ============================================================
+   Arabic (RTL) support
+   - Body/headings use Cairo when lang=ar (Orbitron/Chakra Petch
+     have no Arabic glyphs). The "Ibra" logo stays Orbitron/Latin.
+   - [dir="rtl"] flips the directional layout rules.
+   ============================================================ */
+html[lang="ar"] {
+    --font-main: 'Cairo', 'Chakra Petch', 'Arial', sans-serif;
+}
+
+/* Arabic content headings get the Arabic font (the header logo keeps Orbitron) */
+html[lang="ar"] .about-heading,
+html[lang="ar"] .contact-heading,
+html[lang="ar"] .projects-section-title,
+html[lang="ar"] .skills-heading {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+}
+
+/* Explicit left-aligned text flips to right in RTL
+   (text with no explicit align auto-flips via dir) */
+[dir="rtl"] .home-content,
+[dir="rtl"] .about-text,
+[dir="rtl"] .copyright,
+[dir="rtl"] .footer-tagline {
+    text-align: right;
+}
+
+/* Experience timeline rail + nodes move to the right side */
+[dir="rtl"] .timeline::before {
+    left: auto;
+    right: 31px;
+    margin-left: 0;
+    margin-right: -2px;
+}
+[dir="rtl"] .container {
+    padding-left: 20px;
+    padding-right: 70px;
+}
+[dir="rtl"] .left::after,
+[dir="rtl"] .right::after {
+    left: auto;
+    right: 17px;
+}
+
+@media screen and (max-width: 900px) {
+    [dir="rtl"] .timeline::before { right: 31px; left: auto; }
+    [dir="rtl"] .container { padding-left: 15px; padding-right: 55px; }
+    [dir="rtl"] .left::after, [dir="rtl"] .right::after { right: 17px; left: auto; }
+}
+
+@media screen and (max-width: 600px) {
+    [dir="rtl"] .timeline::before { right: 18px; left: auto; }
+    [dir="rtl"] .left::after, [dir="rtl"] .right::after { right: 9px; left: auto; }
+    [dir="rtl"] .container { padding-left: 0; padding-right: 42px; }
+}
+
+/* Language toggle button (in the shell) */
+.lang-toggle {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    z-index: 300;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: rgba(80, 37, 128, 0.55);
+    border: 1px solid rgba(183, 102, 255, 0.5);
+    color: var(--text-color);
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.lang-toggle:hover {
+    background-color: rgba(111, 51, 153, 0.75);
+    box-shadow: 0 0 12px rgba(183, 102, 255, 0.4);
+}
+
+[dir="rtl"] .lang-toggle {
+    right: auto;
+    left: 16px;
+}

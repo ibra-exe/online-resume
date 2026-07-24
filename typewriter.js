@@ -31,11 +31,18 @@ function initTypewriter(targetId, text, speed = 20) {
 const HOME_TEXT = "Hi, I'm Ibrahim Shaheen, a Digital Transformation professional specializing in AI, HRIS, and strategic digitalization. Currently at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems, aiming for a 70% automation rate and earning SAP's Best HCM Innovation & Automation Award in KSA.";
 const ABOUT_TEXT = "Hello! I'm Ibrahim Shaheen (Ibra), a Saudi Digital Transformation professional focused on AI, HRIS, and strategic digitalization.\n\nAs a People Technology Senior Specialist at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems, aiming for a 70% automation rate and earning SAP's Best HCM Innovation & Automation Award in KSA.\n\nI'm passionate about using AI to solve real problems, from streamlining HRIS platforms like SAP SuccessFactors to building AI agents that support people around the clock.";
 
+// Arabic (draft — pending review). Technical terms kept in Latin per convention.
+const HOME_TEXT_AR = "مرحبًا، أنا إبراهيم شاهين، متخصّص في التحوّل الرقمي مع تركيز على الذكاء الاصطناعي وأنظمة الموارد البشرية (HRIS) والرقمنة الاستراتيجية. أعمل حاليًا في نيوم، حيث أقود مبادرات تُحوّل العمليات المعقّدة إلى أنظمة ذكية ومؤتمتة، مستهدفًا نسبة أتمتة تبلغ 70%، وقد حصلتُ على جائزة SAP لأفضل ابتكار وأتمتة في إدارة رأس المال البشري بالمملكة العربية السعودية.";
+
+function currentLang() {
+    return localStorage.getItem('lang') === 'ar' ? 'ar' : 'en';
+}
+
 // Auto-initialize based on page
 document.addEventListener('DOMContentLoaded', function() {
     // For home page
     if (document.getElementById('type-target')) {
-        initTypewriter('type-target', HOME_TEXT);
+        initTypewriter('type-target', currentLang() === 'ar' ? HOME_TEXT_AR : HOME_TEXT);
     }
     
     // For about page
