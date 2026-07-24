@@ -30,6 +30,8 @@
         <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="stylesheet" href="styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+        <script src="i18n.js"></script>
         <link
             href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap"
             rel="preload"
@@ -72,13 +74,15 @@
         <div class="bright-star bright-star-5"></div>
         <div class="bright-star bright-star-6"></div>
 
+        <button id="lang-toggle" class="lang-toggle" onclick="toggleLang()" aria-label="التبديل إلى العربية">ع</button>
+
         <header>Ibra</header>
         <div class="navbar">
-            <a href="home.html" onclick="event.preventDefault(); loadContent('home.html')"><i class="fas fa-house"></i><span>Home</span></a>
-            <a href="about.html" onclick="event.preventDefault(); loadContent('about.html')"><i class="fas fa-user"></i><span>About</span></a>
-            <a href="experience.html" onclick="event.preventDefault(); loadContent('experience.html')"><i class="fas fa-briefcase"></i><span>Experience</span></a>
-            <a href="projects.html" onclick="event.preventDefault(); loadContent('projects.html')"><i class="fas fa-folder-open"></i><span>Projects</span></a>
-            <a href="contact.html" onclick="event.preventDefault(); loadContent('contact.html')"><i class="fas fa-envelope"></i><span>Contact</span></a>
+            <a href="home.html" onclick="event.preventDefault(); loadContent('home.html')"><i class="fas fa-house"></i><span data-ar="الرئيسية">Home</span></a>
+            <a href="about.html" onclick="event.preventDefault(); loadContent('about.html')"><i class="fas fa-user"></i><span data-ar="نبذة">About</span></a>
+            <a href="experience.html" onclick="event.preventDefault(); loadContent('experience.html')"><i class="fas fa-briefcase"></i><span data-ar="الخبرة">Experience</span></a>
+            <a href="projects.html" onclick="event.preventDefault(); loadContent('projects.html')"><i class="fas fa-folder-open"></i><span data-ar="المشاريع">Projects</span></a>
+            <a href="contact.html" onclick="event.preventDefault(); loadContent('contact.html')"><i class="fas fa-envelope"></i><span data-ar="تواصل">Contact</span></a>
         </div>
 
         <iframe id="contentFrame" src="home.html" title="Page Content" allowtransparency="true"></iframe>
@@ -86,8 +90,8 @@
         <footer>
             <div class="footer-content">
                 <div class="footer-section">
-                    <div class="copyright">© 2026 Ibrahim Shaheen</div>
-                    <div class="footer-tagline">
+                    <div class="copyright" data-ar="© 2026 إبراهيم شاهين">© 2026 Ibrahim Shaheen</div>
+                    <div class="footer-tagline" data-ar="التحوّل الرقمي، الذكاء الاصطناعي، وأنظمة الموارد البشرية">
                         Digital Transformation, AI &amp; HRIS
                     </div>
                 </div>
@@ -150,6 +154,7 @@
 
             frame.addEventListener("load", function () {
                 resizeFrame();
+                try { window.i18nApply(frame.contentDocument); } catch(e) {}
                 try {
                     const observer = new ResizeObserver(resizeFrame);
                     observer.observe(frame.contentDocument.body);

@@ -9,6 +9,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="i18n.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -20,7 +22,7 @@
 <body class="transparent-bg">
     <div class="about-container">
         <div class="about-content">
-            <h2 class="about-heading">About Me</h2>
+            <h2 class="about-heading" data-ar="نبذة عني">About Me</h2>
             
             <div class="about-grid">
                 <div class="profile-container">
@@ -40,57 +42,57 @@
                     <div class="about-text" id="about-type-target"></div>
                     
                     <div class="skills-section">
-                        <h3 class="skills-heading">Education</h3>
+                        <h3 class="skills-heading" data-ar="التعليم">Education</h3>
                         <div class="skill-item" style="margin-bottom: 10px;">
                             <i class="fas fa-graduation-cap"></i>
                             <div>
-                                <div>B.Sc. Software Engineering</div>
-                                <div style="font-size: 0.85rem; opacity: 0.75;">Tokyo University of Technology &nbsp;·&nbsp; 2014 – 2019</div>
+                                <div data-ar="بكالوريوس هندسة البرمجيات">B.Sc. Software Engineering</div>
+                                <div style="font-size: 0.85rem; opacity: 0.75;" data-ar="جامعة طوكيو للتكنولوجيا · 2014 – 2019">Tokyo University of Technology &nbsp;·&nbsp; 2014 – 2019</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="skills-section">
-                        <h3 class="skills-heading">Awards</h3>
+                        <h3 class="skills-heading" data-ar="الجوائز">Awards</h3>
                         <div class="skill-item" style="margin-bottom: 10px;">
                             <i class="fas fa-trophy" style="color: gold;"></i>
                             <div>
-                                <div>Best HCM Innovation & Automation Award — KSA</div>
-                                <div style="font-size: 0.85rem; opacity: 0.75;">SAP SuccessFactors &nbsp;·&nbsp; November 2024</div>
+                                <div data-ar="جائزة أفضل ابتكار وأتمتة في نظام SAP SuccessFactors — المملكة العربية السعودية">Best HCM Innovation & Automation Award — KSA</div>
+                                <div style="font-size: 0.85rem; opacity: 0.75;" data-ar="SAP SuccessFactors · نوفمبر 2024">SAP SuccessFactors &nbsp;·&nbsp; November 2024</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="skills-section">
-                        <h3 class="skills-heading">Languages</h3>
+                        <h3 class="skills-heading" data-ar="اللغات">Languages</h3>
                         <div class="skills-grid">
-                            <div class="skill-item"><i class="fas fa-language"></i> Arabic — Native</div>
-                            <div class="skill-item"><i class="fas fa-language"></i> English — Fluent</div>
-                            <div class="skill-item"><i class="fas fa-language"></i> Japanese — Advanced</div>
+                            <div class="skill-item"><i class="fas fa-language"></i> <span data-ar="العربية — اللغة الأم">Arabic — Native</span></div>
+                            <div class="skill-item"><i class="fas fa-language"></i> <span data-ar="الإنجليزية — بطلاقة">English — Fluent</span></div>
+                            <div class="skill-item"><i class="fas fa-language"></i> <span data-ar="اليابانية — متقدّم">Japanese — Advanced</span></div>
                         </div>
                     </div>
 
                     <div class="skills-section">
-                        <h3 class="skills-heading">Digital Transformation & Strategy</h3>
+                        <h3 class="skills-heading" data-ar="التحوّل الرقمي والاستراتيجية">Digital Transformation & Strategy</h3>
                         <div class="skills-grid">
-                            <div class="skill-item"><i class="fas fa-globe"></i> Digital Transformation</div>
-                            <div class="skill-item"><i class="fas fa-chess"></i> Digital Strategy</div>
-                            <div class="skill-item"><i class="fas fa-chart-line"></i> Process Optimization</div>
-                            <div class="skill-item"><i class="fas fa-people-arrows"></i> Change Management</div>
+                            <div class="skill-item"><i class="fas fa-globe"></i> <span data-ar="التحوّل الرقمي">Digital Transformation</span></div>
+                            <div class="skill-item"><i class="fas fa-chess"></i> <span data-ar="الاستراتيجية الرقمية">Digital Strategy</span></div>
+                            <div class="skill-item"><i class="fas fa-chart-line"></i> <span data-ar="تحسين العمليات">Process Optimization</span></div>
+                            <div class="skill-item"><i class="fas fa-people-arrows"></i> <span data-ar="إدارة التغيير">Change Management</span></div>
                         </div>
 
-                        <h3 class="skills-heading" style="margin-top: 15px;">HRIS</h3>
+                        <h3 class="skills-heading" style="margin-top: 15px;" data-ar="أنظمة الموارد البشرية (HRIS)">HRIS</h3>
                         <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-database"></i> SAP SuccessFactors</div>
-                            <div class="skill-item"><i class="fas fa-users-cog"></i> HR Digitalization</div>
-                            <div class="skill-item"><i class="fas fa-chart-bar"></i> People Analytics</div>
+                            <div class="skill-item"><i class="fas fa-users-cog"></i> <span data-ar="رقمنة الموارد البشرية">HR Digitalization</span></div>
+                            <div class="skill-item"><i class="fas fa-chart-bar"></i> <span data-ar="تحليلات الموارد البشرية">People Analytics</span></div>
                         </div>
 
-                        <h3 class="skills-heading" style="margin-top: 15px;">AI & Automation</h3>
+                        <h3 class="skills-heading" style="margin-top: 15px;" data-ar="الذكاء الاصطناعي والأتمتة">AI & Automation</h3>
                         <div class="skills-grid">
-                            <div class="skill-item"><i class="fas fa-brain"></i> Applied AI & Problem Solving</div>
-                            <div class="skill-item"><i class="fas fa-robot"></i> AI Agent Development</div>
-                            <div class="skill-item"><i class="fas fa-cogs"></i> Automation & RPA Strategy</div>
+                            <div class="skill-item"><i class="fas fa-brain"></i> <span data-ar="الذكاء الاصطناعي التطبيقي وحل المشكلات">Applied AI & Problem Solving</span></div>
+                            <div class="skill-item"><i class="fas fa-robot"></i> <span data-ar="بناء وكلاء الذكاء الاصطناعي">AI Agent Development</span></div>
+                            <div class="skill-item"><i class="fas fa-cogs"></i> <span data-ar="استراتيجية الأتمتة و RPA">Automation & RPA Strategy</span></div>
                         </div>
                     </div>
                 </div>
