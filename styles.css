@@ -2086,6 +2086,55 @@ html[lang="ar"] .skills-heading {
     left: 16px;
 }
 
+/* ---- Starfield toggle ---- */
+/* Sits beside the language button and shares its look. */
+.starfield-toggle {
+    position: fixed;
+    top: 14px;
+    right: 66px;
+    z-index: 300;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: rgba(80, 37, 128, 0.55);
+    border: 1px solid rgba(183, 102, 255, 0.5);
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.starfield-toggle:hover {
+    background-color: rgba(111, 51, 153, 0.75);
+    box-shadow: 0 0 12px rgba(183, 102, 255, 0.4);
+}
+
+/* Dim the glyph when the starfield is switched off */
+.starfield-toggle[aria-pressed="false"] {
+    opacity: 0.55;
+}
+
+[dir="rtl"] .starfield-toggle {
+    right: auto;
+    left: 66px;
+}
+
+/* Starfield off: no nebula clouds, no stars — just the flat background with the
+   faint ambient tint from body::before kept for a little depth.
+   body::after carries its own 1px star layer, so it has to go too.
+   !important because several star layers set their own display/animation. */
+html.no-starfield .nebula,
+html.no-starfield .stars-medium,
+html.no-starfield .stars-large,
+html.no-starfield .bright-star,
+html.no-starfield .star-cluster,
+html.no-starfield body::after {
+    display: none !important;
+}
+
 /* Sub-pages are also reachable as standalone URLs (and are crawlable). Their
    body is `transparent-bg` and `html` has no background, so the canvas fell
    through to the browser default — white in a light-mode browser, leaving

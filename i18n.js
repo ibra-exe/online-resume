@@ -34,6 +34,36 @@
                 lang === "ar" ? "Switch to English" : "التبديل إلى العربية"
             );
         }
+
+        // Keep the starfield button's label in the current language
+        applyStarfieldState(doc);
+    }
+
+    /* ---- Starfield preference ---- */
+    /* The class itself is applied by a tiny inline script in each page's <head>
+       so there is never a flash of stars before the preference takes effect.
+       This only handles the click and the button's label/state. */
+    function starfieldOn() {
+        return localStorage.getItem("starfield") !== "off";
+    }
+
+    function applyStarfieldState(doc) {
+        var btn = doc.getElementById("starfield-toggle");
+        if (!btn) return;  // only the shell and 404 have the control
+        var on = starfieldOn();
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        btn.setAttribute(
+            "aria-label",
+            currentLang() === "ar"
+                ? (on ? "إخفاء النجوم" : "إظهار النجوم")
+                : (on ? "Turn off the starfield" : "Turn on the starfield")
+        );
+    }
+
+    function toggleStarfield() {
+        localStorage.setItem("starfield", starfieldOn() ? "off" : "on");
+        document.documentElement.classList.toggle("no-starfield", !starfieldOn());
+        applyStarfieldState(document);
     }
 
     function toggleLang() {
@@ -49,6 +79,7 @@
 
     window.i18nApply = applyLang;
     window.toggleLang = toggleLang;
+    window.toggleStarfield = toggleStarfield;
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", function () { applyLang(document); });
