@@ -81,15 +81,32 @@
         );
     }
 
+    /* Keep the address bar in step with the current view, so the URL is always
+       copy-pasteable as "what I am looking at right now". Defaults are omitted
+       rather than spelled out, so a plain visit keeps a clean URL.
+       Skipped inside the shell's iframe — that is not the URL the visitor sees,
+       and writing history from a frame would touch the frame's own entry. */
+    function syncPrefUrl(key, value) {
+        if (window.self !== window.top) return;
+        try {
+            var url = new URL(location.href);
+            if (value === null) url.searchParams.delete(key);
+            else url.searchParams.set(key, value);
+            history.replaceState(history.state, "", url);
+        } catch (e) {}
+    }
+
     function toggleStarfield() {
         localStorage.setItem("starfield", starfieldOn() ? "off" : "on");
         document.documentElement.classList.toggle("no-starfield", !starfieldOn());
         applyStarfieldState(document);
+        syncPrefUrl("stars", starfieldOn() ? null : "off");
     }
 
     function toggleLang() {
         localStorage.setItem("lang", currentLang() === "ar" ? "en" : "ar");
         applyLang(document);
+        syncPrefUrl("lang", currentLang() === "ar" ? "ar" : null);
         var frame = document.getElementById("contentFrame");
         if (frame) {
             // reload the sub-page so its content (incl. the typewriter) re-renders

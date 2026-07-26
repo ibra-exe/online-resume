@@ -29,17 +29,27 @@
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-        <!-- Pre-paint setup, before the browser draws anything: text direction from the
-             saved language (so an Arabic visitor never sees a frame of English LTR
-             layout), and the saved starfield preference (so the stars never flash in
-             before being hidden). -->
+        <!-- Pre-paint setup, before the browser draws anything: language/direction and
+             the starfield preference, each taken from the URL (?lang=, ?stars=) if
+             present and otherwise from storage, then remembered. Doing it here rather
+             than in i18n.js means a shared link opens already in the right language
+             and the stars never flash in before being hidden. -->
         <script>
         (function(){
-            var d=document.documentElement;
-            var l=localStorage.getItem("lang")==="ar"?"ar":"en";
-            d.setAttribute("lang",l);
-            d.setAttribute("dir",l==="ar"?"rtl":"ltr");
-            if(localStorage.getItem("starfield")==="off")d.classList.add("no-starfield");
+            var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+            try{S=localStorage}catch(e){}
+            // ?lang= wins over the stored preference, and is then remembered,
+            // so a shared Arabic link keeps working as the visitor browses on.
+            var lp=q.get("lang");
+            var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+            if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+            d.setAttribute("lang",lang);
+            d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+            // ?stars=off|on, same precedence.
+            var sp=q.get("stars");
+            var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
+            if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
+            if(stars==="off")d.classList.add("no-starfield");
         })();
         </script>
         <link rel="stylesheet" href="styles.css" />
@@ -197,9 +207,86 @@
                 } catch(e) {}
             }
 
-            function loadContent(page) {
-                frame.src = page;
+            /* ---- Shareable URLs ----
+               The visible page lives in the query string (?page=projects) rather
+               than a #fragment, on purpose: assigning location.hash triggers the
+               browser's scroll-to-fragment behaviour, which is the same class of
+               bug as the iOS viewport jump that `href="#"` used to cause here.
+               pushState never scrolls.
+               Preferences (?lang, ?stars) are read pre-paint in <head> and are
+               kept in the URL by i18n.js, so whatever is in the address bar is
+               always a faithful, shareable snapshot of what you are looking at. */
+            const PAGES = ["home", "about", "experience", "projects", "contact"];
+            const TITLES = {
+                home: "Ibrahim Shaheen — Digital Transformation, AI & HRIS",
+                about: "About — Ibrahim Shaheen",
+                experience: "Experience — Ibrahim Shaheen",
+                projects: "Projects — Ibrahim Shaheen",
+                contact: "Contact — Ibrahim Shaheen"
+            };
+
+            /* Whitelisted so ?page= can never point the iframe somewhere unintended
+               (e.g. a protocol-relative //host path). */
+            function pageFromUrl() {
+                const p = new URLSearchParams(location.search).get("page");
+                return PAGES.indexOf(p) !== -1 ? p : "home";
             }
+
+            function setActiveNav(page) {
+                document.querySelectorAll(".navbar a").forEach(function (a) {
+                    if (a.getAttribute("href") === page + ".html") {
+                        a.setAttribute("aria-current", "page");
+                    } else {
+                        a.removeAttribute("aria-current");
+                    }
+                });
+            }
+
+            /* Tracked in a variable, not read back off the src attribute: writing to
+               src (even to the value it already has) starts a navigation and pushes a
+               history entry. Seeded with the value hardcoded in the markup. */
+            let currentPage = "home";
+
+            function applyPage(page, history_mode) {
+                if (currentPage !== page) {
+                    /* location.replace, not frame.src: assigning src pushes a session
+                       history entry for the iframe, so every tab change cost TWO
+                       entries and Back rewound the iframe while the parent URL stood
+                       still. replace() swaps the frame's entry in place, leaving our
+                       pushState entries as the only ones Back/Forward walks. */
+                    const target = page + ".html";
+                    try { frame.contentWindow.location.replace(target); }
+                    catch (e) { frame.src = target; }
+                    frame.dataset.page = page;
+                    currentPage = page;
+                }
+                document.title = TITLES[page];
+                frame.setAttribute("title", TITLES[page]);
+                setActiveNav(page);
+                if (history_mode) {
+                    const q = new URLSearchParams(location.search);
+                    if (page === "home") q.delete("page"); else q.set("page", page);
+                    const qs = q.toString();
+                    history[history_mode](
+                        { page: page },
+                        "",
+                        location.pathname + (qs ? "?" + qs : "")
+                    );
+                }
+            }
+
+            // Accepts "projects" or the legacy "projects.html" used by in-page links
+            function loadContent(page) {
+                applyPage(String(page).replace(/\.html$/, ""), "pushState");
+            }
+
+            // Back/Forward should walk the tabs, not desync from them
+            window.addEventListener("popstate", function () {
+                applyPage(pageFromUrl(), null);
+            });
+
+            // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS)
+            applyPage(pageFromUrl(), "replaceState");
 
             frame.addEventListener("load", function () {
                 resizeFrame();

@@ -2089,6 +2089,14 @@ html[lang="ar"] .skills-heading {
     left: 16px;
 }
 
+/* Current page in the nav. Matters most for a shared ?page= link, where the
+   recipient lands mid-site and needs to see where they are. Also gives the
+   mobile tab bar the state indicator it never had. */
+.navbar a[aria-current="page"] {
+    background-color: var(--primary-hover);
+    box-shadow: 0 0 10px rgba(183, 102, 255, 0.35);
+}
+
 /* ---- Starfield toggle ---- */
 /* Sits beside the language button and shares its look. */
 .starfield-toggle {
@@ -2125,11 +2133,34 @@ html[lang="ar"] .skills-heading {
     left: 66px;
 }
 
-/* Starfield off: a genuinely flat black background. Everything decorative goes —
-   nebula clouds, both star layers, star clusters, bright stars, plus body's two
-   pseudo-elements (::before is the purple radial wash, ::after a 1px star
-   layer). What is left is body's own #020004.
-   !important because several star layers set their own display/animation. */
+/* Starfield toggle: fades the whole scene instead of snapping it off, ending on a
+   genuinely flat black background (body's own #020004). Everything decorative
+   goes — nebula clouds, both star layers, clusters, bright stars, plus body's two
+   pseudo-elements (::before is the purple radial wash, ::after a 1px star layer).
+
+   Each layer declares its own resting opacity (nebula 0.15, star fields 0.35 and
+   0.3, clusters 0.2, body::after 0.7), so we only ever animate TO 0 and let the
+   transition carry each one back to whatever it declared — no need to restate
+   those values, and no risk of flattening them all to 1 on the way back.
+
+   Opacity rather than `display: none` because display cannot be transitioned.
+   Nothing fights the transition: no star layer is animated (the only animation in
+   this file is the typewriter caret). A fresh load with the starfield already off
+   does not flash either, because the pre-paint script adds the class before first
+   paint and transitions never run on an element's initial style.
+
+   Reduced-motion users get an instant toggle for free — the block above clamps
+   every transition to 0.01ms. */
+.nebula,
+.stars-medium,
+.stars-large,
+.bright-star,
+.star-cluster,
+body::before,
+body::after {
+    transition: opacity 0.45s ease;
+}
+
 html.no-starfield .nebula,
 html.no-starfield .stars-medium,
 html.no-starfield .stars-large,
@@ -2137,7 +2168,7 @@ html.no-starfield .bright-star,
 html.no-starfield .star-cluster,
 html.no-starfield body::before,
 html.no-starfield body::after {
-    display: none !important;
+    opacity: 0;
 }
 
 /* Sub-pages are also reachable as standalone URLs (and are crawlable). Their

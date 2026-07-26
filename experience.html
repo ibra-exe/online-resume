@@ -9,18 +9,33 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Pre-paint setup, before the browser draws anything:
-         1. text direction from the saved language, so an Arabic visitor never sees a
-            frame of English left-to-right layout before the swap.
-         2. opened directly (not inside the shell iframe)? then this page owns the
+         1. language/direction, taken from ?lang= if present (so a shared Arabic link
+            opens in Arabic) otherwise the stored preference. Set here rather than in
+            i18n.js so an Arabic visitor never sees a frame of English LTR layout.
+         2. the starfield preference, from ?stars= or storage, so the stars never
+            flash in before being hidden.
+         3. opened directly (not inside the shell iframe)? then this page owns the
             canvas and needs the site background instead of the browser default, which
             is white in a light-mode browser. Inside the iframe we stay transparent so
             the shell's starfield shows through. -->
     <script>
     (function(){
-        var d=document.documentElement;
-        var l=localStorage.getItem("lang")==="ar"?"ar":"en";
-        d.setAttribute("lang",l);
-        d.setAttribute("dir",l==="ar"?"rtl":"ltr");
+        var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+        try{S=localStorage}catch(e){}
+        // ?lang= wins over the stored preference, and is then remembered,
+        // so a shared Arabic link keeps working as the visitor browses on.
+        var lp=q.get("lang");
+        var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+        if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+        d.setAttribute("lang",lang);
+        d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+        // ?stars=off|on, same precedence.
+        var sp=q.get("stars");
+        var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
+        if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
+        if(stars==="off")d.classList.add("no-starfield");
+        // Opened directly rather than inside the shell iframe? Then this page owns
+        // the canvas and needs the site background, not the browser default.
         if(window.self===window.top)d.classList.add("standalone");
     })();
     </script>

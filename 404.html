@@ -9,15 +9,24 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <!-- Pre-paint setup: text direction from the saved language, and the saved
-         starfield preference. Both before the browser draws anything. -->
+    <!-- Pre-paint setup, before the browser draws anything: language/direction and
+         the starfield preference, from ?lang=/?stars= if present, else storage. -->
     <script>
     (function(){
-        var d=document.documentElement;
-        var l=localStorage.getItem("lang")==="ar"?"ar":"en";
-        d.setAttribute("lang",l);
-        d.setAttribute("dir",l==="ar"?"rtl":"ltr");
-        if(localStorage.getItem("starfield")==="off")d.classList.add("no-starfield");
+        var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+        try{S=localStorage}catch(e){}
+        // ?lang= wins over the stored preference, and is then remembered,
+        // so a shared Arabic link keeps working as the visitor browses on.
+        var lp=q.get("lang");
+        var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+        if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+        d.setAttribute("lang",lang);
+        d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+        // ?stars=off|on, same precedence.
+        var sp=q.get("stars");
+        var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
+        if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
+        if(stars==="off")d.classList.add("no-starfield");
     })();
     </script>
     <link rel="stylesheet" href="styles.css">
