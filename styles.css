@@ -1222,9 +1222,12 @@ footer a:hover {
 }
 
 /* Center the dots on the left rail */
+/* The rail is centred on x=31 (4px wide at left:31 with margin-left:-2px), so a
+   24px node must start at 31 - 12 = 19px to share that centre. At 17px it sat
+   2px to the left of the line. */
 .left::after,
 .right::after {
-    left: 17px;
+    left: 19px;
 }
 
 /* The actual content */
@@ -1340,7 +1343,7 @@ footer a:hover {
     }
 
     .right::after, .left::after {
-        left: 17px;
+        left: 19px;  /* centred on the rail at x=31 */
     }
 
     .company {
@@ -2040,13 +2043,13 @@ html[lang="ar"] .skills-heading {
 [dir="rtl"] .left::after,
 [dir="rtl"] .right::after {
     left: auto;
-    right: 17px;
+    right: 19px;  /* mirrors the LTR 19px so the node stays centred on the rail */
 }
 
 @media screen and (max-width: 900px) {
     [dir="rtl"] .timeline::before { right: 31px; left: auto; }
     [dir="rtl"] .container { padding-left: 15px; padding-right: 55px; }
-    [dir="rtl"] .left::after, [dir="rtl"] .right::after { right: 17px; left: auto; }
+    [dir="rtl"] .left::after, [dir="rtl"] .right::after { right: 19px; left: auto; }
 }
 
 @media screen and (max-width: 600px) {
