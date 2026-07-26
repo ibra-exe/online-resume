@@ -98,13 +98,34 @@
         }
     }
 
+    /* Wire the header controls here rather than with inline onclick attributes.
+       This script is deferred, so it executes after the buttons are parsed —
+       with inline handlers there was a brief window where a button was painted
+       and clickable but the function did not exist yet, so the click silently
+       did nothing. Attaching the listener in the same task that defines the
+       handler closes that window by construction. */
+    function wireControls(doc) {
+        var lang = doc.getElementById("lang-toggle");
+        if (lang) lang.addEventListener("click", toggleLang);
+
+        var starfield = doc.getElementById("starfield-toggle");
+        if (starfield) starfield.addEventListener("click", toggleStarfield);
+    }
+
     window.i18nApply = applyLang;
     window.toggleLang = toggleLang;
     window.toggleStarfield = toggleStarfield;
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", function () { applyLang(document); });
-    } else {
+    /* Only for this document — never for the iframe's, which has no controls and
+       whose applyLang runs via i18nApply (calling this there would double-bind). */
+    function init() {
         applyLang(document);
+        wireControls(document);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
     }
 })();
