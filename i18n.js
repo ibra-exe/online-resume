@@ -1,6 +1,8 @@
 /**
  * Lightweight EN/AR internationalisation + RTL toggle for the static site.
- * English is the source of truth (element text); Arabic lives in data-ar="…".
+ * English is the source of truth (the element's own markup); Arabic lives in
+ * data-ar="…" as plain text. The original English markup is snapshotted into
+ * data-en-html so switching back restores inline tags like <strong>.
  * Language preference is stored in localStorage and shared across the shell
  * and the iframe sub-pages (same origin).
  */
@@ -18,12 +20,31 @@
         var nodes = doc.querySelectorAll("[data-ar]");
         for (var i = 0; i < nodes.length; i++) {
             var el = nodes[i];
-            if (!el.hasAttribute("data-en")) {
-                el.setAttribute("data-en", el.textContent.trim());
+
+            /* Snapshot the original English *markup* once, before anything
+               overwrites it. Some data-ar elements wrap inline markup — e.g.
+               <li data-ar="…">Led <strong>PeopleGPT</strong>, …</li> — and the
+               bold sits mid-sentence, so it cannot be split into leaf spans
+               without splitting the Arabic sentence too.
+
+               Kept on the element rather than in a JS Map because the shell and
+               each sub-page run their own copy of this script against the same
+               document; an attribute gives them one shared source of truth.
+               The sub-page's own copy always runs first (DOMContentLoaded
+               precedes the shell's iframe load handler), so the snapshot is
+               always taken from pristine English. */
+            if (!el.hasAttribute("data-en-html")) {
+                el.setAttribute("data-en-html", el.innerHTML);
             }
-            el.textContent = lang === "ar"
-                ? el.getAttribute("data-ar")
-                : el.getAttribute("data-en");
+
+            if (lang === "ar") {
+                el.textContent = el.getAttribute("data-ar");
+            } else {
+                // Restore markup, not just text — assigning textContent here is
+                // what previously stripped every <strong> on the Projects page,
+                // in English as well as Arabic.
+                el.innerHTML = el.getAttribute("data-en-html");
+            }
         }
 
         var toggle = doc.getElementById("lang-toggle");
