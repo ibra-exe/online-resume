@@ -24,7 +24,7 @@
         <meta property="og:image:alt" content="Ibrahim Shaheen — Digital Transformation, AI & HRIS" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://ibra.technology/files/og-image.jpg" />
-        <title>Ibra</title>
+        <title>Ibrahim Shaheen — Digital Transformation, AI &amp; HRIS</title>
         <link rel="icon" href="favicon.ico" sizes="any" />
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -48,6 +48,35 @@
             onload="this.onload=null;this.rel='stylesheet'"
         />
         <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ibrahim Shaheen",
+            "alternateName": "Ibra",
+            "url": "https://ibra.technology/",
+            "image": "https://ibra.technology/files/profile-web.png",
+            "email": "mailto:contact@ibra.technology",
+            "jobTitle": "People Technology Senior Specialist",
+            "description": "Digital Transformation professional specializing in AI, HRIS, and strategic digitalization.",
+            "worksFor": { "@type": "Organization", "name": "NEOM" },
+            "alumniOf": { "@type": "CollegeOrUniversity", "name": "Tokyo University of Technology" },
+            "knowsLanguage": ["ar", "en", "ja"],
+            "knowsAbout": [
+                "Digital Transformation",
+                "HRIS",
+                "SAP SuccessFactors",
+                "Applied AI",
+                "Automation & RPA",
+                "People Analytics"
+            ],
+            "award": "SAP Best HCM Innovation & Automation Award — KSA (2024)",
+            "sameAs": [
+                "https://github.com/ibra-exe",
+                "https://www.linkedin.com/in/ibrahim-shaheen/"
+            ]
+        }
+        </script>
     </head>
 
     <body>
@@ -76,7 +105,7 @@
 
         <button id="lang-toggle" class="lang-toggle" onclick="toggleLang()" aria-label="التبديل إلى العربية">ع</button>
 
-        <header>Ibra</header>
+        <header><h1>Ibra</h1></header>
         <div class="navbar">
             <a href="home.html" onclick="event.preventDefault(); loadContent('home.html')"><i class="fas fa-house"></i><span data-ar="الرئيسية">Home</span></a>
             <a href="about.html" onclick="event.preventDefault(); loadContent('about.html')"><i class="fas fa-user"></i><span data-ar="نبذة">About</span></a>
@@ -90,7 +119,7 @@
         <footer>
             <div class="footer-content">
                 <div class="footer-section">
-                    <div class="copyright" data-ar="© 2026 إبراهيم شاهين">© 2026 Ibrahim Shaheen</div>
+                    <div class="copyright">© <span id="year">2026</span> <span data-ar="إبراهيم شاهين">Ibrahim Shaheen</span></div>
                     <div class="footer-tagline" data-ar="التحوّل الرقمي، الذكاء الاصطناعي، وأنظمة الموارد البشرية">
                         Digital Transformation, AI &amp; HRIS
                     </div>
@@ -136,6 +165,12 @@
         </footer>
 
         <script>
+            // Keep the footer year current without touching the markup each January
+            (function () {
+                const y = document.getElementById("year");
+                if (y) y.textContent = new Date().getFullYear();
+            })();
+
             const frame = document.getElementById("contentFrame");
 
             function resizeFrame() {

@@ -1269,7 +1269,7 @@ footer a:hover {
 .description {
     line-height: 1.55;
     margin: 0;
-    padding-left: 1.2em;
+    padding-inline-start: 1.2em;
     list-style-type: disc;
 }
 
@@ -1625,7 +1625,7 @@ body.transparent-bg .star-cluster {
 
 .project-points {
     margin: 0;
-    padding-left: 18px;
+    padding-inline-start: 18px;
     line-height: 1.6;
 }
 
@@ -2086,11 +2086,63 @@ html[lang="ar"] .skills-heading {
     left: 16px;
 }
 
+/* ---- 404 page ---- */
+.notfound-container {
+    max-width: 620px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.notfound-code {
+    font-family: var(--font-special);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--text-color);
+    opacity: 0.28;
+    text-shadow: 0 0 18px var(--glow-color);
+}
+
+.notfound-heading {
+    font-family: var(--font-special);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    text-shadow: 0 0 8px var(--glow-color);
+    margin: 10px 0 14px;
+}
+
+.notfound-text {
+    line-height: 1.6;
+    opacity: 0.85;
+    margin: 0 0 26px;
+}
+
+@media screen and (max-width: 600px) {
+    .notfound-code { font-size: 3.4rem; }
+    .notfound-heading { font-size: 1.3rem; }
+}
+
+/* The logo is now an <h1>; keep it visually identical to the old bare <header> text */
+header h1 {
+    font: inherit;
+    margin: 0;
+    letter-spacing: inherit;
+}
+
+/* The footer credit is a fixed English phrase ("Made with </> + 🤖").
+   In RTL the bidi algorithm reorders it to "🤖 + </> Made with", so pin it to LTR. */
+[dir="rtl"] .footer-credit {
+    direction: ltr;
+    text-align: left;
+}
+
 /* "This Website" — inert, disabled-looking pseudo-button on the Online Resume card */
 .project-link.project-link-static,
 .project-link.project-link-static:hover {
     background-color: rgba(255, 255, 255, 0.06);
-    color: rgba(235, 235, 250, 0.45);
+    color: rgba(235, 235, 250, 0.6);
     font-style: italic;
     cursor: default;
     border: 1px solid rgba(255, 255, 255, 0.12);

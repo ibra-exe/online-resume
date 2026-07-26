@@ -13,7 +13,7 @@
     <script src="i18n.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
-    <title>Experience</title>
+    <title>Experience — Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
     <div class="experience-container">
@@ -30,7 +30,7 @@
                                 <li data-ar="صمّمتُ وقدتُ استراتيجية شاملة لرقمنة الموارد البشرية تستهدف نسبة أتمتة تبلغ 70% عبر توحيد المنصّات الاستراتيجي والأتمتة المدفوعة بالذكاء الاصطناعي">Architected and led a comprehensive HR digitalization strategy aiming for a 70% automation rate through strategic platform unification and AI-driven automation</li>
                                 <li data-ar="قدتُ عدّة عمليات إعادة هيكلة لنظام SAP SuccessFactors ومبادرات أتمتة، مع تحسين سير العمل التشغيلي وتعزيز تجربة المستخدم">Orchestrated multiple SAP SuccessFactors system restructures and automation initiatives, optimizing operational workflows and enhancing user experience</li>
                                 <li data-ar="قدتُ مشاريع على مستوى المؤسسة شملت تجديد PeopleHub، وترحيل منصّة الاستبيانات، وتنظيم برنامج دولي لبرنامج NEOM HiPo في اليابان">Led enterprise-scale projects including PeopleHub revamp, survey platform migration, and international program organization for the NEOM HiPo Program in Japan</li>
-                                <li data-ar="حاصل على جائزة SAP المرموقة لأفضل أتمتة وابتكار في نظام SAP SuccessFactors عن تطبيقه في المملكة العربية السعودية">Recipient of SAP's prestigious Best HCM Automation and Innovation award for SuccessFactors implementation in Saudi Arabia</li>
+                                <li data-ar="حاصل على جائزة SAP المرموقة لأفضل ابتكار وأتمتة في نظام SAP SuccessFactors عن تطبيقه في المملكة العربية السعودية (2024)">Recipient of SAP's prestigious Best HCM Innovation &amp; Automation Award (2024) for SuccessFactors implementation in Saudi Arabia</li>
                             </ul>
                         </div>
                     </div>
@@ -177,6 +177,8 @@
                     card.classList.toggle('expanded');
                 });
                 card.addEventListener('keydown', function (e) {
+                    // Only the card itself toggles; let Enter/Space reach links and buttons inside
+                    if (e.target !== card) return;
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         card.classList.toggle('expanded');
