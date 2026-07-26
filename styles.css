@@ -2086,6 +2086,24 @@ html[lang="ar"] .skills-heading {
     left: 16px;
 }
 
+/* Sub-pages are also reachable as standalone URLs (and are crawlable). Their
+   body is `transparent-bg` and `html` has no background, so the canvas fell
+   through to the browser default — white in a light-mode browser, leaving
+   near-white text on white. Give the canvas the site background, but ONLY when
+   the page is standalone: a sub-page inside the shell's iframe must stay
+   transparent so the starfield shows through.
+
+   The class is set by a tiny inline head script on each sub-page (before first
+   paint), with a <noscript> fallback for the JS-off case.
+
+   Deliberately scoped to .standalone rather than bare `html`: giving `html` a
+   background stops body-background propagation to the canvas, which changes
+   paint order so body's opaque background covers the z-index:-1 nebula and star
+   layers. The shell must keep `html` background-free. */
+html.standalone {
+    background-color: #020004;
+}
+
 /* ---- 404 page ---- */
 .notfound-container {
     max-width: 620px;
