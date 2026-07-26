@@ -2122,15 +2122,17 @@ html[lang="ar"] .skills-heading {
     left: 66px;
 }
 
-/* Starfield off: no nebula clouds, no stars — just the flat background with the
-   faint ambient tint from body::before kept for a little depth.
-   body::after carries its own 1px star layer, so it has to go too.
+/* Starfield off: a genuinely flat black background. Everything decorative goes —
+   nebula clouds, both star layers, star clusters, bright stars, plus body's two
+   pseudo-elements (::before is the purple radial wash, ::after a 1px star
+   layer). What is left is body's own #020004.
    !important because several star layers set their own display/animation. */
 html.no-starfield .nebula,
 html.no-starfield .stars-medium,
 html.no-starfield .stars-large,
 html.no-starfield .bright-star,
 html.no-starfield .star-cluster,
+html.no-starfield body::before,
 html.no-starfield body::after {
     display: none !important;
 }
