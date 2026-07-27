@@ -535,10 +535,23 @@ footer a:hover {
     line-height: 1.5;
 }
 
+/* Typewriter caret.
+
+   This used to be `position: absolute` with no offsets, which leaves the browser
+   to resolve its STATIC POSITION — the spot it "would have" occupied in flow.
+   Engines disagree about that in a right-to-left context, and WebKit gets it
+   wrong: in Arabic on iOS Safari the cursor drifted to the wrong side, and the
+   out-of-flow box could paint past the content edge, nudging the layout sideways
+   a line at a time before snapping back.
+
+   Letting it flow inline removes the guesswork entirely: the inline formatter
+   puts it after the last character in LTR and to the left of it in RTL, by
+   construction. It costs one character of width on the final line, which the
+   typewriter's height measurement already accounts for since the ::after exists
+   during that measurement either way. */
 .home-content::after {
     content: '_';
-    position: absolute;
-    display: inline-block;
+    display: inline;
     animation: blink-caret 0.75s step-end infinite;
 }
 
@@ -2087,6 +2100,15 @@ html[lang="ar"] .skills-heading {
 [dir="rtl"] .lang-toggle {
     right: auto;
     left: 16px;
+}
+
+/* Nothing on a sub-page is meant to scroll sideways. Pinning that down stops a
+   stray out-of-flow box from ever shifting the layout horizontally — the second
+   half of the Arabic typewriter glitch on iOS Safari, where the box slid left as
+   each new line landed and then snapped back. Harmless in every other case,
+   since no sub-page has intentional horizontal overflow. */
+body.transparent-bg {
+    overflow-x: hidden;
 }
 
 /* Current page in the nav. Matters most for a shared ?page= link, where the
