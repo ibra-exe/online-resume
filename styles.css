@@ -8,7 +8,17 @@
     --footer-height: 55px;
 }
 
-* {
+/* `*` does NOT match ::before/::after, and box-sizing is not inherited, so
+   pseudo-elements were silently falling back to content-box. That is what kept the
+   timeline circles off-centre: .left::after sets width:24px AND border:3px, so it
+   painted 30px wide and its visual centre sat 3px right of where `left` implied.
+   Including the pseudo-elements here makes width mean the painted width, so the
+   circle maths finally matches what you see.
+   Verified safe: the only other pseudo-elements that touch border/padding are
+   body::before / body::after, and both set `border: none; padding: 0`. */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -1234,10 +1244,10 @@ footer a:hover {
     z-index: 2;
 }
 
-/* Center the dots on the left rail */
-/* The rail is centred on x=31 (4px wide at left:31 with margin-left:-2px), so a
-   24px node must start at 31 - 12 = 19px to share that centre. At 17px it sat
-   2px to the left of the line. */
+/* Centre the dots on the rail. The rail is centred on x=31 (4px wide at left:31
+   with margin-left:-2px), so a 24px node starts at 31 - 12 = 19px. This only
+   actually lands on centre now that pseudo-elements are border-box (see the reset
+   at the top): before that the 3px border pushed the painted circle 3px right. */
 .left::after,
 .right::after {
     left: 19px;
@@ -1356,7 +1366,7 @@ footer a:hover {
     }
 
     .right::after, .left::after {
-        left: 19px;  /* centred on the rail at x=31 */
+        left: 19px;  /* border-box: 19 + 24/2 = 31 = rail centre */
     }
 
     .company {
@@ -2056,7 +2066,7 @@ html[lang="ar"] .skills-heading {
 [dir="rtl"] .left::after,
 [dir="rtl"] .right::after {
     left: auto;
-    right: 19px;  /* mirrors the LTR 19px so the node stays centred on the rail */
+    right: 19px;  /* mirrors the LTR value; border-box makes it land on centre */
 }
 
 @media screen and (max-width: 900px) {
@@ -2100,6 +2110,27 @@ html[lang="ar"] .skills-heading {
 [dir="rtl"] .lang-toggle {
     right: auto;
     left: 16px;
+}
+
+/* Location line under the dates. Deliberately quieter than .period (which is
+   italic at 0.8 opacity) so the card reads company -> role -> dates -> place
+   without the place competing. No pin icon: experience.html loads no Font Awesome
+   at all, and pulling the whole icon font in for one glyph is not worth it. */
+.location {
+    font-size: 0.85rem;
+    opacity: 0.65;
+    margin-bottom: 10px;
+}
+
+/* .period already carries the gap when a location follows it */
+.period:has(+ .location) {
+    margin-bottom: 2px;
+}
+
+@media screen and (max-width: 600px) {
+    .location {
+        font-size: 0.8rem;
+    }
 }
 
 /* ---- Company logos on the Experience timeline ----
