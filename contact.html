@@ -63,7 +63,12 @@
                 <div class="contact-description" data-ar="للتواصل المهني">Connect professionally</div>
             </a>
             
-            <a href="mailto:contact@ibra.technology" class="contact-card" id="email">
+            <!-- target="_top" is load-bearing: this page runs inside the shell's iframe, and
+                 iOS Safari refuses to hand a mailto: off to the mail app when the navigation
+                 comes from a subframe, so the tap silently did nothing. Escaping to the
+                 top-level context makes it a normal external-scheme navigation. The LinkedIn
+                 and GitHub cards never hit this because they already use target="_blank". -->
+            <a href="mailto:contact@ibra.technology" class="contact-card" id="email" target="_top">
                 <div class="contact-icon"><i class="far fa-envelope"></i></div>
                 <div class="contact-label">Email</div>
                 <div class="contact-description">contact@ibra.technology</div>

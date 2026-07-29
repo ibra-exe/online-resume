@@ -2102,6 +2102,14 @@ html[lang="ar"] .skills-heading {
     left: 16px;
 }
 
+/* Status shown beside a project title ("HR Super App - In Progress"). The status
+   reads lighter than the name so the title still dominates. Was an inline
+   style="font-weight:400" on each <em>; now that two cards use the pattern it
+   belongs here, where a media query can reach it. */
+.project-title em {
+    font-weight: 400;
+}
+
 /* Nothing on a sub-page is meant to scroll sideways. Pinning that down stops a
    stray out-of-flow box from ever shifting the layout horizontally — the second
    half of the Arabic typewriter glitch on iOS Safari, where the box slid left as
