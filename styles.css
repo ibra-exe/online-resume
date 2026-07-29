@@ -2102,6 +2102,49 @@ html[lang="ar"] .skills-heading {
     left: 16px;
 }
 
+/* ---- Company logos on the Experience timeline ----
+   Each logo ships on its own white chip (baked into the image) because every one
+   of these marks is drawn for a white background: on #020004 the Cuore and
+   Crystal lockups would read as white boxes and the Misk/Tokyo type would all but
+   vanish. Chipping them keeps the brand colours untouched — recolouring someone
+   else's logo breaks their guidelines — and gives five very different marks a
+   consistent frame.
+
+   Chips are a fixed HEIGHT with automatic width, so the near-square marks (NEOM,
+   Misk, Crystal) and the wide wordmarks (Cuore, Tokyo) both stay legible instead
+   of being squashed into a common box.
+
+   Flex order handles RTL for free: in Arabic the row reverses and the chip moves
+   to the right of the name, no override needed. */
+.company-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+/* the h3 carried the spacing before it was wrapped */
+.company-row .company {
+    margin-bottom: 0;
+}
+
+.company-logo {
+    height: 40px;
+    width: auto;
+    flex-shrink: 0;      /* never let a long company name crush the logo */
+    display: block;
+    border-radius: 6px;
+}
+
+@media screen and (max-width: 600px) {
+    .company-logo {
+        height: 32px;
+    }
+    .company-row {
+        gap: 8px;
+    }
+}
+
 /* Status shown beside a project title ("HR Super App - In Progress"). The status
    reads lighter than the name so the title still dominates. Was an inline
    style="font-weight:400" on each <em>; now that two cards use the pattern it
