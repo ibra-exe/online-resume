@@ -2355,3 +2355,123 @@ header h1 {
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: none;
 }
+
+/* ---- Tech / circuit background (comparison variant, ?tech=on) ----
+   A second backdrop style to hold against the starfield: a 60px trace grid with
+   an even lattice of pixels slowly fading in and out on it (tech-bg.js).
+   Independent of the starfield toggle on purpose — the point is to be able to see
+   stars only, circuit only, both, or a flat black background, without editing
+   anything.
+
+   Lives in the shell only. Sub-pages are transparent inside the iframe and have
+   no backdrop markup of their own, so there is nothing to duplicate there.
+
+   Both layers sit in the same negative-z band as the star layers, which works
+   because `html` deliberately has no background of its own — body's background
+   propagates to the canvas and these paint above it. Grid at -3, cells at -2, so
+   the cells read as sitting on the board and the stars (-1) stay on top of both. */
+.tech-grid,
+.tech-cells {
+    position: fixed;
+    inset: 0;
+    width: 100%;         /* not 100vw: that would include a scrollbar's width */
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    border: none;
+    outline: none;
+}
+
+.tech-grid {
+    z-index: -3;
+    background-image:
+        linear-gradient(rgba(183, 102, 255, 0.07) 1px, rgba(0, 0, 0, 0) 1px),
+        linear-gradient(90deg, rgba(183, 102, 255, 0.07) 1px, rgba(0, 0, 0, 0) 1px);
+    background-size: 60px 60px, 60px 60px;
+    /* Fade the grid out towards the edges. Without this it reads as graph paper
+       ruled to the corners; masked, it reads as a board lit from the middle. */
+    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 40%, rgba(0, 0, 0, 0) 100%);
+    mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 40%, rgba(0, 0, 0, 0) 100%);
+}
+
+.tech-cells {
+    z-index: -2;
+}
+
+html.tech-bg .tech-grid { opacity: 1; }
+/* Full opacity here: the subtlety is set per cell in tech-bg.js, which peaks at
+   0.34 and spends most of each cycle far below that. Dimming the whole layer on
+   top of that put the brightest pixel at 0.17 alpha, which was invisible. */
+html.tech-bg .tech-cells { opacity: 1; }
+
+/* A few points of blue in the base black. Imperceptible on its own, but it is
+   what makes ruled lines read as a circuit board rather than as a spreadsheet. */
+body {
+    transition: background-color 0.45s ease;
+}
+
+html.tech-bg body {
+    background-color: #02040c;
+}
+
+/* ---- Tech background toggle ---- */
+/* Third in the row, to the left of the starfield and language buttons. */
+.tech-toggle {
+    position: fixed;
+    top: 14px;
+    right: 116px;
+    z-index: 300;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: rgba(80, 37, 128, 0.55);
+    border: 1px solid rgba(183, 102, 255, 0.5);
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.tech-toggle:hover {
+    background-color: rgba(111, 51, 153, 0.75);
+    box-shadow: 0 0 12px rgba(183, 102, 255, 0.4);
+}
+
+/* Dim the glyph while the variant is off, matching the starfield button */
+.tech-toggle[aria-pressed="false"] {
+    opacity: 0.55;
+}
+
+[dir="rtl"] .tech-toggle {
+    right: auto;
+    left: 116px;
+}
+
+/* Three controls beside a centred wordmark is tight on a phone: at 375px the
+   third button's edge overlapped the "I" of Ibra by 4px (measured, not guessed).
+   Shrink the row and close the gaps so it clears the wordmark down to 360px,
+   while keeping the buttons big enough to hit. Placed at the end of the file
+   deliberately — the base .lang-toggle/.starfield-toggle rules come later in the
+   source than the early media blocks, so a mobile override has to sit after them
+   to win. */
+@media screen and (max-width: 600px) {
+    .tech-toggle,
+    .starfield-toggle,
+    .lang-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+    }
+
+    .lang-toggle { right: 10px; }
+    .starfield-toggle { right: 54px; }
+    .tech-toggle { right: 98px; }
+
+    [dir="rtl"] .lang-toggle { right: auto; left: 10px; }
+    [dir="rtl"] .starfield-toggle { right: auto; left: 54px; }
+    [dir="rtl"] .tech-toggle { right: auto; left: 98px; }
+}

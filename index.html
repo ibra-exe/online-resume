@@ -50,11 +50,18 @@
             var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
             if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
             if(stars==="off")d.classList.add("no-starfield");
+            // ?tech=on|off — the circuit background variant. Off unless asked for,
+            // so a plain visit still gets the starfield.
+            var tp=q.get("tech");
+            var tech=tp!==null?(tp==="on"?"on":"off"):(((S&&S.getItem("tech"))==="on")?"on":"off");
+            if(tp!==null&&S){try{S.setItem("tech",tech)}catch(e){}}
+            if(tech==="on")d.classList.add("tech-bg");
         })();
         </script>
         <link rel="stylesheet" href="styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
         <script src="i18n.js" defer></script>
+        <script src="tech-bg.js" defer></script>
         <link
             href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap"
             rel="preload"
@@ -126,6 +133,12 @@
         <div class="bright-star bright-star-5"></div>
         <div class="bright-star bright-star-6"></div>
 
+        <!-- Circuit background variant: a 60px trace grid plus Game-of-Life cells,
+             driven by tech-bg.js. Independent of the starfield above it. -->
+        <div class="tech-grid"></div>
+        <canvas id="tech-cells" class="tech-cells" aria-hidden="true"></canvas>
+
+        <button id="tech-toggle" class="tech-toggle" aria-pressed="false" aria-label="Turn on the circuit background">▦</button>
         <button id="starfield-toggle" class="starfield-toggle" aria-pressed="true" aria-label="Turn off the starfield">✦</button>
         <button id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
 
