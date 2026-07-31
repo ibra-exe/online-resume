@@ -70,6 +70,11 @@
             </g>
         </svg>
     </button>
+    <!-- The 404 is a real landing page — a stale or mistyped link can drop an Arabic
+         reader straight here — so it needs the language control too, not just the
+         backdrop one. i18n.js wires whichever of the two buttons it finds, and
+         toggleLang skips the iframe reload when there is no #contentFrame. -->
+    <button id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
 
     <header><h1>Ibra</h1></header>
 

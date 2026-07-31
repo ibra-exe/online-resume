@@ -16,14 +16,19 @@
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ibra.technology/" />
         <meta property="og:site_name" content="Ibra" />
-        <meta property="og:image" content="https://ibra.technology/files/og-image.jpg" />
-        <meta property="og:image:secure_url" content="https://ibra.technology/files/og-image.jpg" />
+        <!-- Pointed at a new filename rather than overwriting og-image.jpg, for two
+             reasons: the starfield version is kept as-is so it can be switched back
+             to, and social platforms cache preview images by URL — a new path forces
+             LinkedIn and X to re-scrape instead of serving the old stars for weeks.
+             Regenerate with tools/make-og-image.py. -->
+        <meta property="og:image" content="https://ibra.technology/files/og-image-circuit.jpg" />
+        <meta property="og:image:secure_url" content="https://ibra.technology/files/og-image-circuit.jpg" />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Ibrahim Shaheen — Digital Transformation, AI & HRIS" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://ibra.technology/files/og-image.jpg" />
+        <meta name="twitter:image" content="https://ibra.technology/files/og-image-circuit.jpg" />
         <title>Ibrahim Shaheen — Digital Transformation, AI &amp; HRIS</title>
         <link rel="icon" href="favicon.ico" sizes="any" />
         <link rel="icon" type="image/svg+xml" href="favicon.svg" />

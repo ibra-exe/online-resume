@@ -1,5 +1,5 @@
 /**
- * Slow pixel field for the "circuit" background variant (?tech=on).
+ * Slow pixel field for the circuit backdrop.
  *
  * An even lattice of cells — one every 30px, so two to each 60px grid square —
  * each fading up and back down on its own long cycle. Position is a fixed
@@ -30,6 +30,9 @@
 
     var ctx = canvas.getContext("2d");
 
+    /* Keep STEP a divisor of the 60px grid in styles.css, or the cells stop lining
+       up with it. The og-image uses one larger cell per square instead, because it
+       is viewed small in a link preview where this density turns to mush. */
     var STEP = 30;              // css px between cells; two to a 60px grid square
     var SIZE = 9;               // css px of the cell itself, so cells never touch
     var INSET = 10;             // where the cell sits inside its step
@@ -159,11 +162,26 @@
     }
 
     var resizeTimer = null;
-    window.addEventListener("resize", function () {
+    function rebuildSoon() {
         if (!backdropOn()) return;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () { stop(); build(); start(); }, 200);
-    });
+    }
+
+    /* Watch the canvas itself, not just the window. The canvas box can change while
+       the window does not — a scrollbar appearing, a devtools split, an embedding
+       pane resizing its viewport — and when that happens the bitmap keeps its old
+       dimensions while CSS stretches it to the new box, so the cells render larger,
+       softer and at the wrong spacing. It looks like someone changed the design.
+       Observing the element catches every case; window.resize stays as a fallback
+       and also covers moving between displays of different DPR, which changes what
+       the bitmap should be without changing the CSS box at all.
+       No feedback loop: build() only touches canvas.width/height (the bitmap), and
+       the CSS box is width/height 100%, so it cannot be affected by that. */
+    if (window.ResizeObserver) {
+        new window.ResizeObserver(rebuildSoon).observe(canvas);
+    }
+    window.addEventListener("resize", rebuildSoon);
 
     /* Called by the backdrop toggle in i18n.js, which owns the preference itself. */
     window.circuitBgSync = function () {

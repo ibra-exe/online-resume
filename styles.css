@@ -2424,3 +2424,14 @@ header h1 {
    whole layer on top of that put the brightest pixel at 0.17, which was invisible.
    Both layers rest at the default opacity: 1 and are only animated down to 0 by
    .no-backdrop, matching how the nebula and wash behave. */
+
+/* The 404's CTA sits in .notfound-container, which is a plain block with
+   text-align: center — not the flex column with align-items: center that wraps the
+   identical markup on the home page. So the shared `max-width: 280px` that
+   .cta-buttons picks up below 600px left it hugging the container's left padding:
+   measured 20px of gap on one side and 75px on the other. Auto inline margins
+   centre the block itself. Scoped to the 404 so the home page cannot be affected,
+   and a no-op above 600px where .cta-buttons has no width limit to centre within. */
+.notfound-container .cta-buttons {
+    margin-inline: auto;
+}
