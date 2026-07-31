@@ -32,23 +32,30 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="i18n.js" defer></script>
+    <script src="tech-bg.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
     <title>Page not found — Ibrahim Shaheen</title>
 </head>
 <body>
-    <!-- CSS-based galaxy background elements -->
+    <!-- Same backdrop as the shell: purple wash, trace grid, slow pixel lattice.
+         The star layers are retired (see styles.css); markup kept commented so the
+         trial reverts in one step. -->
     <div class="nebula nebula-1"></div>
     <div class="nebula nebula-2"></div>
     <div class="nebula nebula-3"></div>
+    <div class="tech-grid"></div>
+    <canvas id="tech-cells" class="tech-cells" aria-hidden="true"></canvas>
+    <!--
     <div class="stars-medium"></div>
     <div class="stars-large"></div>
     <div class="bright-star bright-star-1"></div>
     <div class="bright-star bright-star-3"></div>
     <div class="bright-star bright-star-5"></div>
+    -->
 
-    <button id="starfield-toggle" class="starfield-toggle" aria-pressed="true" aria-label="Turn off the starfield">✦</button>
+    <button id="starfield-toggle" class="starfield-toggle" aria-pressed="true" aria-label="Turn off the background">▦</button>
 
     <header><h1>Ibra</h1></header>
 

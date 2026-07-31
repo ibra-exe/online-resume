@@ -18,10 +18,11 @@
  * few seconds, at a low peak alpha. About a third are lit at any moment and most
  * of those are barely visible, which is what keeps it in the background.
  *
- * Only runs while html.tech-bg is set — the loop is cancelled outright when the
- * variant is off, so the default site pays nothing for this beyond the file
- * itself. requestAnimationFrame rather than setInterval, so the browser also
- * parks it in a hidden tab instead of burning battery behind another window.
+ * Paused whenever the backdrop is switched off (html.no-starfield) — the loop is
+ * cancelled outright rather than drawing into a hidden layer, so a visitor who
+ * prefers the flat black background pays nothing for this. requestAnimationFrame
+ * rather than setInterval, so the browser also parks it in a hidden tab instead of
+ * burning battery behind another window.
  */
 (function () {
     var canvas = document.getElementById("tech-cells");
@@ -149,17 +150,20 @@
         }
     }
 
+    function backdropOn() {
+        return !document.documentElement.classList.contains("no-starfield");
+    }
+
     var resizeTimer = null;
     window.addEventListener("resize", function () {
-        if (!document.documentElement.classList.contains("tech-bg")) return;
+        if (!backdropOn()) return;
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () { stop(); build(); start(); }, 200);
     });
 
-    /* Called by the toggle in i18n.js, which owns the preference itself the same
-       way it owns the starfield's. */
+    /* Called by the backdrop toggle in i18n.js, which owns the preference itself. */
     window.techBgSync = function () {
-        if (document.documentElement.classList.contains("tech-bg")) start();
+        if (backdropOn()) start();
         else stop();
     };
 

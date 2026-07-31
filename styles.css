@@ -2237,41 +2237,53 @@ body.transparent-bg {
     left: 66px;
 }
 
-/* Starfield toggle: fades the whole scene instead of snapping it off, ending on a
+/* Backdrop toggle: fades the whole scene instead of snapping it off, ending on a
    genuinely flat black background (body's own #020004). Everything decorative
-   goes — nebula clouds, both star layers, clusters, bright stars, plus body's two
-   pseudo-elements (::before is the purple radial wash, ::after a 1px star layer).
+   goes — the purple radial wash (body::before), the nebula clouds, and the trace
+   grid and pixel lattice that replaced the stars.
 
-   Each layer declares its own resting opacity (nebula 0.15, star fields 0.35 and
-   0.3, clusters 0.2, body::after 0.7), so we only ever animate TO 0 and let the
-   transition carry each one back to whatever it declared — no need to restate
-   those values, and no risk of flattening them all to 1 on the way back.
+   Each layer declares its own resting opacity (nebula 0.15, grid and cells 1), so
+   we only ever animate TO 0 and let the transition carry each one back to whatever
+   it declared — no need to restate those values, and no risk of flattening them
+   all to 1 on the way back.
 
    Opacity rather than `display: none` because display cannot be transitioned.
-   Nothing fights the transition: no star layer is animated (the only animation in
-   this file is the typewriter caret). A fresh load with the starfield already off
-   does not flash either, because the pre-paint script adds the class before first
-   paint and transitions never run on an element's initial style.
+   Nothing fights the transition: no backdrop layer is animated in CSS (the only
+   animation in this file is the typewriter caret; the pixels are drawn on canvas).
+   A fresh load with the backdrop already off does not flash either, because the
+   pre-paint script adds the class before first paint and transitions never run on
+   an element's initial style.
 
    Reduced-motion users get an instant toggle for free — the block above clamps
    every transition to 0.01ms. */
 .nebula,
-.stars-medium,
-.stars-large,
-.bright-star,
-.star-cluster,
-body::before,
-body::after {
+.tech-grid,
+.tech-cells,
+body::before {
     transition: opacity 0.45s ease;
 }
 
 html.no-starfield .nebula,
-html.no-starfield .stars-medium,
-html.no-starfield .stars-large,
-html.no-starfield .bright-star,
-html.no-starfield .star-cluster,
-html.no-starfield body::before,
-html.no-starfield body::after {
+html.no-starfield .tech-grid,
+html.no-starfield .tech-cells,
+html.no-starfield body::before {
+    opacity: 0;
+}
+
+/* ---- Retired starfield ----
+   The star *dots* were the only thing that read as "outer space"; the purple wash
+   they sat on is just depth and brand colour, so the wash stays and the dots go.
+   Hidden here rather than deleted, because the markup in index.html and 404.html
+   is commented out on the same trial — one rule to revert. If the new backdrop is
+   kept, this rule and every star-layer block above it (the .stars-medium,
+   .stars-large, .bright-star and .star-cluster gradients, roughly 200 lines) can
+   be deleted outright.
+   body::after is the 1px star layer, not to be confused with body::before. */
+body::after,
+.stars-medium,
+.stars-large,
+.bright-star,
+.star-cluster {
     opacity: 0;
 }
 
@@ -2356,20 +2368,19 @@ header h1 {
     box-shadow: none;
 }
 
-/* ---- Tech / circuit background (comparison variant, ?tech=on) ----
-   A second backdrop style to hold against the starfield: a 60px trace grid with
-   an even lattice of pixels slowly fading in and out on it (tech-bg.js).
-   Independent of the starfield toggle on purpose — the point is to be able to see
-   stars only, circuit only, both, or a flat black background, without editing
-   anything.
+/* ---- Trace grid + pixel lattice ----
+   The backdrop that replaced the starfield: a 60px grid with an even lattice of
+   pixels slowly fading in and out on it (tech-bg.js), over the purple wash that
+   the stars used to sit on. Governed by the same .no-starfield class as everything
+   else decorative, so the one header control still means "backdrop on/off".
 
-   Lives in the shell only. Sub-pages are transparent inside the iframe and have
-   no backdrop markup of their own, so there is nothing to duplicate there.
+   Lives in the shell (and 404). Sub-pages are transparent inside the iframe and
+   have no backdrop markup of their own, so there is nothing to duplicate there.
 
-   Both layers sit in the same negative-z band as the star layers, which works
-   because `html` deliberately has no background of its own — body's background
-   propagates to the canvas and these paint above it. Grid at -3, cells at -2, so
-   the cells read as sitting on the board and the stars (-1) stay on top of both. */
+   Both layers sit in the negative-z band, which works because `html` deliberately
+   has no background of its own — body's background propagates to the canvas and
+   these paint above it. Grid at -3 with the purple wash, cells at -2, so the
+   pixels read as sitting on the board. */
 .tech-grid,
 .tech-cells {
     position: fixed;
@@ -2377,7 +2388,6 @@ header h1 {
     width: 100%;         /* not 100vw: that would include a scrollbar's width */
     height: 100%;
     pointer-events: none;
-    opacity: 0;
     transition: opacity 0.45s ease;
     border: none;
     outline: none;
@@ -2399,79 +2409,8 @@ header h1 {
     z-index: -2;
 }
 
-html.tech-bg .tech-grid { opacity: 1; }
-/* Full opacity here: the subtlety is set per cell in tech-bg.js, which peaks at
-   0.34 and spends most of each cycle far below that. Dimming the whole layer on
-   top of that put the brightest pixel at 0.17 alpha, which was invisible. */
-html.tech-bg .tech-cells { opacity: 1; }
-
-/* A few points of blue in the base black. Imperceptible on its own, but it is
-   what makes ruled lines read as a circuit board rather than as a spreadsheet. */
-body {
-    transition: background-color 0.45s ease;
-}
-
-html.tech-bg body {
-    background-color: #02040c;
-}
-
-/* ---- Tech background toggle ---- */
-/* Third in the row, to the left of the starfield and language buttons. */
-.tech-toggle {
-    position: fixed;
-    top: 14px;
-    right: 116px;
-    z-index: 300;
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background-color: rgba(80, 37, 128, 0.55);
-    border: 1px solid rgba(183, 102, 255, 0.5);
-    color: var(--text-color);
-    font-size: 1rem;
-    line-height: 1;
-    cursor: pointer;
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
-}
-
-.tech-toggle:hover {
-    background-color: rgba(111, 51, 153, 0.75);
-    box-shadow: 0 0 12px rgba(183, 102, 255, 0.4);
-}
-
-/* Dim the glyph while the variant is off, matching the starfield button */
-.tech-toggle[aria-pressed="false"] {
-    opacity: 0.55;
-}
-
-[dir="rtl"] .tech-toggle {
-    right: auto;
-    left: 116px;
-}
-
-/* Three controls beside a centred wordmark is tight on a phone: at 375px the
-   third button's edge overlapped the "I" of Ibra by 4px (measured, not guessed).
-   Shrink the row and close the gaps so it clears the wordmark down to 360px,
-   while keeping the buttons big enough to hit. Placed at the end of the file
-   deliberately — the base .lang-toggle/.starfield-toggle rules come later in the
-   source than the early media blocks, so a mobile override has to sit after them
-   to win. */
-@media screen and (max-width: 600px) {
-    .tech-toggle,
-    .starfield-toggle,
-    .lang-toggle {
-        width: 36px;
-        height: 36px;
-        border-radius: 9px;
-    }
-
-    .lang-toggle { right: 10px; }
-    .starfield-toggle { right: 54px; }
-    .tech-toggle { right: 98px; }
-
-    [dir="rtl"] .lang-toggle { right: auto; left: 10px; }
-    [dir="rtl"] .starfield-toggle { right: auto; left: 54px; }
-    [dir="rtl"] .tech-toggle { right: auto; left: 98px; }
-}
+/* No layer opacity on the cells: the subtlety is set per cell in tech-bg.js, which
+   peaks at 0.30 alpha and spends most of each cycle well below that. Dimming the
+   whole layer on top of that put the brightest pixel at 0.17, which was invisible.
+   Both layers rest at the default opacity: 1 and are only animated down to 0 by
+   .no-starfield, matching how the nebula and wash behave. */

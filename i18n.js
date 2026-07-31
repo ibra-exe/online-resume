@@ -56,15 +56,20 @@
             );
         }
 
-        // Keep the backdrop buttons' labels in the current language
+        // Keep the backdrop button's label in the current language
         applyStarfieldState(doc);
-        applyTechState(doc);
     }
 
-    /* ---- Starfield preference ---- */
+    /* ---- Backdrop preference ---- */
     /* The class itself is applied by a tiny inline script in each page's <head>
-       so there is never a flash of stars before the preference takes effect.
-       This only handles the click and the button's label/state. */
+       so there is never a flash of the backdrop before the preference takes effect.
+       This only handles the click and the button's label/state.
+
+       Still named "starfield" throughout — the class, the storage key and the
+       ?stars= param — even though the backdrop is now a trace grid rather than
+       stars. Renaming it would mean touching the duplicated pre-paint script in
+       all seven pages and would break links already shared with ?stars=off, for
+       no behaviour change. Worth doing as its own commit, not inside a redesign. */
     function starfieldOn() {
         return localStorage.getItem("starfield") !== "off";
     }
@@ -77,42 +82,9 @@
         btn.setAttribute(
             "aria-label",
             currentLang() === "ar"
-                ? (on ? "إخفاء النجوم" : "إظهار النجوم")
-                : (on ? "Turn off the starfield" : "Turn on the starfield")
+                ? (on ? "إخفاء الخلفية" : "إظهار الخلفية")
+                : (on ? "Turn off the background" : "Turn on the background")
         );
-    }
-
-    /* ---- Circuit background preference ---- */
-    /* The alternative backdrop being trialled against the starfield: a trace grid
-       with Game-of-Life cells on it. Deliberately independent of the starfield, so
-       all four combinations are reachable. Off by default — a visitor who has never
-       touched it still gets the starfield. Same split as above: the class is set
-       pre-paint in <head>, this only handles the click, the label, and starting or
-       stopping the animation loop in tech-bg.js. */
-    function techOn() {
-        return localStorage.getItem("tech") === "on";
-    }
-
-    function applyTechState(doc) {
-        var btn = doc.getElementById("tech-toggle");
-        if (!btn) return;  // only the shell has the control
-        var on = techOn();
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-        btn.setAttribute(
-            "aria-label",
-            currentLang() === "ar"
-                ? (on ? "إخفاء الخلفية التقنية" : "إظهار الخلفية التقنية")
-                : (on ? "Turn off the circuit background" : "Turn on the circuit background")
-        );
-    }
-
-    function toggleTech() {
-        localStorage.setItem("tech", techOn() ? "off" : "on");
-        document.documentElement.classList.toggle("tech-bg", techOn());
-        applyTechState(document);
-        syncPrefUrl("tech", techOn() ? "on" : null);
-        // Start or cancel the cell loop, so the variant costs nothing while off
-        if (window.techBgSync) window.techBgSync();
     }
 
     /* Keep the address bar in step with the current view, so the URL is always
@@ -135,6 +107,8 @@
         document.documentElement.classList.toggle("no-starfield", !starfieldOn());
         applyStarfieldState(document);
         syncPrefUrl("stars", starfieldOn() ? null : "off");
+        // Start or cancel the pixel loop with it, so a hidden backdrop costs nothing
+        if (window.techBgSync) window.techBgSync();
     }
 
     function toggleLang() {
@@ -161,15 +135,11 @@
 
         var starfield = doc.getElementById("starfield-toggle");
         if (starfield) starfield.addEventListener("click", toggleStarfield);
-
-        var tech = doc.getElementById("tech-toggle");
-        if (tech) tech.addEventListener("click", toggleTech);
     }
 
     window.i18nApply = applyLang;
     window.toggleLang = toggleLang;
     window.toggleStarfield = toggleStarfield;
-    window.toggleTech = toggleTech;
 
     /* Only for this document — never for the iframe's, which has no controls and
        whose applyLang runs via i18nApply (calling this there would double-bind). */

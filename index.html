@@ -50,12 +50,6 @@
             var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
             if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
             if(stars==="off")d.classList.add("no-starfield");
-            // ?tech=on|off — the circuit background variant. Off unless asked for,
-            // so a plain visit still gets the starfield.
-            var tp=q.get("tech");
-            var tech=tp!==null?(tp==="on"?"on":"off"):(((S&&S.getItem("tech"))==="on")?"on":"off");
-            if(tp!==null&&S){try{S.setItem("tech",tech)}catch(e){}}
-            if(tech==="on")d.classList.add("tech-bg");
         })();
         </script>
         <link rel="stylesheet" href="styles.css" />
@@ -110,36 +104,37 @@
     </head>
 
     <body>
-        <!-- CSS-based galaxy background elements -->
+        <!-- The purple wash and nebula clouds: depth and brand colour, kept. -->
         <div class="nebula nebula-1"></div>
         <div class="nebula nebula-2"></div>
         <div class="nebula nebula-3"></div>
 
-        <!-- Additional star layers -->
+        <!-- Trace grid plus the slow pixel lattice on it (tech-bg.js). These replace
+             the literal starfield: the star *dots* were the only thing that read as
+             "outer space", while the purple wash behind them is just depth. -->
+        <div class="tech-grid"></div>
+        <canvas id="tech-cells" class="tech-cells" aria-hidden="true"></canvas>
+
+        <!-- Retired star layers. Commented out rather than deleted so this is a
+             one-line revert while the new backdrop is on trial; the markup and the
+             now-dead CSS go for good if it is kept.
         <div class="stars-medium"></div>
         <div class="stars-large"></div>
-
-        <!-- Star clusters -->
         <div class="star-cluster star-cluster-1"></div>
         <div class="star-cluster star-cluster-2"></div>
         <div class="star-cluster star-cluster-3"></div>
         <div class="star-cluster star-cluster-4"></div>
-
-        <!-- Bright twinkling stars -->
         <div class="bright-star bright-star-1"></div>
         <div class="bright-star bright-star-2"></div>
         <div class="bright-star bright-star-3"></div>
         <div class="bright-star bright-star-4"></div>
         <div class="bright-star bright-star-5"></div>
         <div class="bright-star bright-star-6"></div>
+        -->
 
-        <!-- Circuit background variant: a 60px trace grid plus Game-of-Life cells,
-             driven by tech-bg.js. Independent of the starfield above it. -->
-        <div class="tech-grid"></div>
-        <canvas id="tech-cells" class="tech-cells" aria-hidden="true"></canvas>
-
-        <button id="tech-toggle" class="tech-toggle" aria-pressed="false" aria-label="Turn on the circuit background">▦</button>
-        <button id="starfield-toggle" class="starfield-toggle" aria-pressed="true" aria-label="Turn off the starfield">✦</button>
+        <!-- One backdrop control, not a switchboard. The glyph is the grid now that
+             the backdrop is a board rather than a starfield. -->
+        <button id="starfield-toggle" class="starfield-toggle" aria-pressed="true" aria-label="Turn off the background">▦</button>
         <button id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
 
         <header><h1>Ibra</h1></header>
