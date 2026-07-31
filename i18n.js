@@ -57,7 +57,7 @@
         }
 
         // Keep the backdrop button's label in the current language
-        applyStarfieldState(doc);
+        applyBackdropState(doc);
     }
 
     /* ---- Backdrop preference ---- */
@@ -65,19 +65,20 @@
        so there is never a flash of the backdrop before the preference takes effect.
        This only handles the click and the button's label/state.
 
-       Still named "starfield" throughout — the class, the storage key and the
-       ?stars= param — even though the backdrop is now a trace grid rather than
-       stars. Renaming it would mean touching the duplicated pre-paint script in
-       all seven pages and would break links already shared with ?stars=off, for
-       no behaviour change. Worth doing as its own commit, not inside a redesign. */
-    function starfieldOn() {
-        return localStorage.getItem("starfield") !== "off";
+       Named "backdrop" rather than after the visual, because what this governs is
+       the whole decorative layer — the purple wash and nebula clouds as well as the
+       trace grid and its pixels — so naming it "circuit" or "grid" would undersell
+       what switching it off actually does. The layers themselves are the circuit-*
+       classes in styles.css and circuit-bg.js. The pre-paint script still accepts
+       the old ?stars= param and starfield key so earlier links keep working. */
+    function backdropOn() {
+        return localStorage.getItem("backdrop") !== "off";
     }
 
-    function applyStarfieldState(doc) {
-        var btn = doc.getElementById("starfield-toggle");
+    function applyBackdropState(doc) {
+        var btn = doc.getElementById("backdrop-toggle");
         if (!btn) return;  // only the shell and 404 have the control
-        var on = starfieldOn();
+        var on = backdropOn();
         btn.setAttribute("aria-pressed", on ? "true" : "false");
         btn.setAttribute(
             "aria-label",
@@ -102,13 +103,13 @@
         } catch (e) {}
     }
 
-    function toggleStarfield() {
-        localStorage.setItem("starfield", starfieldOn() ? "off" : "on");
-        document.documentElement.classList.toggle("no-starfield", !starfieldOn());
-        applyStarfieldState(document);
-        syncPrefUrl("stars", starfieldOn() ? null : "off");
+    function toggleBackdrop() {
+        localStorage.setItem("backdrop", backdropOn() ? "off" : "on");
+        document.documentElement.classList.toggle("no-backdrop", !backdropOn());
+        applyBackdropState(document);
+        syncPrefUrl("backdrop", backdropOn() ? null : "off");
         // Start or cancel the pixel loop with it, so a hidden backdrop costs nothing
-        if (window.techBgSync) window.techBgSync();
+        if (window.circuitBgSync) window.circuitBgSync();
     }
 
     function toggleLang() {
@@ -133,13 +134,13 @@
         var lang = doc.getElementById("lang-toggle");
         if (lang) lang.addEventListener("click", toggleLang);
 
-        var starfield = doc.getElementById("starfield-toggle");
-        if (starfield) starfield.addEventListener("click", toggleStarfield);
+        var backdrop = doc.getElementById("backdrop-toggle");
+        if (backdrop) backdrop.addEventListener("click", toggleBackdrop);
     }
 
     window.i18nApply = applyLang;
     window.toggleLang = toggleLang;
-    window.toggleStarfield = toggleStarfield;
+    window.toggleBackdrop = toggleBackdrop;
 
     /* Only for this document — never for the iframe's, which has no controls and
        whose applyLang runs via i18nApply (calling this there would double-bind). */

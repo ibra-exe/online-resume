@@ -12,12 +12,12 @@
          1. language/direction, taken from ?lang= if present (so a shared Arabic link
             opens in Arabic) otherwise the stored preference. Set here rather than in
             i18n.js so an Arabic visitor never sees a frame of English LTR layout.
-         2. the starfield preference, from ?stars= or storage, so the stars never
-            flash in before being hidden.
+         2. the backdrop preference, from ?backdrop= or storage, so the backdrop
+            never flashes in before being hidden.
          3. opened directly (not inside the shell iframe)? then this page owns the
             canvas and needs the site background instead of the browser default, which
             is white in a light-mode browser. Inside the iframe we stay transparent so
-            the shell's starfield shows through. -->
+            the shell's backdrop shows through. -->
     <script>
     (function(){
         var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
@@ -29,11 +29,14 @@
         if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
         d.setAttribute("lang",lang);
         d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
-        // ?stars=off|on, same precedence.
-        var sp=q.get("stars");
-        var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
-        if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
-        if(stars==="off")d.classList.add("no-starfield");
+        // ?backdrop=off|on, same precedence. ?stars= is what this was called
+        // before the backdrop stopped being a starfield; still read so links
+        // shared earlier keep working. Safe to drop once none are in use.
+        var bp=q.get("backdrop");if(bp===null)bp=q.get("stars");
+        var bs=S&&(S.getItem("backdrop")||S.getItem("starfield"));
+        var bg=bp!==null?(bp==="off"?"off":"on"):(bs==="off"?"off":"on");
+        if(bp!==null&&S){try{S.setItem("backdrop",bg)}catch(e){}}
+        if(bg==="off")d.classList.add("no-backdrop");
         // Opened directly rather than inside the shell iframe? Then this page owns
         // the canvas and needs the site background, not the browser default.
         if(window.self===window.top)d.classList.add("standalone");

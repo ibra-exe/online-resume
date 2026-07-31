@@ -18,14 +18,14 @@
  * few seconds, at a low peak alpha. About a third are lit at any moment and most
  * of those are barely visible, which is what keeps it in the background.
  *
- * Paused whenever the backdrop is switched off (html.no-starfield) — the loop is
+ * Paused whenever the backdrop is switched off (html.no-backdrop) — the loop is
  * cancelled outright rather than drawing into a hidden layer, so a visitor who
  * prefers the flat black background pays nothing for this. requestAnimationFrame
  * rather than setInterval, so the browser also parks it in a hidden tab instead of
  * burning battery behind another window.
  */
 (function () {
-    var canvas = document.getElementById("tech-cells");
+    var canvas = document.getElementById("circuit-cells");
     if (!canvas || !canvas.getContext) return;
 
     var ctx = canvas.getContext("2d");
@@ -155,7 +155,7 @@
     }
 
     function backdropOn() {
-        return !document.documentElement.classList.contains("no-starfield");
+        return !document.documentElement.classList.contains("no-backdrop");
     }
 
     var resizeTimer = null;
@@ -166,10 +166,10 @@
     });
 
     /* Called by the backdrop toggle in i18n.js, which owns the preference itself. */
-    window.techBgSync = function () {
+    window.circuitBgSync = function () {
         if (backdropOn()) start();
         else stop();
     };
 
-    window.techBgSync();
+    window.circuitBgSync();
 })();

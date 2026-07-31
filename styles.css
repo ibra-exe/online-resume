@@ -2201,20 +2201,24 @@ body.transparent-bg {
     box-shadow: 0 0 10px rgba(183, 102, 255, 0.35);
 }
 
-/* ---- Starfield toggle ---- */
-/* Sits beside the language button and shares its look. */
-.starfield-toggle {
+/* ---- Backdrop toggle ---- */
+/* Sits beside the language button and shares its look. Flexed, unlike the language
+   button, because its content is an SVG rather than a glyph: a replaced element
+   centred by text-align alone sits a couple of pixels low on its baseline. */
+.backdrop-toggle {
     position: fixed;
     top: 14px;
     right: 66px;
     z-index: 300;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 42px;
     height: 42px;
     border-radius: 10px;
     background-color: rgba(80, 37, 128, 0.55);
     border: 1px solid rgba(183, 102, 255, 0.5);
     color: var(--text-color);
-    font-size: 1rem;
     line-height: 1;
     cursor: pointer;
     -webkit-backdrop-filter: blur(6px);
@@ -2222,17 +2226,23 @@ body.transparent-bg {
     transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
 }
 
-.starfield-toggle:hover {
+.backdrop-toggle:hover {
     background-color: rgba(111, 51, 153, 0.75);
     box-shadow: 0 0 12px rgba(183, 102, 255, 0.4);
 }
 
-/* Dim the glyph when the starfield is switched off */
-.starfield-toggle[aria-pressed="false"] {
+/* The icon draws itself in the button's own colour, so there is nothing to keep in
+   sync when the button is dimmed or hovered. */
+.backdrop-icon {
+    display: block;
+}
+
+/* Dim the icon when the backdrop is switched off */
+.backdrop-toggle[aria-pressed="false"] {
     opacity: 0.55;
 }
 
-[dir="rtl"] .starfield-toggle {
+[dir="rtl"] .backdrop-toggle {
     right: auto;
     left: 66px;
 }
@@ -2257,16 +2267,16 @@ body.transparent-bg {
    Reduced-motion users get an instant toggle for free — the block above clamps
    every transition to 0.01ms. */
 .nebula,
-.tech-grid,
-.tech-cells,
+.circuit-grid,
+.circuit-cells,
 body::before {
     transition: opacity 0.45s ease;
 }
 
-html.no-starfield .nebula,
-html.no-starfield .tech-grid,
-html.no-starfield .tech-cells,
-html.no-starfield body::before {
+html.no-backdrop .nebula,
+html.no-backdrop .circuit-grid,
+html.no-backdrop .circuit-cells,
+html.no-backdrop body::before {
     opacity: 0;
 }
 
@@ -2292,7 +2302,7 @@ body::after,
    through to the browser default — white in a light-mode browser, leaving
    near-white text on white. Give the canvas the site background, but ONLY when
    the page is standalone: a sub-page inside the shell's iframe must stay
-   transparent so the starfield shows through.
+   transparent so the shell's backdrop shows through.
 
    The class is set by a tiny inline head script on each sub-page (before first
    paint), with a <noscript> fallback for the JS-off case.
@@ -2370,8 +2380,8 @@ header h1 {
 
 /* ---- Trace grid + pixel lattice ----
    The backdrop that replaced the starfield: a 60px grid with an even lattice of
-   pixels slowly fading in and out on it (tech-bg.js), over the purple wash that
-   the stars used to sit on. Governed by the same .no-starfield class as everything
+   pixels slowly fading in and out on it (circuit-bg.js), over the purple wash that
+   the stars used to sit on. Governed by the same .no-backdrop class as everything
    else decorative, so the one header control still means "backdrop on/off".
 
    Lives in the shell (and 404). Sub-pages are transparent inside the iframe and
@@ -2381,8 +2391,8 @@ header h1 {
    has no background of its own — body's background propagates to the canvas and
    these paint above it. Grid at -3 with the purple wash, cells at -2, so the
    pixels read as sitting on the board. */
-.tech-grid,
-.tech-cells {
+.circuit-grid,
+.circuit-cells {
     position: fixed;
     inset: 0;
     width: 100%;         /* not 100vw: that would include a scrollbar's width */
@@ -2393,7 +2403,7 @@ header h1 {
     outline: none;
 }
 
-.tech-grid {
+.circuit-grid {
     z-index: -3;
     background-image:
         linear-gradient(rgba(183, 102, 255, 0.07) 1px, rgba(0, 0, 0, 0) 1px),
@@ -2405,12 +2415,12 @@ header h1 {
     mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 40%, rgba(0, 0, 0, 0) 100%);
 }
 
-.tech-cells {
+.circuit-cells {
     z-index: -2;
 }
 
-/* No layer opacity on the cells: the subtlety is set per cell in tech-bg.js, which
+/* No layer opacity on the cells: the subtlety is set per cell in circuit-bg.js, which
    peaks at 0.30 alpha and spends most of each cycle well below that. Dimming the
    whole layer on top of that put the brightest pixel at 0.17, which was invisible.
    Both layers rest at the default opacity: 1 and are only animated down to 0 by
-   .no-starfield, matching how the nebula and wash behave. */
+   .no-backdrop, matching how the nebula and wash behave. */

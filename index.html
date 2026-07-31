@@ -30,10 +30,10 @@
         <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <!-- Pre-paint setup, before the browser draws anything: language/direction and
-             the starfield preference, each taken from the URL (?lang=, ?stars=) if
+             the backdrop preference, each taken from the URL (?lang=, ?backdrop=) if
              present and otherwise from storage, then remembered. Doing it here rather
              than in i18n.js means a shared link opens already in the right language
-             and the stars never flash in before being hidden. -->
+             and the backdrop never flashes in before being hidden. -->
         <script>
         (function(){
             var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
@@ -45,17 +45,20 @@
             if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
             d.setAttribute("lang",lang);
             d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
-            // ?stars=off|on, same precedence.
-            var sp=q.get("stars");
-            var stars=sp!==null?(sp==="off"?"off":"on"):(((S&&S.getItem("starfield"))==="off")?"off":"on");
-            if(sp!==null&&S){try{S.setItem("starfield",stars)}catch(e){}}
-            if(stars==="off")d.classList.add("no-starfield");
+            // ?backdrop=off|on, same precedence. ?stars= is what this was called
+            // before the backdrop stopped being a starfield; still read so links
+            // shared earlier keep working. Safe to drop once none are in use.
+            var bp=q.get("backdrop");if(bp===null)bp=q.get("stars");
+            var bs=S&&(S.getItem("backdrop")||S.getItem("starfield"));
+            var bg=bp!==null?(bp==="off"?"off":"on"):(bs==="off"?"off":"on");
+            if(bp!==null&&S){try{S.setItem("backdrop",bg)}catch(e){}}
+            if(bg==="off")d.classList.add("no-backdrop");
         })();
         </script>
         <link rel="stylesheet" href="styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
         <script src="i18n.js" defer></script>
-        <script src="tech-bg.js" defer></script>
+        <script src="circuit-bg.js" defer></script>
         <link
             href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap"
             rel="preload"
@@ -109,11 +112,11 @@
         <div class="nebula nebula-2"></div>
         <div class="nebula nebula-3"></div>
 
-        <!-- Trace grid plus the slow pixel lattice on it (tech-bg.js). These replace
+        <!-- Trace grid plus the slow pixel lattice on it (circuit-bg.js). These replace
              the literal starfield: the star *dots* were the only thing that read as
              "outer space", while the purple wash behind them is just depth. -->
-        <div class="tech-grid"></div>
-        <canvas id="tech-cells" class="tech-cells" aria-hidden="true"></canvas>
+        <div class="circuit-grid"></div>
+        <canvas id="circuit-cells" class="circuit-cells" aria-hidden="true"></canvas>
 
         <!-- Retired star layers. Commented out rather than deleted so this is a
              one-line revert while the new backdrop is on trial; the markup and the
@@ -132,9 +135,23 @@
         <div class="bright-star bright-star-6"></div>
         -->
 
-        <!-- One backdrop control, not a switchboard. The glyph is the grid now that
-             the backdrop is a board rather than a starfield. -->
-        <button id="starfield-toggle" class="starfield-toggle" aria-pressed="true" aria-label="Turn off the background">▦</button>
+        <!-- One backdrop control, not a switchboard. The icon is the backdrop in
+             miniature — trace lines with a few lit cells on them — rather than a
+             glyph that happens to be square-ish. Inline SVG, not Font Awesome: it
+             is four paths, it inherits the button's colour through currentColor,
+             and 404.html loads no icon font at all. -->
+        <button id="backdrop-toggle" class="backdrop-toggle" aria-pressed="true" aria-label="Turn off the background">
+            <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.55" shape-rendering="crispEdges">
+                    <path d="M8.5 0v24M15.5 0v24M0 8.5h24M0 15.5h24" />
+                </g>
+                <g fill="currentColor">
+                    <rect x="2.25" y="10" width="4" height="4" />
+                    <rect x="17.75" y="2.25" width="4" height="4" />
+                    <rect x="10" y="17.75" width="4" height="4" />
+                </g>
+            </svg>
+        </button>
         <button id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
 
         <header><h1>Ibra</h1></header>
