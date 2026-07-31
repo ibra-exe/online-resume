@@ -34,14 +34,18 @@
     var SIZE = 9;               // css px of the cell itself, so cells never touch
     var INSET = 10;             // where the cell sits inside its step
     /* Timing is what makes this calm rather than busy. A cell takes
-       PERIOD * LIT / 2 to go from dark to its peak — 4 to 8 seconds here — so at
-       any instant nothing on screen is moving quickly. An earlier pass used 8-14s
-       periods over a narrower lit window, which worked out to a 1.2s fade: slower
-       than a blink, but still read as blinking. */
-    var FRAME_MS = 100;         // 10fps; a 4s fade moves ~0.008 alpha per frame
+       PERIOD * LIT / 2 to go from dark to its peak — 2.6 to 5.2 seconds here — so
+       at any instant nothing on screen is moving quickly.
+
+       Two earlier passes bracket this: 8-14s periods over a narrower lit window
+       gave a 1.2s fade, which still read as blinking; 20-40s gave a 4-8s fade,
+       which was calm but sluggish. This sits between them, nearer the slow end.
+       To retune, change only these two numbers — everything else is derived. */
+    var FRAME_MS = 70;          // ~14fps; a 2.6s fade moves ~0.013 alpha per frame,
+                                // one quantisation step, so no visible stepping
     var LEVELS = 24;            // alpha buckets (see draw) — steps are imperceptible
-    var PERIOD_MIN = 20000;     // ms for one full dark -> lit -> dark cycle
-    var PERIOD_MAX = 40000;
+    var PERIOD_MIN = 13000;     // ms for one full dark -> lit -> dark cycle
+    var PERIOD_MAX = 26000;
     var LIT = 0.4;              // fraction of its cycle a cell is lit at all
     var PEAK_MIN = 0.12;        // dimmest a cell ever gets at its brightest
     var PEAK_MAX = 0.3;         // and the brightest
