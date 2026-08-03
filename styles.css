@@ -486,16 +486,16 @@ footer a:hover {
         width: 100%;
     }
 
-    .home-highlights {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .highlight-item {
-        width: 100%;
-        gap: 12px;
-        justify-content: center;
-    }
+    /* The three highlight cards deliberately do NOT stack here. They used to, from
+       700px down, which left three ~200px cards in a column with half the width
+       empty on a 610px screen. The column layout that mobile actually wants — cards
+       full width, icon beside the text rather than above it — is defined in the
+       600px block further down, and it is the only place that needs it. Everything
+       this used to declare (flex-direction, width, gap, justify-content) is either
+       restated there or comes from the base rules, so removing it lost nothing.
+       Between 601 and 700px the cards now sit in a row at max-width 180px: three of
+       those plus two 12px gaps is 564px, inside the 570px of content width a 610px
+       viewport gives, and flex-shrink covers the last few pixels down to 601. */
 
     .cta-buttons {
         flex-direction: column;
