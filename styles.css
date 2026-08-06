@@ -2027,14 +2027,23 @@ body.transparent-bg .star-cluster {
 /* ============================================================
    Arabic (RTL) support
    - Body/headings use Cairo when lang=ar (Orbitron/Chakra Petch
-     have no Arabic glyphs). The "Ibra" logo stays Orbitron/Latin.
+     have no Arabic glyphs), the header wordmark included — it now
+     carries the name itself, which is translated, not a Latin mark.
    - [dir="rtl"] flips the directional layout rules.
    ============================================================ */
 html[lang="ar"] {
     --font-main: 'Cairo', 'Chakra Petch', 'Arial', sans-serif;
 }
 
-/* Arabic content headings get the Arabic font (the header logo keeps Orbitron) */
+/* Arabic content headings get the Arabic font.
+   The header wordmark is in here too now that it carries the name in Arabic rather
+   than the Latin "Ibra". It cannot be left on Orbitron: Orbitron has no Arabic
+   glyphs at all, so the browser silently falls back to whatever system Arabic face
+   it has — the default-sans look this is meant to avoid. Cairo is already loaded
+   for Arabic, so naming it costs no extra request.
+   No letter-spacing is introduced here on purpose: Arabic is cursive and spacing
+   the letters pulls the joins apart. The header inherits `normal`, so it is fine. */
+html[lang="ar"] header h1,
 html[lang="ar"] .about-heading,
 html[lang="ar"] .contact-heading,
 html[lang="ar"] .projects-section-title,
@@ -2434,4 +2443,31 @@ header h1 {
    and a no-op above 600px where .cta-buttons has no width limit to centre within. */
 .notfound-container .cta-buttons {
     margin-inline: auto;
+}
+
+/* The header wordmark is centred while the two controls are pinned to the right,
+   which is fine for a short mark but not for a full name: "Ibrahim Shaheen" is
+   292px at the mobile size and ran straight under the buttons on every phone —
+   measured 67px of overlap at 375px and 94px at 320px.
+
+   Centring cannot be rescued here; making the name fit between two 42px controls
+   at 320px would need roughly a 20px font, which stops reading as a logo. So on
+   small screens the header becomes the conventional mobile arrangement instead:
+   name to the left, controls to the right, with the controls' lane reserved as
+   padding (16 + 42 + 8 + 42 gets to 108, plus a 16px gap) so the name wraps to a
+   second line rather than colliding. Above 600px there is room to centre it.
+
+   Logical properties, not left/right: in Arabic the two controls mirror to the
+   other side, so a physical padding reserves the wrong lane and the name lands on
+   top of them again — which is exactly what the first attempt at this did.
+
+   End of file on purpose: the base `header` rules and the two earlier font-size
+   media blocks all come later in the source than the block this would otherwise
+   belong in, so an override has to sit after them to win. */
+@media screen and (max-width: 600px) {
+    header {
+        text-align: start;
+        padding-inline-start: 16px;
+        padding-inline-end: 124px;
+    }
 }
