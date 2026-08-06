@@ -2047,10 +2047,14 @@ html[lang="ar"] header h1,
 html[lang="ar"] .about-heading,
 html[lang="ar"] .contact-heading,
 html[lang="ar"] .projects-section-title,
-html[lang="ar"] .skills-heading {
+html[lang="ar"] .skills-heading,
+html[lang="ar"] .notfound-heading {
     font-family: 'Cairo', sans-serif;
     font-weight: 700;
 }
+
+/* .notfound-code is the only --font-special element deliberately left out: it is the
+   digits "404", which Orbitron does have, so there is nothing to fall back from. */
 
 /* Explicit left-aligned text flips to right in RTL
    (text with no explicit align auto-flips via dir) */
