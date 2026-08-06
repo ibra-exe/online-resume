@@ -77,6 +77,30 @@
                 <div class="contact-description">contact@ibra.technology</div>
             </a>
             
+            <!-- One card, not two (a tel: card plus a WhatsApp card). The grid is two
+                 columns, so three cards left an orphan centred on the second row;
+                 a fourth makes it a clean 2x2, and a fifth would orphan again.
+
+                 WhatsApp rather than tel: because it is where business actually
+                 happens in the region, a cold voice call is the least welcome way to
+                 be contacted, and tel: does nothing useful on a desktop. The number
+                 stays visible either way, so anyone who does want to dial or save it
+                 can — they just do not get a one-tap call.
+
+                 dir="ltr" on the number is load-bearing, not decoration: in Arabic
+                 the bare string renders as "2594 966 +" — segments reordered and the
+                 plus flipped to the far end — because the digits and the + are
+                 neutral characters resolved against an RTL paragraph. Same class of
+                 bug as the footer's "Made with" credit.
+
+                 target="_blank" because wa.me is a normal https link, unlike the
+                 mailto: card above, which needs _top to escape this iframe. -->
+            <a href="https://wa.me/966505502594" class="contact-card" id="whatsapp" target="_blank" rel="noopener">
+                <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                <div class="contact-label">WhatsApp</div>
+                <div class="contact-description" dir="ltr">+966 50 550 2594</div>
+            </a>
+
             <!-- X (hidden for now)
             <a href="https://x.com/ibrahimium" class="contact-card" id="x-twitter" target="_blank" rel="noopener">
                 <div class="contact-icon"><i class="fab fa-x-twitter"></i></div>
