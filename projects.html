@@ -232,6 +232,29 @@
         <h2 class="projects-section-title" data-ar="مشاريع شخصية">Personal Projects</h2>
         <p class="projects-section-subtitle" data-ar="أشياء أبنيها لاستكشاف الأفكار وللمتعة. انقر على البطاقة للتفاصيل.">Things I build to explore ideas and for fun. Tap a card for details.</p>
 
+        <!-- Live Demo but no Source Code link: the repo is private, same as Life OS
+             below, so a source link would 404 for every visitor. -->
+        <div class="project-card expandable" tabindex="0">
+            <div class="project-card-head">
+                <h3 class="project-title">Momentum</h3>
+            </div>
+            <p class="project-summary" data-ar="أداة لإدارة المشاريع والمهام، مع مساعد ذكاء اصطناعي يحوّل جملة واحدة إلى تعديلات على مهامك.">A project and task manager with an AI assistant that turns a sentence into changes to your work.</p>
+            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <div class="project-details">
+                <div class="project-details-inner">
+                    <p class="project-description" data-ar="أداة لإدارة المشاريع والمهام مبنية على Next.js و TypeScript مع Prisma. المساعد يعمل بالأدوات عبر واجهة Claude: يُنشئ المهام ويعدّلها ويحذفها ويعيد جدولتها دفعةً واحدة، ويطلب توضيحًا عند الغموض. الجملة الواحدة تُسجَّل كتراجع واحد مهما غيّرت من أشياء، مع احتساب تكلفة الرموز لكل نموذج. الصلاحيات تُفرض على الخادم لا في الواجهة: لوحة الإدارة تُعيد 404 لمن لا يملك الصلاحية بدل إخفاء الزر. والجلسات صفوف في قاعدة البيانات، فيخرج المستخدم فور إزالته لا عند انتهاء صلاحية رمز.">A project and task manager built on Next.js and TypeScript with Prisma. The assistant is tool-calling over the Claude API: it creates, edits, deletes and bulk-reschedules tasks, and asks for clarification rather than guessing. A whole sentence is recorded as a single undo no matter how many things it changed, and token cost is metered per model. Access is enforced on the server rather than in the interface — the admin area returns a 404 to anyone without the role instead of just hiding the button. Sessions are database rows, so removing someone signs them out on their next request instead of whenever a token would have expired.</p>
+                    <div class="project-tags">
+                        <span>TypeScript</span>
+                        <span>Next.js</span>
+                        <span>Prisma</span>
+                        <span>Claude API</span>
+                        <span data-ar="مساعد ذكاء اصطناعي">AI Assistant</span>
+                    </div>
+                    <a href="https://momentum-ibra.vercel.app" class="project-link" target="_blank" rel="noopener" data-ar="عرض حي">Live Demo</a>
+                </div>
+            </div>
+        </div>
+
         <div class="project-card expandable" tabindex="0">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="السيرة الذاتية الإلكترونية">Online Resume</h3>
