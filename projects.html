@@ -232,6 +232,32 @@
         <h2 class="projects-section-title" data-ar="مشاريع شخصية">Personal Projects</h2>
         <p class="projects-section-subtitle" data-ar="أشياء أبنيها لاستكشاف الأفكار وللمتعة. انقر على البطاقة للتفاصيل.">Things I build to explore ideas and for fun. Tap a card for details.</p>
 
+        <!-- Request TestFlight, not a store link: the app is on TestFlight, not the
+             App Store. target="_top" is load-bearing for exactly the reason the Contact
+             page documents — this runs inside the shell's iframe, and iOS Safari drops a
+             mailto: handed off from a subframe, so the tap would silently do nothing.
+             _blank, which every other project link uses, would not save it. -->
+        <div class="project-card expandable" tabindex="0">
+            <div class="project-card-head">
+                <h3 class="project-title">Ember - <em><span data-ar="قيد التنفيذ">In Progress</span></em> 🚧</h3>
+            </div>
+            <p class="project-summary" data-ar="مكان هادئ تضع فيه ما تودّ العودة إليه لاحقًا: روابط ومنتجات ومقاطع وملاحظات وأماكن.">A quiet place to put down things you want to come back to later — links, products, videos, notes, places.</p>
+            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <div class="project-details">
+                <div class="project-details-inner">
+                    <p class="project-description" data-ar="تطبيق iOS أصلي مكتوب بـ SwiftUI و SwiftData، بلا خادم ولا حسابات ولا اعتماديات خارجية. الحفظ يتم من ورقة المشاركة: من Safari إلى Ember ثم حفظ، فتعود إلى Safari خلال ثانية تقريبًا، لأن ملحق المشاركة يكتب ويخرج دون أن يتصل بالشبكة إطلاقًا. الإثراء يجري بعدها داخل التطبيق: يقرأ JSON-LD و Open Graph ليملأ العنوان والصورة والمصدر في مكانها. وكل عنصر محفوظ يمكن فتحه أو الاحتفاظ به أو التخلّي عنه مع تراجع خلال أربع ثوانٍ.">A native iOS app in SwiftUI and SwiftData, with no backend, no accounts and no third-party dependencies. Saving happens from the iOS share sheet: Safari → Share → Ember → Save puts you back in Safari in about a second, because the share extension writes and exits without ever touching the network. Enrichment runs afterwards inside the app, reading JSON-LD and Open Graph to fill in the title, thumbnail and source in place. Anything saved can be opened, kept, or let go with a four-second undo.</p>
+                    <div class="project-tags">
+                        <span>Swift</span>
+                        <span>SwiftUI</span>
+                        <span>SwiftData</span>
+                        <span>iOS</span>
+                        <span data-ar="ملحق المشاركة">Share Extension</span>
+                    </div>
+                    <a href="mailto:contact@ibra.technology?subject=Ember%20-%20TestFlight%20Request&amp;body=Hi%20Ibrahim%2C%0A%0AI%27d%20like%20to%20try%20Ember%20on%20TestFlight.%0A%0AApple%20ID%20email%3A%0ADevice%20%2F%20iOS%20version%3A%0A%0AThanks" class="project-link" target="_top" data-ar="طلب TestFlight">Request TestFlight</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Live Demo but no Source Code link: the repo is private, same as Life OS
              below, so a source link would 404 for every visitor. -->
         <div class="project-card expandable" tabindex="0">
