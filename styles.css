@@ -2475,3 +2475,122 @@ header h1 {
         padding-inline-end: 124px;
     }
 }
+
+/* ---- Arabic line boxes ----
+   Cairo's default line box is far taller than Chakra Petch's at the same font-size,
+   so every element left on `line-height: normal` grew when the language switched:
+   the Contact heading 50px -> 75px, each contact card 148px -> 190px, the shell
+   header 90px -> 120px, the nav 41px -> 50px, the footer 52px -> 68px. That put
+   Contact 86px past the viewport on a 1440x780 laptop in Arabic while English fit.
+
+   The proof it is line-height and not font-size: .contact-intro carries an explicit
+   25.52px and measures exactly 51px in BOTH languages. Only the `normal` ones moved.
+
+   So give Arabic explicit values rather than inheriting Cairo's metrics. They are set
+   a little looser than the Latin equivalents on purpose, because Arabic needs the
+   leading for descenders and tashkeel, and the text here carries both. */
+html[lang="ar"] {
+    line-height: 1.55;
+}
+
+html[lang="ar"] header h1 {
+    line-height: 1.2;
+}
+
+/* 1.3 was too tight to hold the glyphs: at 40px the box came out 52px while the
+   text needed 64px, so roughly 6px of Arabic descenders painted *below* the box.
+   Since these headings carry no bottom margin, that spill landed in the following
+   paragraph's space and "تواصل معي" sat on top of the intro. 1.6 makes the line box
+   contain its own glyphs, which fixes the clearance above the heading at the same
+   time, rather than hiding the overlap behind a margin. */
+html[lang="ar"] .contact-heading,
+html[lang="ar"] .about-heading,
+html[lang="ar"] .projects-section-title,
+html[lang="ar"] .skills-heading,
+html[lang="ar"] .notfound-heading {
+    line-height: 1.6;
+}
+
+html[lang="ar"] .navbar a {
+    line-height: 1.25;
+}
+
+html[lang="ar"] .contact-label,
+html[lang="ar"] .contact-description,
+html[lang="ar"] .copyright,
+html[lang="ar"] .footer-tagline,
+html[lang="ar"] .footer-credit {
+    line-height: 1.4;
+}
+
+/* Contact on a short laptop. The page is one screen by design, but at 1280x700 it
+   needed 487px of content in a 469px frame in English and 515px in Arabic, so both
+   scrolled. The vertical rhythm is generous enough to give that back without
+   touching type sizes: the intro's 30px gap, the grid's 20px tail, the 15px gap
+   between rows and 15px of card padding top and bottom.
+
+   Keyed on viewport HEIGHT, and floored at 701px wide so it cannot reach a phone in
+   landscape, which has its own single-column layout a few blocks up. Taller screens
+   keep the original spacing untouched. */
+@media screen and (min-width: 701px) and (max-height: 800px) {
+    .contact-container {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .contact-intro {
+        margin-bottom: 16px;
+    }
+
+    .contact-grid {
+        margin-top: 2px;
+        margin-bottom: 8px;
+        gap: 12px;
+    }
+
+    .contact-card {
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+}
+
+/* The contact icon holds a Font Awesome glyph, not Arabic, so it has no reason to
+   inherit Arabic leading — but it did, and at 40px that cost 10px a card (62px tall
+   against English's 52px), which is most of what still made the Arabic page taller.
+   1.3 is what Chakra Petch resolves `normal` to at this size, so the two match. */
+html[lang="ar"] .contact-icon {
+    line-height: 1.3;
+}
+
+/* A second, tighter step for the shortest laptop viewports — an 11" or an older 13"
+   with a full browser chrome lands around 660px of usable height, where the step
+   above still left Arabic 6px short. Same reasoning, smaller numbers. */
+@media screen and (min-width: 701px) and (max-height: 700px) {
+    .contact-intro {
+        margin-bottom: 10px;
+    }
+
+    .contact-grid {
+        gap: 7px;
+    }
+
+    /* Taken from the cards rather than from the Arabic heading's bottom margin:
+       that margin is what stops the heading sitting on the intro, so it is the last
+       thing that should be sacrificed to make a short screen fit. */
+    .contact-card {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+
+/* .contact-heading is the only page heading with no bottom margin — .about-heading
+   has 5px, .skills-heading 10px, .projects-section-title 4px, and those absorb the
+   glyph spill. With 0 it did not: Cairo's ink runs about 6px past the line box even
+   at 1.6, so "تواصل معي" ended up 3px INTO the intro paragraph. This restores roughly
+   the 8-9px of clearance the other Arabic headings get.
+
+   Arabic only. English has no spill here and reads correctly at the existing spacing,
+   so there is nothing to fix on that side. */
+html[lang="ar"] .contact-heading {
+    margin-bottom: 12px;
+}
