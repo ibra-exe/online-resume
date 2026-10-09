@@ -2163,13 +2163,6 @@ html[lang="ar"] .notfound-heading {
     }
 }
 
-/* Status shown beside a project title ("Momentum - In Progress"). The status
-   reads lighter than the name so the title still dominates. Was an inline
-   style="font-weight:400" on each <em>; now that several cards use the pattern it
-   belongs here, where a media query can reach it. */
-.project-title em {
-    font-weight: 400;
-}
 
 /* Nothing on a sub-page is meant to scroll sideways. Pinning that down stops a
    stray out-of-flow box from ever shifting the layout horizontally — the second
@@ -3083,7 +3076,7 @@ html[lang="ar"] .seg-unit {
 }
 
 .hero .cta-buttons {
-    justify-content: flex-start;
+    justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px;
@@ -3096,6 +3089,7 @@ html[lang="ar"] .seg-unit {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 8px 20px;
     margin: 0;
     padding: 0;
@@ -3273,12 +3267,42 @@ html[lang="ar"] .seg-unit {
     margin-bottom: 0;
 }
 
+/* Side by side, the photo takes the full height of the text card, so their tops and
+   bottoms line up. The image is lifted out of the flow (it would otherwise set the
+   row's height itself) and cropped to fill, keeping the face in frame. */
+@media screen and (min-width: 641px) {
+    .about-intro {
+        align-items: stretch;
+    }
+
+    .about-intro .profile-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-intro .profile-frame {
+        flex: 1 1 auto;
+        min-height: 250px;
+    }
+
+    .about-intro #profile-pic {
+        position: absolute;
+        inset: 5px;
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+        aspect-ratio: auto;
+        object-fit: cover;
+        object-position: 50% 22%;
+    }
+}
+
 .about-v2 .about-text {
     font-size: 1.02rem;
     line-height: 1.7;
     color: var(--text-color);
     white-space: pre-line;
     max-width: none;
+    margin: 0;              /* an older rule's bottom margin made the row taller than the card */
     padding: 26px 36px;     /* wide side padding keeps lines near 80 characters */
     border-radius: 14px;
     background: var(--surface-solid);       /* the backdrop moved behind the words */
@@ -4255,6 +4279,28 @@ html[lang="ar"] .ai-group-label {
     }
 }
 
+/* ---- 7d. "In progress" tag ----
+   The purple chip under a title, the same as an outcome chip, with a dot ahead of
+   the words so it reads as a status. Replaces the old "- In Progress 🚧" title
+   suffix on Ember, Momentum and Unmasked, and marks the strategy card. */
+/* .project-outcome is declared later in the file as inline-block; doubling the
+   class keeps this layout winning. */
+.project-outcome.project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.project-outcome.project-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-strong);
+    box-shadow: 0 0 0 3px rgba(207, 162, 255, 0.2);
+    flex-shrink: 0;
+}
+
 /* ---- 7c. The highlight card (Digital Transformation Strategy) ----
    The first card of Professional Work, always the full row on laptops, where its
    details are always open: the vision on one side, four figures on the other, and
@@ -4414,15 +4460,22 @@ html[lang="ar"] .project-feature-card .feature-vision {
         letter-spacing: -0.015em;
     }
 
-    .project-grid > .project-card.project-feature-card.expandable > .feature-vision-label {
+    .project-grid > .project-card.project-feature-card.expandable > .project-status {
         grid-column: 1;
         grid-row: 2;
+        justify-self: start;
+        margin: 10px 0 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .feature-vision-label {
+        grid-column: 1;
+        grid-row: 3;
         margin-top: 22px;
     }
 
     .project-grid > .project-card.project-feature-card.expandable > .project-summary {
         grid-column: 1;
-        grid-row: 3;
+        grid-row: 4;
         align-self: start;
         display: block;
         -webkit-line-clamp: unset;
@@ -4432,7 +4485,7 @@ html[lang="ar"] .project-feature-card .feature-vision {
 
     .project-grid > .project-card.project-feature-card.expandable .feature-figures {
         grid-column: 2;
-        grid-row: 1 / span 3;
+        grid-row: 1 / span 4;
         align-self: center;
         margin: 0;
         gap: 12px;
@@ -4651,7 +4704,7 @@ html[lang="ar"] .contact-v2 .contact-heading {
 
 .based-in .fa-arrows-left-right {
     font-size: 0.8em;
-    margin: 0 0.35em;
+    margin: 0 0.2em;
     color: var(--accent-strong);
 }
 
