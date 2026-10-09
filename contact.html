@@ -68,8 +68,8 @@
          - Copy buttons sit BESIDE the row link, never inside it: a button inside an <a>
            is invalid nesting and screen readers announce it unpredictably. -->
     <main class="contact-container contact-v2">
+        <p class="contact-kicker" data-ar="تواصل">Contact</p>
         <section class="contact-lead">
-            <p class="contact-kicker" data-ar="تواصل">Contact</p>
             <h2 class="contact-heading" data-ar="تواصل معي">Get In Touch</h2>
             <p class="contact-intro" data-ar="أنا دائمًا منفتح على الفرص الجديدة والتعاون. لا تتردّد في التواصل معي عبر أيٍّ من هذه القنوات.">I'm always open to new opportunities and collaborations. Feel free to reach out through any of these channels.</p>
 
@@ -80,11 +80,7 @@
                 </div>
                 <div>
                     <dt data-ar="التوقيت المحلي">Local time</dt>
-                    <dd><span class="local-time" dir="ltr">--:--</span> <span class="tz" dir="ltr">UTC+3</span></dd>
-                </div>
-                <div>
-                    <dt data-ar="اللغات">Languages</dt>
-                    <dd data-ar="العربية، الإنجليزية، اليابانية">Arabic, English, Japanese</dd>
+                    <dd><span class="local-time" dir="ltr">--:--</span><span class="ampm"></span> <span class="tz" dir="ltr">UTC+3</span></dd>
                 </div>
             </dl>
 
@@ -153,10 +149,24 @@
             var ar = document.documentElement.lang === 'ar';
 
             /* Local time where he is. Asia/Riyadh covers NEOM (both UTC+3, no DST).
-               24-hour digits in both languages, matching the site's Western numerals. */
+               12-hour clock with Western digits in both languages, as on the rest of
+               the site; only the AM/PM marker is translated (ص / م). */
             var clock = document.querySelector('.local-time');
-            var fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Riyadh', hour: '2-digit', minute: '2-digit', hour12: false });
-            function tick() { if (clock) clock.textContent = fmt.format(new Date()); }
+            var fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Riyadh', hour: 'numeric', minute: '2-digit', hour12: true });
+            // The digits sit in their own LTR span in the mono face. AM/PM is a sibling
+            // outside it, in the text face: the mono face has no Arabic, and outside the
+            // LTR span the bidi order puts "م" after the time in Arabic, as it is read.
+            var mark = document.querySelector('.contact-facts .ampm');
+            function tick() {
+                if (!clock) return;
+                var digits = '', period = '';
+                fmt.formatToParts(new Date()).forEach(function (p) {
+                    if (p.type === 'dayPeriod') period = p.value.toUpperCase();
+                    else if (p.type === 'hour' || p.type === 'minute' || p.value === ':') digits += p.value;
+                });
+                clock.textContent = digits;
+                if (mark) mark.textContent = ar ? (period === 'AM' ? 'ص' : 'م') : period;
+            }
             tick();
             setInterval(tick, 15000);
 

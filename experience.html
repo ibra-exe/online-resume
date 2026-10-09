@@ -51,6 +51,10 @@
 </head>
 <body class="transparent-bg">
     <div class="experience-container">
+        <div class="exp-header">
+            <h2 class="exp-heading" data-ar="الخبرة المهنية">Experience</h2>
+            <p class="exp-subtitle" data-ar="اختر دورًا لعرض تفاصيله.">Select a role to see what I worked on.</p>
+        </div>
         <div class="timeline">
             <!-- One block for NEOM rather than four cards. Four separate cards repeated the logo
              and the name four times and, worse, hid the strongest thing on the page:
@@ -236,14 +240,15 @@
     </script>
 
     <script>
-        /* Laptop view: a career strip plus a list-and-detail split, built from the
-           timeline markup above at load. Nothing is duplicated in the HTML, so the
-           content still lives in one place and tools/make-cv.py still reads it.
+        /* Laptop view (1000px and up): the roles as a list beside a detail panel, built
+           from the timeline markup above at load. Nothing is duplicated in the HTML, so
+           the content lives in one place and tools/make-cv.py still reads it.
 
-           Runs inline at the end of <body>, i.e. BEFORE the deferred i18n.js. That
-           ordering matters: every clone is taken from pristine English and carries its
-           data-ar across, so i18n then translates the clones exactly like the originals.
-           Below 1000px this view is hidden and the original timeline shows instead. */
+           Runs inline at the end of <body>, BEFORE the deferred i18n.js. Every piece of
+           text it creates carries both languages (data-ar, and the English in
+           data-en-html), so it reads correctly whether i18n has run yet or not; the
+           cloned bullet lists carry their own data-ar the same way.
+           Below 1000px this view is hidden and the stacked timeline shows instead. */
         (function () {
             var roles = [].slice.call(document.querySelectorAll('[data-start]'));
             var container = document.querySelector('.experience-container');
@@ -252,189 +257,187 @@
             var AR = document.documentElement.lang === 'ar';
 
             function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
-            // Copy a translatable text node: its text, and the attributes i18n works from.
-            function textClone(node, tag, cls) {
+            function escapeHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+            function bi(tag, cls, en, ar) {
                 var n = el(tag, cls);
-                n.textContent = node.textContent.trim();
-                ['data-ar', 'data-en-html'].forEach(function (a) {
-                    if (node.hasAttribute(a)) n.setAttribute(a, node.getAttribute(a));
-                });
+                n.textContent = AR ? ar : en;
+                n.setAttribute('data-ar', ar);
+                n.setAttribute('data-en-html', escapeHtml(en));
                 return n;
             }
-            // Plain text in the page's language, for attributes i18n does not reach.
-            function say(node) {
-                return (AR && node.getAttribute('data-ar')) || node.textContent.trim();
+            // English and Arabic of a node. Read at build time, before i18n has
+            // touched anything, so the node's own text is still the English.
+            function pair(node) {
+                if (!node) return null;
+                var en = node.textContent.replace(/\s+/g, ' ').trim();
+                return { en: en, ar: node.getAttribute('data-ar') || en };
             }
-            function toTime(v) {
-                if (v === 'present') return Date.now();
-                var p = v.split('-');
-                return Date.UTC(+p[0], +p[1] - 1, 1);
+            // "People Technology Intern" ... "People Technology Senior Specialist" ->
+            // "Intern" ... "Senior Specialist": drop the words every title shares, at
+            // the front (English) or the back (Arabic), keeping at least one word.
+            function shorten(titles) {
+                var w = titles.map(function (t) { return t.split(' '); });
+                var min = Math.min.apply(null, w.map(function (x) { return x.length; }));
+                var lead = 0, tail = 0;
+                while (lead < min - 1 && w.every(function (x) { return x[lead] === w[0][lead]; })) lead++;
+                while (tail < min - 1 - lead && w.every(function (x) {
+                    return x[x.length - 1 - tail] === w[0][w[0].length - 1 - tail];
+                })) tail++;
+                return w.map(function (x) { return x.slice(lead, x.length - tail).join(' '); });
             }
 
             var items = roles.map(function (r, i) {
-                var row = (r.closest('.company-group') || r).querySelector('.company-row');
+                var group = r.closest('.company-group');
+                var row = (group || r).querySelector('.company-row');
                 return {
                     idx: i, row: row,
-                    start: toTime(r.dataset.start), end: toTime(r.dataset.end),
+                    start: r.dataset.start,
                     current: r.dataset.end === 'present',
-                    company: row.querySelector('.company'),
                     logo: row.querySelector('img'),
-                    position: r.querySelector('.position'),
-                    period: r.querySelector('.period'),
-                    location: r.querySelector('.location'),
+                    company: pair(row.querySelector('.company')),
+                    tenure: group ? pair(group.querySelector('.company-tenure')) : null,
+                    position: pair(r.querySelector('.position')),
+                    period: pair(r.querySelector('.period')),
+                    location: pair(r.querySelector('.location')),
                     lead: r.querySelector('.description-lead'),
                     list: r.querySelector('ul.description')
                 };
             });
 
-            // Consecutive roles at one employer form a group (NEOM's four, everyone else's one).
+            // Consecutive roles at one employer form a group: NEOM's four, everyone else's one.
             var groups = [];
             items.forEach(function (it) {
                 var g = groups[groups.length - 1];
                 if (!g || g.row !== it.row) { g = { row: it.row, items: [] }; groups.push(g); }
                 g.items.push(it);
+                it.group = g;
             });
-            // Within a group, older roles are dimmer: the strip shows the climb.
             groups.forEach(function (g) {
-                var byStart = g.items.slice().sort(function (a, b) { return a.start - b.start; });
-                byStart.forEach(function (it, n) { it.tone = g.items.length > 1 ? n / (g.items.length - 1) : -1; });
+                if (g.items.length < 2) return;
+                // oldest first, for the progression shown in the panel
+                g.path = g.items.slice().sort(function (a, b) { return a.start < b.start ? -1 : 1; });
+                var en = shorten(g.path.map(function (x) { return x.position.en; }));
+                var ar = shorten(g.path.map(function (x) { return x.position.ar; }));
+                g.path.forEach(function (x, n) { x.short = { en: en[n], ar: ar[n] }; });
             });
 
             var view = el('section', 'exp-desktop');
-            view.setAttribute('aria-label', AR ? 'المسيرة المهنية' : 'Career');
-
-            /* ---- the strip ---- */
-            var minStart = Math.min.apply(null, items.map(function (i) { return i.start; }));
-            var firstYear = new Date(minStart).getUTCFullYear();
-            var t0 = Date.UTC(firstYear, 0, 1), t1 = Date.now(), span = t1 - t0;
-            function pct(t) { return (t - t0) / span * 100; }
-
-            // Lanes, so overlapping roles (Tokyo and Cuore in 2018) sit on separate rows.
-            var laneEnds = [];
-            items.slice().sort(function (a, b) { return a.start - b.start; }).forEach(function (it) {
-                var lane = -1;
-                for (var l = 0; l < laneEnds.length; l++) if (laneEnds[l] <= it.start) { lane = l; break; }
-                if (lane === -1) { lane = laneEnds.length; laneEnds.push(0); }
-                it.lane = lane; laneEnds[lane] = it.end;
-            });
-
-            // The strip repeats the list below in visual form, so it is hidden from
-            // assistive tech and kept out of the tab order; the list is the real control.
-            var strip = el('div', 'career-strip');
-            strip.setAttribute('aria-hidden', 'true');
-            var track = el('div', 'strip-track');
-            track.style.setProperty('--lanes', laneEnds.length);
-            items.forEach(function (it) {
-                var bar = el('button', 'strip-bar' + (it.tone >= 0 ? ' is-group' : ''));
-                bar.type = 'button';
-                bar.tabIndex = -1;
-                bar.dataset.idx = it.idx;
-                bar.style.insetInlineStart = pct(it.start) + '%';
-                bar.style.width = Math.max(pct(it.end) - pct(it.start), 0.9) + '%';
-                bar.style.setProperty('--lane', it.lane);
-                if (it.tone >= 0) bar.style.setProperty('--tone', it.tone);
-                bar.title = say(it.position) + ' · ' + say(it.company);
-                it.bar = bar;
-                track.appendChild(bar);
-            });
-            // One label per employer span, only where it fits.
-            groups.forEach(function (g) {
-                var s0 = Math.min.apply(null, g.items.map(function (i) { return i.start; }));
-                var s1 = Math.max.apply(null, g.items.map(function (i) { return i.end; }));
-                var w = pct(s1) - pct(s0);
-                if (w < 9) return;
-                var lab = textClone(g.items[0].company, 'span', 'strip-label');
-                lab.style.insetInlineStart = pct(s0) + '%';
-                lab.style.width = w + '%';
-                lab.style.setProperty('--lane', g.items[0].lane);
-                track.appendChild(lab);
-            });
-            var axis = el('div', 'strip-axis');
-            for (var y = firstYear; y <= new Date(t1).getUTCFullYear(); y++) {
-                if (pct(Date.UTC(y, 0, 1)) > 95) break;   // too close to "Now" to label
-                var tick = el('span', 'strip-tick');
-                tick.textContent = y;
-                tick.style.insetInlineStart = pct(Date.UTC(y, 0, 1)) + '%';
-                axis.appendChild(tick);
-            }
-            var now = el('span', 'strip-now');
-            now.textContent = AR ? 'الآن' : 'Now';
-            axis.appendChild(now);
-            var cap = el('p', 'strip-caption');
-            cap.textContent = AR ? 'المسيرة المهنية' : 'Career timeline';
-            strip.appendChild(cap);
-            strip.appendChild(track);
-            strip.appendChild(axis);
-            view.appendChild(strip);
-
-            /* ---- the list and the panel ---- */
             var split = el('div', 'exp-split');
             var list = el('div', 'exp-list');
-            list.setAttribute('aria-label', AR ? 'الأدوار' : 'Roles');
             var panel = el('div', 'exp-panel');
             panel.id = 'exp-panel';
             panel.setAttribute('aria-live', 'polite');
 
+            /* ---- the list: one block per employer, roles on a rail ---- */
             groups.forEach(function (g) {
+                var first = g.items[0];
+                var block = el('div', 'list-employer');
                 var head = el('div', 'list-company');
-                if (g.items[0].logo) head.appendChild(g.items[0].logo.cloneNode(true));
-                head.appendChild(textClone(g.items[0].company, 'span', 'list-company-name'));
-                list.appendChild(head);
+                if (first.logo) head.appendChild(first.logo.cloneNode(true));
+                var text = el('div', 'list-company-text');
+                text.appendChild(bi('span', 'list-company-name', first.company.en, first.company.ar));
+                var sub = g.items.length > 1 && first.tenure ? first.tenure : first.period;
+                text.appendChild(bi('span', 'list-company-tenure', sub.en, sub.ar));
+                head.appendChild(text);
+                block.appendChild(head);
+
+                var ol = el('ol', 'list-roles');
                 g.items.forEach(function (it) {
+                    var li = el('li');
                     var b = el('button', 'list-role');
                     b.type = 'button';
                     b.dataset.idx = it.idx;
                     b.setAttribute('aria-controls', 'exp-panel');
-                    b.appendChild(textClone(it.position, 'span', 'list-role-title'));
-                    b.appendChild(textClone(it.period, 'span', 'list-role-period'));
+                    b.appendChild(bi('span', 'list-role-title', it.position.en, it.position.ar));
+                    // a lone role's dates are already in the employer line above
+                    if (g.items.length > 1) b.appendChild(bi('span', 'list-role-period', it.period.en, it.period.ar));
                     it.tab = b;
-                    list.appendChild(b);
+                    li.appendChild(b);
+                    ol.appendChild(li);
                 });
+                block.appendChild(ol);
+                list.appendChild(block);
             });
 
-            function select(idx, focus) {
+            /* ---- the panel ---- */
+            function select(idx, focusFrom) {
                 var it = items[idx];
                 items.forEach(function (x) {
                     var on = x === it;
                     x.tab.classList.toggle('is-selected', on);
                     x.tab.setAttribute('aria-current', on ? 'true' : 'false');
-                    x.bar.classList.toggle('is-selected', on);
                 });
+
                 panel.innerHTML = '';
-                var headEl = el('div', 'panel-head');
-                if (it.logo) headEl.appendChild(it.logo.cloneNode(true));
+                var head = el('div', 'panel-head');
+                if (it.logo) head.appendChild(it.logo.cloneNode(true));
                 var ht = el('div', 'panel-head-text');
-                ht.appendChild(textClone(it.position, 'h3', 'panel-title'));
-                var meta = el('p', 'panel-meta');
+                ht.appendChild(bi('h3', 'panel-title', it.position.en, it.position.ar));
                 // "NEOM, Saudi Arabia" already names the employer; don't say NEOM twice.
-                if (say(it.location).indexOf(say(it.company)) !== 0) {
-                    meta.appendChild(textClone(it.company, 'span', 'panel-company'));
-                    meta.appendChild(document.createTextNode(' · '));
-                }
-                meta.appendChild(textClone(it.location, 'span', 'panel-location'));
-                ht.appendChild(meta);
+                var co = it.location.en.indexOf(it.company.en) === 0;
+                ht.appendChild(bi('p', 'panel-meta',
+                    (co ? '' : it.company.en + ' · ') + it.location.en,
+                    (co ? '' : it.company.ar + ' · ') + it.location.ar));
                 var per = el('p', 'panel-period');
-                per.appendChild(textClone(it.period, 'span', ''));
-                if (it.current) {
-                    var badge = el('span', 'panel-badge');
-                    badge.textContent = AR ? 'الدور الحالي' : 'Current role';
-                    per.appendChild(badge);
-                }
+                per.appendChild(bi('span', '', it.period.en, it.period.ar));
+                if (it.current) per.appendChild(bi('span', 'panel-badge', 'Current role', 'الدور الحالي'));
                 ht.appendChild(per);
-                headEl.appendChild(ht);
-                panel.appendChild(headEl);
+                head.appendChild(ht);
+                panel.appendChild(head);
+
+                // The promotion path, for an employer with more than one role.
+                var g = it.group;
+                if (g.path) {
+                    var wrap = el('div', 'panel-path');
+                    wrap.appendChild(bi('h4', 'panel-label',
+                        'Path at ' + g.items[0].company.en, 'المسار في ' + g.items[0].company.ar));
+                    var steps = el('ol', 'path-steps');
+                    var at = g.path.indexOf(it);
+                    g.path.forEach(function (s, n) {
+                        var li = el('li', 'path-step' + (n < at ? ' is-done' : n === at ? ' is-current' : ''));
+                        var b = el('button', 'path-btn');
+                        b.type = 'button';
+                        b.dataset.idx = s.idx;
+                        if (n === at) b.setAttribute('aria-current', 'step');
+                        b.appendChild(el('span', 'path-dot'));
+                        b.appendChild(bi('span', 'path-title', s.short.en, s.short.ar));
+                        var yr = el('span', 'path-year');
+                        yr.textContent = s.start.slice(0, 4);
+                        b.appendChild(yr);
+                        li.appendChild(b);
+                        steps.appendChild(li);
+                    });
+                    wrap.appendChild(steps);
+                    panel.appendChild(wrap);
+                }
+
+                // A lead introduces its list (Misk's ends with a colon), so a label
+                // goes in only when there is no lead to do that job.
                 if (it.lead) panel.appendChild(it.lead.cloneNode(true));
-                if (it.list) panel.appendChild(it.list.cloneNode(true));
-                if (focus) it.tab.focus();
+                if (it.list) {
+                    if (!it.lead) panel.appendChild(bi('h4', 'panel-label', 'Highlights', 'أبرز ما قمتُ به'));
+                    panel.appendChild(it.list.cloneNode(true));
+                }
+
+                // replay the entrance, so a change of role reads as a change
+                panel.classList.remove('is-entering');
+                void panel.offsetWidth;
+                panel.classList.add('is-entering');
+
+                if (focusFrom === 'list') it.tab.focus();
+                if (focusFrom === 'path') {
+                    var again = panel.querySelector('.path-btn[data-idx="' + idx + '"]');
+                    if (again) again.focus();
+                }
             }
 
             list.addEventListener('click', function (e) {
                 var b = e.target.closest('.list-role');
                 if (b) select(+b.dataset.idx);
             });
-            track.addEventListener('click', function (e) {
-                var b = e.target.closest('.strip-bar');
-                if (b) select(+b.dataset.idx);
+            panel.addEventListener('click', function (e) {
+                var b = e.target.closest('.path-btn');
+                if (b) select(+b.dataset.idx, 'path');
             });
             // Up and Down walk the roles, Home and End jump to the ends.
             list.addEventListener('keydown', function (e) {
@@ -445,14 +448,14 @@
                 else if (e.key === 'ArrowUp') to = (i - 1 + n) % n;
                 else if (e.key === 'Home') to = 0;
                 else if (e.key === 'End') to = n - 1;
-                if (to !== null) { e.preventDefault(); select(to, true); }
+                if (to !== null) { e.preventDefault(); select(to, 'list'); }
             });
 
             split.appendChild(list);
             split.appendChild(panel);
             view.appendChild(split);
             container.insertBefore(view, timeline);
-            select(0, false);
+            select(0);
         })();
     </script>
 </body>

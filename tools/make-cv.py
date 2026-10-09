@@ -90,6 +90,8 @@ capabilities = (skill_group("Digital Transformation &amp; Strategy")
                 else skill_group("Digital Transformation & Strategy"))
 capabilities += skill_group("HRIS") + skill_group("AI &amp; Automation" if ">AI &amp; Automation</h3>" in about else "AI & Automation")
 tools = skill_group("Tools &amp; Platforms" if ">Tools &amp; Platforms</h3>" in about else "Tools & Platforms")
+ai_tools = skill_group("AI Tools")
+assert ai_tools, "expected an AI Tools card on About"
 
 # The About intro, minus its greeting, as the summary.
 tw = read("typewriter.js")
@@ -188,7 +190,10 @@ doc = """<!doctype html>
 <h2>Skills</h2>
 <div class="grid">
   <div class="kv"><b>Capabilities:</b> %(capabilities)s</div>
-  <div class="kv"><b>Tools &amp; platforms:</b> %(tools)s</div>
+  <div>
+    <div class="kv"><b>Tools &amp; platforms:</b> %(tools)s</div>
+    <div class="kv"><b>AI tools:</b> %(ai_tools)s</div>
+  </div>
 </div>
 <div class="kv"><b>Languages:</b> %(languages)s</div>
 
@@ -202,6 +207,7 @@ doc = """<!doctype html>
     "award_title": esc(award[0]), "award_detail": esc(award[1]),
     "capabilities": esc(", ".join(capabilities)),
     "tools": esc(", ".join(tools)),
+    "ai_tools": esc(", ".join(ai_tools)),
     "languages": esc(", ".join(languages)),
     "projects": "".join('<div class="proj"><b>%s.</b> %s</div>' % (esc(t), esc(s)) for t, s in projects),
 }
@@ -217,6 +223,6 @@ subprocess.run([
 ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 print("roles: %d across %d employers" % (sum(len(e["roles"]) for e in employers), len(employers)))
-print("capabilities %d, tools %d, languages %d, projects %d"
-      % (len(capabilities), len(tools), len(languages), len(projects)))
+print("capabilities %d, tools %d, AI tools %d, languages %d, projects %d"
+      % (len(capabilities), len(tools), len(ai_tools), len(languages), len(projects)))
 print("wrote %s (%.1f KB)" % (OUT_PDF, os.path.getsize(OUT_PDF) / 1024))

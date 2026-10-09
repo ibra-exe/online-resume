@@ -751,14 +751,6 @@ footer a:hover {
         justify-content: center;
     }
 
-    .social-links a {
-        min-width: 44px;
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .contact-grid {
         grid-template-columns: 1fr;
     }
@@ -939,24 +931,6 @@ footer a:hover {
 
 .fade-in {
     opacity: 1 !important;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.social-links a {
-    color: var(--text-color);
-    font-size: 1.5rem;
-    transition: color 0.3s, transform 0.3s;
-}
-
-.social-links a:hover {
-    color: var(--glow-color);
-    transform: translateY(-3px);
 }
 
 .about-info {
@@ -2189,9 +2163,9 @@ html[lang="ar"] .notfound-heading {
     }
 }
 
-/* Status shown beside a project title ("HR Super App - In Progress"). The status
+/* Status shown beside a project title ("Momentum - In Progress"). The status
    reads lighter than the name so the title still dominates. Was an inline
-   style="font-weight:400" on each <em>; now that two cards use the pattern it
+   style="font-weight:400" on each <em>; now that several cards use the pattern it
    belongs here, where a media query can reach it. */
 .project-title em {
     font-weight: 400;
@@ -3233,7 +3207,7 @@ html[lang="ar"] .seg-unit {
 
 .about-intro {
     display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
+    grid-template-columns: 250px minmax(0, 1fr);
     gap: 32px;
     align-items: start;
     margin-bottom: 28px;
@@ -3244,8 +3218,8 @@ html[lang="ar"] .seg-unit {
 }
 
 .about-intro .profile-frame {
-    max-width: 220px;
-    margin-bottom: 12px;
+    max-width: 250px;
+    margin-bottom: 0;
 }
 
 .about-v2 .about-text {
@@ -3253,10 +3227,13 @@ html[lang="ar"] .seg-unit {
     line-height: 1.7;
     color: var(--text-color);
     white-space: pre-line;
-    max-width: 68ch;
-    padding: 0;
-    background: none;
-    border: none;
+    max-width: none;
+    padding: 26px 36px;     /* wide side padding keeps lines near 80 characters */
+    border-radius: 14px;
+    background: var(--surface-solid);       /* the backdrop moved behind the words */
+    border: 1px solid var(--surface-border);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
 }
 
 .about-bento {
@@ -3269,7 +3246,7 @@ html[lang="ar"] .seg-unit {
     position: relative;
     padding: 18px 18px 16px;
     border-radius: 14px;
-    background: var(--surface);
+    background: var(--surface-solid);     /* same material as the intro card above */
     border: 1px solid var(--surface-border);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
@@ -3311,7 +3288,7 @@ html[lang="ar"] .seg-unit {
 /* The award is the strongest single credential on the page, so it gets a warm edge. */
 .bento-award {
     border-color: rgba(255, 205, 90, 0.38);
-    background: linear-gradient(160deg, rgba(255, 205, 90, 0.10), var(--surface) 55%);
+    background: linear-gradient(160deg, rgba(255, 205, 90, 0.10), var(--surface-solid) 55%);
 }
 
 .bento-award .bento-icon {
@@ -3339,18 +3316,42 @@ html[lang="ar"] .seg-unit {
     display: none;
 }
 
-/* Tools span the full width as a row of chips. */
-.bento-tools {
-    grid-column: 1 / -1;
+/* Last row: Tools & Platforms (a list, like the skill cards) beside AI Tools, which
+   spans the other two columns. Two groups of chips inside, builders first. */
+.bento-ai {
+    grid-column: span 2;
 }
 
-.bento-tools .skills-grid {
+.ai-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ai-group-label {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .ai-group-label {
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.bento-ai .skills-grid {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.bento-tools .skill-item {
+.bento-ai .skill-item {
     width: auto;
     padding: 8px 14px;
     border-radius: 999px;
@@ -3359,6 +3360,11 @@ html[lang="ar"] .seg-unit {
 @media screen and (max-width: 1000px) {
     .about-bento {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* eight cards in two columns: every card one cell, so no row has a hole */
+    .bento-ai {
+        grid-column: auto;
     }
 }
 
@@ -3374,6 +3380,10 @@ html[lang="ar"] .seg-unit {
 
     .about-intro .profile-container {
         align-items: center;
+    }
+
+    .about-v2 .about-text {
+        padding: 16px 18px;
     }
 
     .about-bento {
@@ -3456,24 +3466,64 @@ html[lang="ar"] .seg-unit {
     display: inline;
 }
 
-/* ---- 6b. Experience on laptops: the whole career at a glance, one role in focus ----
-   A vertical stack of cards makes you scroll the entire history to compare two roles,
-   and the NEOM progression only shows if you read the dates. On laptops the page is
-   rebuilt (by a script in experience.html, from the same markup) into:
-     - a strip: every role as a bar on one time axis, so the shape of the career is
-       visible before reading a word. NEOM's four roles sit end to end and get
-       brighter as they get more senior; overlapping roles take a second lane.
-     - a list of roles beside a detail panel that stays in view while you pick.
-   Below 1000px the original timeline shows instead: a list beside a panel needs the
-   width, and stacked cards are already right for a phone. */
+/* ---- 6b. Experience: a heading, then a list of roles beside one role in focus ----
+   Laptops get the list and a detail panel (built by a script in experience.html from
+   the same markup); below 1000px the stacked timeline shows instead, since a list
+   beside a panel needs the width. An earlier version led with a time-axis strip of
+   bars; it was hard to read (three-month roles became specks, overlaps needed a
+   second lane) and has been dropped. The NEOM progression it tried to show now
+   lives in the panel as a path, which says the same thing in words.
+
+   Text-heavy panels sit on a near-opaque surface: over the dark page it is the same
+   colour as the translucent cards, but the moving backdrop no longer shows through
+   the words. */
+:root {
+    --surface-solid: rgba(25, 11, 41, 0.88);
+}
+
+.exp-header {
+    margin: 4px 0 22px;
+}
+
+.exp-heading {
+    font-family: var(--font-special);
+    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--text-color);
+    text-shadow: none;
+    margin: 0 0 6px;
+}
+
+.exp-subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
 .exp-desktop {
     display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .exp-header {
+        margin: 0 0 14px;
+    }
+
+    .exp-heading {
+        font-size: 1.6rem;
+    }
+
+    .exp-subtitle {
+        font-size: 0.88rem;
+    }
 }
 
 @media screen and (min-width: 1000px) {
     .experience-container {
         max-width: 1180px;
-        padding: 26px 32px 40px;
+        padding: 28px 32px 40px;
     }
 
     .exp-desktop {
@@ -3484,153 +3534,120 @@ html[lang="ar"] .seg-unit {
         display: none;
     }
 
-    /* the strip */
-    .career-strip {
-        padding: 18px 22px 12px;
-        border-radius: 16px;
-        background: rgba(80, 37, 128, 0.22);
-        border: 1px solid var(--surface-border);
-    }
-
-    .strip-caption {
-        margin: 0 0 14px;
-        font-family: var(--font-mono);
-        font-size: 0.74rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
-    }
-
-    .strip-track {
-        position: relative;
-        height: calc(var(--lanes, 1) * 32px - 6px);
-    }
-
-    .strip-bar,
-    .strip-label {
-        position: absolute;
-        top: calc(var(--lane, 0) * 32px);
-        height: 26px;
-    }
-
-    /* A dark 1px seam, so bars that meet end to end (NEOM's four roles) still read
-       as separate steps. */
-    .strip-bar {
-        padding: 0;
-        border: 1px solid rgba(8, 3, 16, 0.9);
-        border-radius: 7px;
-        background: rgba(183, 102, 255, 0.42);
-        cursor: pointer;
-        transition: background-color 0.2s, box-shadow 0.2s;
-    }
-
-    .strip-bar.is-group {
-        background: rgba(183, 102, 255, calc(0.26 + var(--tone, 1) * 0.6));
-    }
-
-    .strip-bar:hover {
-        background: rgba(207, 162, 255, 0.85);
-    }
-
-    .strip-bar.is-selected {
-        box-shadow: 0 0 0 2px #fff, 0 0 18px rgba(183, 102, 255, 0.55);
-        z-index: 1;
-    }
-
-    .strip-label {
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        padding-inline: 10px;
-        font-size: 0.76rem;
-        font-weight: 600;
-        color: #fff;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        pointer-events: none;   /* clicks fall through to the bar underneath */
-    }
-
-    /* Each year is a short rule with its label to the inline-end side, so nothing has
-       to be centred on a point and the axis mirrors in Arabic by itself. */
-    .strip-axis {
-        position: relative;
-        height: 24px;
-        margin-top: 10px;
-        border-top: 1px solid rgba(183, 102, 255, 0.2);
-    }
-
-    .strip-tick,
-    .strip-now {
-        position: absolute;
-        top: 0;
-        padding-inline-start: 5px;
-        padding-top: 4px;
-        font-family: var(--font-mono);
-        font-size: 0.7rem;
-        color: var(--muted);
-        border-inline-start: 1px solid rgba(183, 102, 255, 0.3);
-        line-height: 1;
-    }
-
-    .strip-now {
-        inset-inline-end: 0;
-        padding-inline-start: 0;
-        border-inline-start: 0;
-        color: var(--accent-strong);
-    }
-
-    /* the list and the panel */
     .exp-split {
         display: grid;
-        grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
-        gap: 26px;
+        grid-template-columns: minmax(300px, 370px) minmax(0, 1fr);
+        gap: 24px;
         align-items: start;
-        margin-top: 22px;
     }
 
+    /* the list */
     .exp-list {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
+        padding: 16px 14px;
+        border-radius: 16px;
+        background: var(--surface-solid);
+        border: 1px solid var(--surface-border);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    .list-employer + .list-employer {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(183, 102, 255, 0.14);
     }
 
     .list-company {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin: 12px 0 2px;
-        font-weight: 600;
-        font-size: 0.95rem;
+        gap: 12px;
+        padding: 2px 8px 8px;
     }
 
-    .list-company:first-child {
-        margin-top: 0;
-    }
-
+    /* Logos sit in a fixed slot, centred, so wide wordmarks (Tokyo, Cuore) do not
+       push their names out of line with the square marks. */
     .list-company img {
-        height: 26px;
-        width: auto;
-        border-radius: 5px;
+        width: 58px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 6px;
         flex-shrink: 0;
     }
 
+    .list-company-text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .list-company-name {
+        font-size: 0.97rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .list-company-tenure {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--muted);
+    }
+
+    .list-roles {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .list-roles li {
+        position: relative;
+    }
+
+    .list-roles li + li {
+        margin-top: 2px;
+    }
+
+    /* The rail: a node per role, joined by a line from one node to the next, the
+       same marks as the phone timeline. */
+    .list-roles li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        inset-inline-start: 22px;      /* node centre: 1px border + 16px + 6px, less 1px */
+        top: 27px;                     /* node bottom */
+        bottom: -17px;                 /* next node top: 2px gap + 1px border + 14px */
+        width: 2px;
+        background: rgba(183, 102, 255, 0.28);
+        pointer-events: none;
+    }
+
     .list-role {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 2px;
         width: 100%;
-        padding: 7px 14px;
+        padding: 8px 12px;
+        padding-inline-start: 38px;
         text-align: start;
         font-family: var(--font-main);
         color: var(--text-color);
         background: transparent;
         border: 1px solid transparent;
-        border-inline-start: 2px solid rgba(183, 102, 255, 0.22);
         border-radius: 10px;
         cursor: pointer;
         transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .list-role::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: 16px;
+        top: 14px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface-solid);
+        transition: background-color 0.2s, box-shadow 0.2s;
     }
 
     .list-role:hover {
@@ -3638,53 +3655,70 @@ html[lang="ar"] .seg-unit {
     }
 
     .list-role.is-selected {
-        background: var(--surface);
-        border-color: var(--surface-border);
-        border-inline-start-color: var(--accent);
+        background: rgba(183, 102, 255, 0.16);
+        border-color: rgba(183, 102, 255, 0.38);
+    }
+
+    .list-role.is-selected::before {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(183, 102, 255, 0.22);
     }
 
     .list-role-title {
-        font-size: 0.93rem;
+        font-size: 0.92rem;
         font-weight: 500;
         line-height: 1.35;
     }
 
     .list-role-period {
         font-family: var(--font-mono);
-        font-size: 0.76rem;
+        font-size: 0.74rem;
         color: var(--muted);
     }
 
+    /* the panel */
     .exp-panel {
         position: sticky;
         top: 18px;
         padding: 26px 30px 28px;
         border-radius: 16px;
-        background: rgba(80, 37, 128, 0.34);
+        background: var(--surface-solid);
         border: 1px solid var(--surface-border);
         -webkit-backdrop-filter: blur(6px);
         backdrop-filter: blur(6px);
     }
 
+    .exp-panel.is-entering > * {
+        animation: exp-panel-in 0.28s ease both;
+    }
+
+    @keyframes exp-panel-in {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+    }
+
     .panel-head {
         display: flex;
         align-items: flex-start;
-        gap: 16px;
-        margin-bottom: 18px;
-        padding-bottom: 18px;
+        gap: 18px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
         border-bottom: 1px solid rgba(183, 102, 255, 0.16);
     }
 
     .panel-head img {
-        height: 48px;
-        width: auto;
+        width: 96px;
+        height: 52px;
+        object-fit: contain;
         border-radius: 8px;
         flex-shrink: 0;
     }
 
     .panel-title {
         margin: 0 0 4px;
-        font-size: 1.35rem;
+        font-size: 1.4rem;
         font-weight: 600;
         line-height: 1.3;
         letter-spacing: -0.01em;
@@ -3693,7 +3727,6 @@ html[lang="ar"] .seg-unit {
     .panel-meta {
         margin: 0 0 6px;
         font-size: 0.95rem;
-        color: var(--text-color);
     }
 
     .panel-period {
@@ -3718,21 +3751,197 @@ html[lang="ar"] .seg-unit {
         border: 1px solid rgba(143, 240, 176, 0.35);
     }
 
+    .panel-label {
+        margin: 0 0 12px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-strong);
+    }
+
+    /* The path: one step per role, oldest first, joined by a line. Steps before the
+       one in view are filled, the one in view is ringed, later ones are hollow. */
+    .panel-path {
+        margin-bottom: 22px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(183, 102, 255, 0.16);
+    }
+
+    .path-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    /* Earlier steps share the width; the last one is only as wide as its label and
+       sits at the far end, so the line runs the full width of the panel. */
+    .path-step {
+        position: relative;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .path-step:last-child {
+        flex: 0 0 auto;
+    }
+
+    .path-step:last-child .path-btn {
+        padding-inline-end: 0;
+    }
+
+    .path-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 7px;
+        inset-inline-start: 20px;
+        inset-inline-end: 4px;
+        height: 2px;
+        background: rgba(183, 102, 255, 0.22);
+        pointer-events: none;
+    }
+
+    .path-step.is-done::after {
+        background: rgba(183, 102, 255, 0.6);
+    }
+
+    .path-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        width: 100%;
+        padding: 0;
+        padding-inline-end: 10px;
+        text-align: start;
+        font-family: var(--font-main);
+        color: var(--text-color);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .path-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface-solid);
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .path-step.is-done .path-dot {
+        background: rgba(183, 102, 255, 0.6);
+    }
+
+    .path-step.is-current .path-dot {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(183, 102, 255, 0.25);
+    }
+
+    .path-title {
+        font-size: 0.88rem;
+        font-weight: 500;
+        line-height: 1.3;
+        color: var(--muted);
+        transition: color 0.2s;
+    }
+
+    .path-step.is-current .path-title,
+    .path-btn:hover .path-title {
+        color: var(--text-color);
+    }
+
+    .path-year {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--muted);
+    }
+
     .exp-panel .description-lead {
         font-size: 1rem;
+        margin-bottom: 18px;
     }
 
     .exp-panel .description li {
-        margin-bottom: 9px;
+        margin-bottom: 10px;
     }
 
-    html[lang="ar"] .strip-caption,
-    html[lang="ar"] .strip-now,
+    html[lang="ar"] .list-company-tenure,
     html[lang="ar"] .list-role-period,
-    html[lang="ar"] .panel-period {
+    html[lang="ar"] .panel-period,
+    html[lang="ar"] .panel-label {
         font-family: var(--font-main);
         letter-spacing: 0;
         text-transform: none;
+    }
+
+    html[lang="ar"] .panel-label {
+        font-size: 0.82rem;
+    }
+}
+
+/* Short laptop screens (1280x720 leaves the page about 605px): tighten the panel
+   so a long role still fits in view while it is pinned. */
+@media screen and (min-width: 1000px) and (max-height: 760px) {
+    .exp-header {
+        margin-bottom: 16px;
+    }
+
+    .exp-panel {
+        top: 12px;
+        padding: 20px 26px 22px;
+    }
+
+    .panel-head {
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+    }
+
+    .panel-head img {
+        width: 80px;
+        height: 44px;
+    }
+
+    .panel-title {
+        font-size: 1.25rem;
+    }
+
+    .panel-path {
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+    }
+
+    .exp-panel .description li {
+        margin-bottom: 7px;
+    }
+}
+
+/* Below the laptop view: the stacked cards get the same near-opaque surface, so the
+   backdrop stops showing through the text, and lose the hover lift, which looks
+   wrong on a card as tall as NEOM's. The "select a role" line belongs to the list
+   view; here each card has its own View details. */
+@media screen and (max-width: 999px) {
+    .experience-container .content {
+        background: var(--surface-solid);
+        border-color: var(--surface-border);
+    }
+
+    .experience-container .content:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .exp-subtitle {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .exp-panel.is-entering > * {
+        animation: none;
     }
 }
 
@@ -3780,9 +3989,42 @@ html[lang="ar"] .seg-unit {
         cursor: pointer;
     }
 
-    /* Two columns: an odd count makes the first card a full-width lead. */
+    /* Two columns: an odd count makes the first card a full-width lead. A lead that
+       wide would be mostly empty with just a title and a summary, so it shows its
+       details in a second column instead of behind a button (see the featured rules
+       below; the script skips the dialog when the details are already visible). */
     .project-grid > .project-card:first-child:nth-last-child(odd) {
         grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 34px;
+        cursor: default;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > :not(.project-details) {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / -1;
+        padding-inline-start: 30px;
+        border-inline-start: 1px solid rgba(183, 102, 255, 0.2);
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .expand-btn {
+        display: none;
     }
 
     /* Summaries clamp to three lines so cards in a row agree on height; the full
@@ -3814,22 +4056,93 @@ html[lang="ar"] .seg-unit {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    /* Undo the two-column rule, then size the lead card for three columns:
-       3k+2 cards -> the first spans two; 3k+1 -> the first takes the whole row. */
+    /* Undo the two-column rule (span and featured layout), then size the lead card
+       for three columns: 3k+2 cards -> the first spans two; 3k+1 -> the first takes
+       the whole row. Either way it is wide, so it gets the featured layout. */
     .project-grid > .project-card:first-child:nth-last-child(odd) {
         grid-column: auto;
+        display: flex;
+        cursor: pointer;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .project-details {
+        display: none;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .expand-btn {
+        display: inline-flex;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2),
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) {
+        grid-column: 1 / -1;  /* narrowed to two columns for 3k+2 below */
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 34px;
+        cursor: default;
     }
 
     .project-grid > .project-card:first-child:nth-last-child(3n+2) {
         grid-column: span 2;
     }
 
-    .project-grid > .project-card:first-child:nth-last-child(3n+1) {
-        grid-column: 1 / -1;
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > :not(.project-details),
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > :not(.project-details) {
+        grid-column: 1;
     }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > .project-details,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / -1;
+        padding-inline-start: 30px;
+        border-inline-start: 1px solid rgba(183, 102, 255, 0.2);
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) .project-details-inner,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) .project-summary,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > .expand-btn,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > .expand-btn {
+        display: none;
+    }
+
 }
 
+/* The dialog lives inside the iframe, so its backdrop cannot reach the shell's bar
+   and footer. The page tells the shell when a dialog opens; the shell dims both
+   (opacity, not filter: a filter would make the bar a containing block for the
+   fixed phone nav inside it). */
+html.frame-modal .site-bar,
+html.frame-modal footer {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.site-bar,
+footer {
+    transition: opacity 0.2s ease;
+}
+
+/* margin:auto is how the browser centres a modal dialog; the reset at the top of
+   this file zeroes every margin, which left the dialog pinned to the top-left. */
 .project-dialog {
+    margin: auto;
     width: min(720px, calc(100vw - 48px));
     max-height: min(84vh, 780px);
     padding: 28px 28px 24px;
@@ -3884,6 +4197,7 @@ body.dialog-open {
     display: inline-block;
     align-self: flex-start;     /* in the laptop grid the card is a flex column, which
                                    would otherwise stretch the chip across the card */
+    justify-self: start;        /* and the featured lead card is a grid */
     margin: 2px 0 8px;
     padding: 3px 10px;
     border-radius: 999px;
@@ -3895,12 +4209,16 @@ body.dialog-open {
     letter-spacing: 0.03em;
 }
 
-/* ---- 8. Contact: two panels, centred in the space the shell gives it ---- */
+/* ---- 8. Contact: two panels, centred in the space the shell gives it ----
+   The kicker spans both columns, so the two columns start together at the heading.
+   They also share a height: the action buttons sit at the bottom of the left column
+   and the channel rows share out the right one, so the bottom of the buttons and the
+   bottom of the last channel land on the same line whichever side has more text. */
 .contact-container.contact-v2 {
     display: grid;
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-    gap: 44px;
-    align-items: center;
+    gap: 0 44px;
+    align-items: stretch;
     align-content: center;
     max-width: 1040px;
     min-height: 100vh;               /* the iframe's own viewport */
@@ -3915,7 +4233,17 @@ body.dialog-open {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--accent-strong);
-    margin: 0 0 10px;
+    margin: 0 0 16px;           /* the heading below is trimmed to its cap height */
+    grid-column: 1 / -1;
+}
+
+.contact-lead {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-lead .contact-actions {
+    margin-top: auto;
 }
 
 /* Letter-spacing pulls Arabic letters apart and breaks the joins between them. */
@@ -3926,10 +4254,20 @@ html[lang="ar"] .contact-kicker {
     text-transform: none;
 }
 
+/* text-box trims the line box to the cap height, so the top of the letters, not
+   the top of the line, is what lines up with the first channel row. */
 .contact-v2 .contact-heading {
     text-align: start;
     font-size: clamp(2rem, 4vw, 2.75rem);
-    margin: 0 0 12px;
+    margin: 0 0 20px;
+    text-box: trim-both cap alphabetic;
+}
+
+/* The trim measures the gap from the baseline, and Arabic letters such as ع and ي
+   dip well below it, so Arabic needs more room before the intro. (Also outranks the
+   older html[lang="ar"] .contact-heading margin, which is more specific.) */
+html[lang="ar"] .contact-v2 .contact-heading {
+    margin-bottom: 30px;
 }
 
 .contact-v2 .contact-intro {
@@ -3975,6 +4313,11 @@ html[lang="ar"] .contact-kicker {
     font-variant-numeric: tabular-nums;
 }
 
+.contact-facts .ampm {
+    font-size: 0.85em;
+    margin-inline-start: 0.3em;
+}
+
 .tz {
     color: var(--muted);
     font-size: 0.8rem;
@@ -4003,6 +4346,7 @@ html[lang="ar"] .contact-kicker {
 }
 
 .channel {
+    flex: 1 1 auto;               /* rows share the column's height evenly */
     display: flex;
     align-items: stretch;
     gap: 8px;
@@ -4110,12 +4454,16 @@ html[lang="ar"] .contact-kicker {
     border-color: rgba(143, 240, 176, 0.5);
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 900px) {
     .contact-container.contact-v2 {
         grid-template-columns: 1fr;
-        gap: 26px;
+        gap: 0;
         min-height: auto;
         padding: 22px 16px 28px;
+    }
+
+    .channels {
+        margin-top: 26px;
     }
 
     .channel-main {

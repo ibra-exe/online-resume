@@ -58,28 +58,6 @@
 
         <div class="project-card expandable">
             <div class="project-card-head">
-                <h3 class="project-title">HR Super App - <em><span data-ar="قيد التنفيذ">In Progress</span></em> 🚧</h3>
-            </div>
-            <p class="project-summary" data-ar="منصّة الموارد البشرية الموحّدة لنيوم: كل خدمات الموارد البشرية في واجهة واحدة ذكية تضع الموظّف أولًا.">NEOM's unified HR platform: every HR service in one intelligent, employee-first interface.</p>
-            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
-            <div class="project-details">
-                <div class="project-details-inner">
-                    <ul class="project-points">
-                        <li data-ar="أبني منصّة الموارد البشرية الموحّدة لنيوم، بجمع وحدات SAP SuccessFactors (Employee Central و Goals و Time Off وغيرها) وخدمات ServiceNow والتعلّم والرواتب والتأهيل معًا.">Building NEOM's unified HR platform, bringing together SAP SuccessFactors modules (Employee Central, Goals, Time Off, and more), ServiceNow services, learning, payroll, and onboarding.</li>
-                        <li data-ar="أدمج الأنظمة المتفرّقة عبر أتمتة العمليات الروبوتية (RPA) في واجهة واحدة ذكية تضع الموظّف أولًا.">Integrating fragmented systems through RPA into a single, intelligent, employee-first interface.</li>
-                    </ul>
-                    <div class="project-tags">
-                        <span>SAP SuccessFactors</span>
-                        <span>ServiceNow</span>
-                        <span>RPA</span>
-                        <span data-ar="تجربة الموظّف">Employee Experience</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-card expandable">
-            <div class="project-card-head">
                 <h3 class="project-title" data-ar="مساعدو الذكاء الاصطناعي للموارد البشرية">AI Assistants for HR</h3>
             </div>
             <p class="project-outcome" data-ar="إرشاد للموظفين على مدار الساعة">24/7 employee guidance</p>
@@ -439,6 +417,15 @@
             const closeBtn = dialog.querySelector('.dialog-close');
             let opener = null;
 
+            // The shell dims its own bar and footer while a dialog is open in here.
+            function tellShell(open) {
+                try {
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ type: 'project-dialog', open: open }, location.origin);
+                    }
+                } catch (e) {}
+            }
+
             function openDialog(card) {
                 dialogBody.innerHTML = '';
                 // Title, outcome, summary, then everything that is in the details.
@@ -455,11 +442,13 @@
                 opener = card.querySelector('.expand-btn');
                 document.body.classList.add('dialog-open');
                 dialog.showModal();
+                tellShell(true);
                 closeBtn.focus();
             }
             function closeDialog() { if (dialog.open) dialog.close(); }
             dialog.addEventListener('close', function () {
                 document.body.classList.remove('dialog-open');
+                tellShell(false);
                 if (opener) opener.focus();
             });
             closeBtn.addEventListener('click', closeDialog);
@@ -495,7 +484,12 @@
                 card.addEventListener('click', function (e) {
                     // Don't act when following a link inside the card
                     if (e.target.closest('a, .project-link-static')) return;
-                    if (wide.matches) { openDialog(card); return; }
+                    if (wide.matches) {
+                        // a featured lead card already shows its details inline
+                        if (getComputedStyle(details).display !== 'none') return;
+                        openDialog(card);
+                        return;
+                    }
                     card.classList.toggle('expanded');
                     sync();
                 });

@@ -330,7 +330,15 @@
             // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS)
             applyPage(pageFromUrl(), "replaceState");
 
+            // Projects opens its details in a dialog inside the frame; dim the bar and
+            // footer around it. Same-origin messages only.
+            window.addEventListener("message", function (e) {
+                if (e.origin !== location.origin || !e.data || e.data.type !== "project-dialog") return;
+                document.documentElement.classList.toggle("frame-modal", !!e.data.open);
+            });
+
             frame.addEventListener("load", function () {
+                document.documentElement.classList.remove("frame-modal");
                 resizeFrame();
                 try { window.i18nApply(frame.contentDocument); } catch(e) {}
                 try {
