@@ -26,13 +26,14 @@ const ABOUT_TEXT_AR = "مرحبًا! أنا إبراهيم شاهين (إبرا)
 /**
  * Typed role line: the line under the name on Home.
  *
- * Runs once per visit, not forever. The full line is on the page from the start, so
- * nothing waits on the animation. Once the page can actually be seen (loaded, fonts
- * in, tab in front) it holds, then erases and types a few focus areas the chips below
- * do not already show, returns to the full line, blinks the caret a few times and
- * stops. About twenty seconds, then still.
+ * Runs once per visit, not forever. When it is going to move, the line starts empty
+ * with the caret blinking; once the page can actually be seen (loaded, fonts in, tab
+ * in front) it types the full line, holds it, then erases and types a few focus areas
+ * the chips below do not already show, returns to the full line, blinks the caret a
+ * few times and stops. About twenty-five seconds, then still. The name and summary
+ * above and below are never typed, so nothing a visitor needs waits on it.
  *
- * Stays still (just the full line) when any of these hold:
+ * Shows the full line, still, from the first paint when any of these hold:
  *   - prefers-reduced-motion, checked live, so switching it on mid-visit stops it;
  *   - the backdrop is off. The shell's backdrop switch ("background & animation")
  *     governs all decorative motion; the shell calls window.typedSync when it flips;
@@ -65,11 +66,11 @@ function initTypedRotator(el) {
     var seg = (window.Intl && Intl.Segmenter) ? new Intl.Segmenter(ar ? 'ar' : 'en', { granularity: 'grapheme' }) : null;
     function split(s) { return seg ? Array.from(seg.segment(s), function (x) { return x.segment; }) : Array.from(s); }
 
-    var TYPE = 55, ERASE = 26, HOLD = 1800, FIRST_HOLD = 3000, GAP = 340, SETTLE = 2400;
-    // One pass: through the focus areas and back to the full line.
+    var TYPE = 55, ERASE = 26, HOLD = 1800, FIRST_HOLD = 3000, GAP = 340, SETTLE = 2400, START = 250;
+    // One pass: the full line typed in, then the focus areas, then the full line again.
     var order = phrases.slice(1).concat([phrases[0]]);
-    var step = -1;                          // index into order; -1 = the first hold
-    var timer = null, next = null, nextDelay = 0, running = false, done = false;
+    var step = -1;                          // index into order; -1 = the opening full line
+    var timer = null, next = null, nextDelay = 0, running = false, done = false, inFirstHold = false;
 
     function reduced() { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
     function backdropOff() {
@@ -107,7 +108,7 @@ function initTypedRotator(el) {
     }
 
     function later(ms, fn) {
-        next = fn; nextDelay = ms;
+        next = fn; nextDelay = ms; inFirstHold = false;
         if (document.hidden) { timer = null; return; }   // parked until the tab is seen
         timer = setTimeout(function () { timer = null; next = null; fn(); }, ms);
     }
@@ -118,7 +119,8 @@ function initTypedRotator(el) {
         if (n < chars.length) { later(TYPE, function () { type(chars, n + 1); }); return; }
         busy(false);
         if (step === order.length - 1) { later(SETTLE, finish); return; }   // back on the full line
-        later(HOLD, function () { erase(chars.slice()); });
+        later(step === -1 ? FIRST_HOLD : HOLD, function () { erase(chars.slice()); });
+        if (step === -1) inFirstHold = true;
     }
     function erase(chars) {
         busy(true);
@@ -146,17 +148,22 @@ function initTypedRotator(el) {
     function run() {
         running = true; step = -1;
         line.classList.add('is-typing');
-        later(FIRST_HOLD, function () { erase(split(phrases[0])); });
+        show('');
+        later(START, function () { type(split(phrases[0]), 1); });
     }
+    function moving() { return !reduced() && !backdropOff() && fitsOneRow(); }
 
     // One place decides whether it should be moving.
     function sync() {
-        if (reduced() || backdropOff() || !fitsOneRow()) { if (running) halt(); return; }
+        if (!moving()) { if (running || line.classList.contains('is-typing')) halt(); return; }
         if (!running && !done) run();
     }
     window.typedSync = sync;
 
     reserve();
+    // If it is going to move, start empty with the caret, so the first paint does not
+    // show the full line only to wipe it. (Re-checked on load, when fonts are in.)
+    if (moving()) { line.classList.add('is-typing'); show(''); }
     var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
     if (mq) { if (mq.addEventListener) mq.addEventListener('change', sync); else if (mq.addListener) mq.addListener(sync); }
     var resizeTimer = null;
@@ -182,7 +189,11 @@ function initTypedRotator(el) {
             if (timer) { clearTimeout(timer); timer = null; }
             return;
         }
-        if (next && !timer) later(step === -1 ? FIRST_HOLD : Math.min(nextDelay, HOLD), next);
+        if (next && !timer) {
+            var first = inFirstHold;
+            later(first ? FIRST_HOLD : Math.min(nextDelay, HOLD), next);
+            inFirstHold = first;
+        }
     });
 }
 
