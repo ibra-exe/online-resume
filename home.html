@@ -55,8 +55,8 @@
 <body class="transparent-bg">
     <!-- The hero shows everything immediately. It used to be typed out character by
          character, which took 6.4 seconds before the sentence saying who you are was
-         readable - longer than a recruiter's first scan. Motion now lives only in the
-         backdrop, where it cannot hold the content hostage.
+         readable - longer than a recruiter's first scan. The only typing left is the
+         short role line, which starts already complete and never holds content back.
 
          Every number here is already stated elsewhere on the site, and labelled the
          way the site states it: 90% of HR processes automated is achieved, as the
@@ -65,7 +65,12 @@
         <section class="hero" aria-labelledby="hero-name">
             <p class="hero-eyebrow" data-ar="أخصائي أول تقنيات الموارد البشرية · نيوم">People Technology Senior Specialist · NEOM</p>
             <h2 class="hero-name" id="hero-name" data-ar="إبراهيم شاهين">Ibrahim Shaheen</h2>
-            <p class="hero-role" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية">Digital Transformation · AI · HRIS</p>
+            <!-- The role line types through four focus areas once per visit and settles back
+                 on the full line (typewriter.js). It starts on the full line, so nothing waits
+                 on the animation; screen readers get the static line from the sr-only span.
+                 It stays still with reduced motion, with the backdrop switched off, or when
+                 the line would wrap. -->
+            <p class="hero-role"><span class="sr-only" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية">Digital Transformation · AI · HRIS</span><span class="typed" aria-hidden="true" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية" data-phrases="[&quot;Digital Transformation · AI · HRIS&quot;, &quot;AI Agent Development&quot;, &quot;HR Digitalization&quot;, &quot;Process Optimization&quot;, &quot;People Analytics&quot;]" data-phrases-ar="[&quot;التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية&quot;, &quot;بناء وكلاء الذكاء الاصطناعي&quot;, &quot;رقمنة الموارد البشرية&quot;, &quot;تحسين العمليات&quot;, &quot;تحليلات الموارد البشرية&quot;]">Digital Transformation · AI · HRIS</span><span class="typed-caret" aria-hidden="true"></span></p>
             <p class="hero-summary" data-ar="متخصّص في التحوّل الرقمي مع تركيز على الذكاء الاصطناعي وأنظمة الموارد البشرية (HRIS) والرقمنة الاستراتيجية. أعمل حاليًا في نيوم، حيث أقود مبادرات تُحوّل العمليات المعقّدة إلى أنظمة ذكية ومؤتمتة.">A Digital Transformation professional specializing in AI, HRIS, and strategic digitalization. Currently at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems.</p>
 
             <!-- Experience counts live from data-since, measured on the Riyadh wall clock
@@ -169,5 +174,6 @@
             setTimeout(function () { render(); setInterval(render, 1000); }, 1000 - (Date.now() % 1000));
         })();
     </script>
+    <script src="typewriter.js"></script>
 </body>
 </html>

@@ -2885,6 +2885,34 @@ footer .backdrop-toggle .backdrop-icon {
     margin: 0 0 16px;
 }
 
+/* The typed role line (typewriter.js). The caret is inline after the text, so it
+   follows the end of the line in either direction; it blinks while the line holds
+   and stays solid while letters are going in or out. */
+.hero-role .typed-caret {
+    display: none;
+}
+
+.hero-role.is-typing .typed-caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-inline-start: 3px;
+    margin-inline-end: -5px;        /* takes no room on the line, so it never causes a wrap */
+    vertical-align: -0.15em;
+    background: var(--accent-strong);
+    animation: caret-blink 1.05s steps(1) infinite;
+}
+
+.hero-role.is-typing.is-busy .typed-caret {
+    animation: none;
+}
+
+@keyframes caret-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
 .hero-summary {
     font-size: 1.02rem;
     line-height: 1.65;
