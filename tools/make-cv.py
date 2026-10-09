@@ -111,7 +111,7 @@ for m in re.finditer(r'<h3 class="project-title"[^>]*>(.*?)</h3>.*?class="projec
 exp_text = " ".join(b for e in employers for r in e["roles"] for b in r["bullets"]).lower()
 COVERED_BY = {                       # project -> phrase that proves Experience covers it
     "AI Assistants for HR": "peoplegpt",
-    "Digital Transformation Strategy": "digitalization strategy aiming for a 70%",
+    "Digital Transformation Strategy": "comprehensive hr digitalization strategy",
     "SAP SuccessFactors Org Structure & Automation": "structure within sap successfactors",
     "Robotic Process Automation": "robotic process automation",
 }
