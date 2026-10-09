@@ -2590,13 +2590,12 @@ html[lang="ar"] .contact-heading {
     --accent: #b766ff;
     --accent-strong: #cfa2ff;       /* accent as TEXT on dark: brighter, readable */
     --muted: rgba(230, 230, 242, 0.74);
-    /* One card surface for every page. It is the purple the old translucent cards
-       showed over the backdrop (measured at about rgb(73, 39, 104)), made nearly
-       opaque, so cards look the same on every page and the moving squares never
-       show through text. --surface-solid is kept as an alias for older rules. */
-    --surface: rgba(72, 38, 104, 0.92);
+    /* One card surface for every page: a deep, nearly opaque purple, easy on the
+       eye, and the moving squares never show through text. --surface-solid is kept
+       as an alias for older rules. */
+    --surface: rgba(25, 11, 41, 0.88);
     --surface-solid: var(--surface);
-    --surface-hover: rgba(86, 47, 124, 0.95);
+    --surface-hover: rgba(40, 18, 64, 0.92);
     --surface-border: rgba(183, 102, 255, 0.22);
 }
 
@@ -2973,7 +2972,7 @@ html[lang="ar"] .stat-kicker {
     gap: 4px;
     padding: 8px 4px 7px;
     border-radius: 8px;
-    background: rgba(2, 0, 4, 0.35);
+    background: rgba(183, 102, 255, 0.07);
     border: 1px solid rgba(183, 102, 255, 0.14);
 }
 
@@ -4256,6 +4255,237 @@ html[lang="ar"] .ai-group-label {
     }
 }
 
+/* ---- 7c. The highlight card (Digital Transformation Strategy) ----
+   The first card of Professional Work, always the full row on laptops. Its details
+   are always open there and laid out as a feature: title and summary on one side,
+   the two headline figures on the other, then the pillars, the points and the
+   related work across the full width. Phones and the dialog show the same blocks
+   stacked. (The full-row rule is this card's own; the count-based lead rules agree
+   with it while Professional Work has an odd number of cards.) */
+.feature-kicker {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+}
+
+.project-feature-card .project-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+.feature-label {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .feature-kicker,
+html[lang="ar"] .feature-label {
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.feature-figures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.figure {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(183, 102, 255, 0.09);
+    border: 1px solid var(--surface-border);
+}
+
+.figure-value {
+    font-family: var(--font-special);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--accent-strong);
+}
+
+.figure-label {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.feature-pillars {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.pillar-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(183, 102, 255, 0.14);
+    color: var(--accent-strong);
+    font-size: 0.9rem;
+}
+
+.pillar strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.pillar div span {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.project-related {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.project-related .feature-label {
+    flex-basis: 100%;
+    margin-bottom: 2px;
+}
+
+.related-chip {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(183, 102, 255, 0.35);
+    background: transparent;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.related-chip:hover {
+    background: rgba(183, 102, 255, 0.16);
+    border-color: rgba(183, 102, 255, 0.7);
+}
+
+@media screen and (min-width: 1000px) {
+    .project-grid > .project-card.project-feature-card.expandable {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        grid-template-rows: none;
+        column-gap: 44px;
+        padding: 30px 34px 32px;
+        cursor: default;
+        border-color: rgba(183, 102, 255, 0.45);
+    }
+
+    /* Lift the details' blocks into the card's own grid, so the figures can sit
+       beside the summary and the rest can run the full width. */
+    .project-grid > .project-card.project-feature-card.expandable > .project-details,
+    .project-grid > .project-card.project-feature-card.expandable .project-details-inner {
+        display: contents;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-card-head {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .project-title {
+        font-size: 1.75rem;
+        letter-spacing: -0.015em;
+    }
+
+    /* on phones the chip is the at-a-glance figure; here the 70% tile beside it is */
+    .project-grid > .project-card.project-feature-card.expandable > .project-outcome {
+        display: none;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-summary {
+        grid-column: 1;
+        grid-row: 2;
+        margin-top: 10px;
+        display: block;
+        -webkit-line-clamp: unset;
+        font-size: 1.06rem;
+        line-height: 1.65;
+        color: var(--text-color);
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-figures {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+        margin: 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .figure {
+        padding: 18px 20px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .figure-value {
+        font-size: 2.6rem;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-pillars {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 32px;
+        margin: 24px 0 0;
+        padding-top: 22px;
+        border-top: 1px solid rgba(183, 102, 255, 0.16);
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-pillars .feature-label {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .project-tags {
+        grid-column: 1 / -1;
+        margin-top: 20px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .project-related {
+        grid-column: 1 / -1;
+        margin-top: 22px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(183, 102, 255, 0.16);
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .expand-btn {
+        display: none;
+    }
+}
+
 /* The dialog lives inside the iframe, so its backdrop cannot reach the shell's bar
    and footer. The page tells the shell when a dialog opens; the shell dims both
    (opacity, not filter: a filter would make the bar a containing block for the
@@ -4440,6 +4670,12 @@ html[lang="ar"] .contact-v2 .contact-heading {
     text-align: end;
 }
 
+.based-in .fa-arrows-left-right {
+    font-size: 0.8em;
+    margin: 0 0.35em;
+    color: var(--accent-strong);
+}
+
 .local-time {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
@@ -4566,7 +4802,7 @@ html[lang="ar"] .contact-v2 .contact-heading {
     gap: 7px;
     padding: 0 14px;
     border-radius: 12px;
-    background: transparent;
+    background: var(--surface);
     border: 1px solid var(--surface-border);
     color: var(--muted);
     font-family: var(--font-main);
