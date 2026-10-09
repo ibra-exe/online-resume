@@ -237,6 +237,24 @@
 
             const frame = document.getElementById("contentFrame");
 
+            /* Page changes animate (styles.css, 1b): fade the current page out, run the
+               navigation, and let the load handler below rise the new page in. The
+               frame starts hidden so the first page gets the same entrance instead of
+               painting and then animating. A safety timer shows the frame again if a
+               load event never arrives. Also used by i18n.js for the language switch. */
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+            let leaveTimer = null, safetyTimer = null;
+            frame.classList.add("is-leaving");
+            function swapFrame(navigate, instant) {
+                clearTimeout(leaveTimer);
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-entering");
+                frame.classList.add("is-leaving");
+                leaveTimer = setTimeout(navigate, instant || reduceMotion.matches ? 0 : 140);
+                safetyTimer = setTimeout(function () { frame.classList.remove("is-leaving"); }, 4000);
+            }
+            window.swapFrame = swapFrame;
+
             function resizeFrame() {
                 try {
                     const body = frame.contentDocument && frame.contentDocument.body;
@@ -288,7 +306,7 @@
             let currentPage = "home";
             document.documentElement.dataset.page = "home";
 
-            function applyPage(page, history_mode) {
+            function applyPage(page, history_mode, instant) {
                 if (currentPage !== page) {
                     /* location.replace, not frame.src: assigning src pushes a session
                        history entry for the iframe, so every tab change cost TWO
@@ -296,8 +314,10 @@
                        still. replace() swaps the frame's entry in place, leaving our
                        pushState entries as the only ones Back/Forward walks. */
                     const target = page + ".html";
-                    try { frame.contentWindow.location.replace(target); }
-                    catch (e) { frame.src = target; }
+                    swapFrame(function () {
+                        try { frame.contentWindow.location.replace(target); }
+                        catch (e) { frame.src = target; }
+                    }, instant);
                     frame.dataset.page = page;
                     document.documentElement.dataset.page = page;
                     currentPage = page;
@@ -327,8 +347,9 @@
                 applyPage(pageFromUrl(), null);
             });
 
-            // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS)
-            applyPage(pageFromUrl(), "replaceState");
+            // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS).
+            // Instant: the frame is already hidden, so there is nothing to fade out.
+            applyPage(pageFromUrl(), "replaceState", true);
 
             // Projects opens its details in a dialog inside the frame; dim the bar and
             // footer around it. Same-origin messages only.
@@ -339,6 +360,10 @@
 
             frame.addEventListener("load", function () {
                 document.documentElement.classList.remove("frame-modal");
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-leaving", "is-entering");
+                void frame.offsetWidth;            // restart the entrance animation
+                frame.classList.add("is-entering");
                 resizeFrame();
                 try { window.i18nApply(frame.contentDocument); } catch(e) {}
                 try {

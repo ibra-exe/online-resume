@@ -406,12 +406,23 @@
     </dialog>
     <script>
         (function () {
-            /* The button is the disclosure control: focusable, reporting its state through
-               aria-expanded. Clicking anywhere on the card still toggles as a mouse
-               convenience; a keyboard press on the button fires the same click. It used
-               to be the card that took focus while the real button was tabindex="-1". */
+            const AR = document.documentElement.lang === 'ar';
             const cards = document.querySelectorAll('.project-card.expandable');
             const wide = window.matchMedia('(min-width: 1000px)');
+            const threeCols = window.matchMedia('(min-width: 1320px)');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+            /* On laptops a card opens in one of two ways while we compare them:
+               "expand" (default) grows it in place across its row; "dialog" opens it in
+               a centred dialog. ?cards=dialog on the address bar picks the dialog; the
+               shell keeps that parameter as you move between pages. */
+            let MODE = 'expand';
+            try {
+                const host = window.parent !== window ? window.parent : window;
+                if (new URLSearchParams(host.location.search).get('cards') === 'dialog') MODE = 'dialog';
+            } catch (e) {}
+
+            /* ---------- dialog mode ---------- */
             const dialog = document.getElementById('project-dialog');
             const dialogBody = dialog.querySelector('.dialog-body');
             const closeBtn = dialog.querySelector('.dialog-close');
@@ -454,44 +465,173 @@
             closeBtn.addEventListener('click', closeDialog);
             // A click on the backdrop lands on the dialog element itself.
             dialog.addEventListener('click', function (e) { if (e.target === dialog) closeDialog(); });
-            closeBtn.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'إغلاق' : 'Close');
+            closeBtn.setAttribute('aria-label', AR ? 'إغلاق' : 'Close');
 
-            /* The button is the disclosure control on phones (aria-expanded) and opens a
-               dialog on laptops (aria-haspopup). Clicking anywhere on the card does the
-               same as the button, as a mouse convenience; a keyboard press on the button
-               fires the same click. */
+            /* ---------- expand mode ---------- */
+            let openCard = null;
+            const EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+
+            // Which grid row a card sits in now: the rank of its top among all tops.
+            function rowOf(card) {
+                const tops = [];
+                Array.prototype.forEach.call(card.parentElement.children, function (c) {
+                    const t = Math.round(c.offsetTop);
+                    if (tops.indexOf(t) === -1) tops.push(t);
+                });
+                tops.sort(function (a, b) { return a - b; });
+                return tops.indexOf(Math.round(card.offsetTop)) + 1;
+            }
+
+            /* FLIP: measure everything, change the layout, measure again, then play
+               each element from where it was to where it is. The opened card is not
+               scaled (that would stretch its text): it starts clipped to its old size
+               at its old spot and opens out to its full size. */
+            function animateLayout(change, opened, closed) {
+                const els = Array.prototype.slice.call(document.querySelectorAll(
+                    '.project-grid > .project-card, .projects-section-title, .projects-section-subtitle'));
+                const before = new Map(els.map(function (e) { return [e, e.getBoundingClientRect()]; }));
+                change();
+                if (reduceMotion.matches) return;
+                const rtl = document.documentElement.dir === 'rtl';
+                els.forEach(function (e) {
+                    const a = before.get(e), b = e.getBoundingClientRect();
+                    if (e === opened) {
+                        const dx = rtl ? a.right - b.right : a.left - b.left;
+                        const dy = a.top - b.top;
+                        const cutW = Math.max(0, b.width - a.width), cutH = Math.max(0, b.height - a.height);
+                        const r = getComputedStyle(e).borderTopLeftRadius;
+                        const from = rtl ? 'inset(0 0 ' + cutH + 'px ' + cutW + 'px round ' + r + ')'
+                                         : 'inset(0 ' + cutW + 'px ' + cutH + 'px 0 round ' + r + ')';
+                        e.animate([
+                            { transform: 'translate(' + dx + 'px, ' + dy + 'px)', clipPath: from },
+                            { transform: 'none', clipPath: 'inset(0 0 0 0 round ' + r + ')' }
+                        ], { duration: 480, easing: EASE });
+                        // the newly visible content arrives a beat after the box
+                        e.querySelectorAll('.project-details, .project-summary').forEach(function (part) {
+                            part.animate([{ opacity: 0 }, { opacity: 1 }],
+                                { duration: 320, delay: 160, easing: 'ease', fill: 'backwards' });
+                        });
+                        return;
+                    }
+                    const dx = a.left - b.left, dy = a.top - b.top;
+                    if (e === closed) {
+                        e.animate([
+                            { transform: 'translate(' + dx + 'px, ' + dy + 'px)', opacity: 0.35 },
+                            { transform: 'none', opacity: 1 }
+                        ], { duration: 400, easing: EASE });
+                        return;
+                    }
+                    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                        e.animate([{ transform: 'translate(' + dx + 'px, ' + dy + 'px)' }, { transform: 'none' }],
+                            { duration: 480, easing: EASE });
+                    }
+                });
+            }
+
+            function setOpen(next) {
+                const prev = openCard;
+                if (prev === next) return;
+                animateLayout(function () {
+                    if (prev) {
+                        prev.classList.remove('is-open');
+                        prev.style.gridRow = '';
+                    }
+                    if (next) {
+                        // Lock it to the row it is in now (measured after prev closed), so
+                        // the cards beside it move below rather than leaving a hole.
+                        const row = rowOf(next);
+                        next.classList.add('is-open');
+                        next.style.gridRow = String(row);
+                    }
+                    openCard = next;
+                    if (prev) sync(prev);
+                    if (next) sync(next);
+                }, next, prev);
+                if (next) {
+                    next.querySelector('.card-close').focus({ preventScroll: true });
+                    // once it has settled, bring it fully into view if it is not
+                    setTimeout(function () {
+                        if (openCard === next) next.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'nearest' });
+                    }, reduceMotion.matches ? 0 : 500);
+                } else if (prev) {
+                    const b = prev.querySelector('.expand-btn');
+                    if (b) b.focus({ preventScroll: true });
+                }
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && openCard) setOpen(null);
+            });
+            // Leaving the laptop layout: fold away without animating.
+            wide.addEventListener('change', function () {
+                if (!wide.matches && openCard) {
+                    openCard.classList.remove('is-open');
+                    openCard.style.gridRow = '';
+                    const c = openCard;
+                    openCard = null;
+                    sync(c);
+                }
+            });
+            // Two columns to three (or back): re-find the open card's row.
+            threeCols.addEventListener('change', function () {
+                if (!openCard) return;
+                openCard.style.gridRow = '';
+                openCard.style.gridRow = String(rowOf(openCard));
+            });
+
+            /* ---------- every card ---------- */
+            /* The button is the disclosure control on phones and in expand mode
+               (aria-expanded) and opens a dialog in dialog mode (aria-haspopup). Clicking
+               anywhere on the card does the same as the button, as a mouse convenience;
+               a keyboard press on the button fires the same click. */
+            function sync(card) {
+                const btn = card.querySelector('.expand-btn');
+                const details = card.querySelector('.project-details');
+                if (!btn) return;
+                if (wide.matches && MODE === 'dialog') {
+                    btn.setAttribute('aria-haspopup', 'dialog');
+                    btn.removeAttribute('aria-expanded');
+                    btn.removeAttribute('aria-controls');
+                    card.classList.remove('expanded');
+                } else {
+                    btn.removeAttribute('aria-haspopup');
+                    btn.setAttribute('aria-controls', details.id);
+                    const open = wide.matches ? card.classList.contains('is-open') : card.classList.contains('expanded');
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                }
+            }
+
+            const X_ICON = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">' +
+                '<path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
             cards.forEach(function (card, i) {
                 const btn = card.querySelector('.expand-btn');
                 const details = card.querySelector('.project-details');
-                if (btn && details) {
-                    details.id = details.id || 'project-details-' + i;
-                }
-                function sync() {
-                    if (!btn) return;
-                    if (wide.matches) {
-                        btn.setAttribute('aria-haspopup', 'dialog');
-                        btn.removeAttribute('aria-expanded');
-                        btn.removeAttribute('aria-controls');
-                        card.classList.remove('expanded');
-                    } else {
-                        btn.removeAttribute('aria-haspopup');
-                        btn.setAttribute('aria-controls', details.id);
-                        btn.setAttribute('aria-expanded', card.classList.contains('expanded') ? 'true' : 'false');
-                    }
-                }
-                sync();
-                wide.addEventListener('change', sync);
+                if (details) details.id = details.id || 'project-details-' + i;
+
+                const x = document.createElement('button');
+                x.type = 'button';
+                x.className = 'card-close';
+                x.innerHTML = X_ICON;
+                x.setAttribute('aria-label', AR ? 'إغلاق التفاصيل' : 'Close details');
+                x.addEventListener('click', function (e) { e.stopPropagation(); setOpen(null); });
+                card.appendChild(x);
+
+                sync(card);
+                wide.addEventListener('change', function () { sync(card); });
+
                 card.addEventListener('click', function (e) {
                     // Don't act when following a link inside the card
                     if (e.target.closest('a, .project-link-static')) return;
                     if (wide.matches) {
                         // a featured lead card already shows its details inline
-                        if (getComputedStyle(details).display !== 'none') return;
-                        openDialog(card);
+                        if (!card.classList.contains('is-open') && getComputedStyle(details).display !== 'none') return;
+                        if (MODE === 'dialog') { openDialog(card); return; }
+                        if (!card.classList.contains('is-open')) setOpen(card);
                         return;
                     }
                     card.classList.toggle('expanded');
-                    sync();
+                    sync(card);
                 });
             });
         })();

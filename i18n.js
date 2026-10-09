@@ -120,9 +120,14 @@
         syncPrefUrl("lang", currentLang() === "ar" ? "ar" : null);
         var frame = document.getElementById("contentFrame");
         if (frame) {
-            // reload the sub-page so its content (incl. the typewriter) re-renders
-            try { frame.contentWindow.location.reload(); }
-            catch (e) { frame.src = frame.src; }
+            // reload the sub-page so its content re-renders in the new language,
+            // through the shell's page transition when it has one
+            var reload = function () {
+                try { frame.contentWindow.location.reload(); }
+                catch (e) { frame.src = frame.src; }
+            };
+            if (window.swapFrame) window.swapFrame(reload);
+            else reload();
         }
     }
 

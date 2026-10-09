@@ -2590,8 +2590,21 @@ html[lang="ar"] .contact-heading {
     --accent: #b766ff;
     --accent-strong: #cfa2ff;       /* accent as TEXT on dark: brighter, readable */
     --muted: rgba(230, 230, 242, 0.74);
-    --surface: rgba(80, 37, 128, 0.30);
+    /* One card surface for every page. It is the purple the old translucent cards
+       showed over the backdrop (measured at about rgb(73, 39, 104)), made nearly
+       opaque, so cards look the same on every page and the moving squares never
+       show through text. --surface-solid is kept as an alias for older rules. */
+    --surface: rgba(72, 38, 104, 0.92);
+    --surface-solid: var(--surface);
+    --surface-hover: rgba(86, 47, 124, 0.95);
     --surface-border: rgba(183, 102, 255, 0.22);
+}
+
+/* The two card types that predate the token used their own translucent purple. */
+.project-card,
+.experience-container .content {
+    background-color: var(--surface);
+    border-color: var(--surface-border);
 }
 
 html[lang="ar"] {
@@ -2624,6 +2637,45 @@ html[lang="ar"] .expand-btn {
     font-family: var(--font-main);
     letter-spacing: 0;
     text-transform: none;
+}
+
+/* ---- 1b. Page changes ----
+   The shell swaps the iframe's page, and a new document paints nothing until its
+   fonts are in, so a plain swap read as a blink. Now the old page fades out, the
+   new one loads hidden, and it rises in once its load event says it is ready. */
+#contentFrame {
+    transition: opacity 0.14s ease;
+}
+
+#contentFrame.is-leaving {
+    opacity: 0;
+}
+
+#contentFrame.is-entering {
+    animation: frame-in 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes frame-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes frame-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #contentFrame.is-entering {
+        animation: frame-fade 0.15s ease both;
+    }
 }
 
 /* ---- 2. One compact bar instead of a large name on every page ----
@@ -3474,12 +3526,7 @@ html[lang="ar"] .ai-group-label {
    second lane) and has been dropped. The NEOM progression it tried to show now
    lives in the panel as a path, which says the same thing in words.
 
-   Text-heavy panels sit on a near-opaque surface: over the dark page it is the same
-   colour as the translucent cards, but the moving backdrop no longer shows through
-   the words. */
-:root {
-    --surface-solid: rgba(25, 11, 41, 0.88);
-}
+   Panels use the shared --surface (section 1), like every other card. */
 
 .exp-header {
     margin: 4px 0 22px;
@@ -3924,11 +3971,6 @@ html[lang="ar"] .ai-group-label {
    wrong on a card as tall as NEOM's. The "select a role" line belongs to the list
    view; here each card has its own View details. */
 @media screen and (max-width: 999px) {
-    .experience-container .content {
-        background: var(--surface-solid);
-        border-color: var(--surface-border);
-    }
-
     .experience-container .content:hover {
         transform: none;
         box-shadow: none;
@@ -4122,6 +4164,96 @@ html[lang="ar"] .ai-group-label {
         display: none;
     }
 
+}
+
+/* ---- 7b. Projects, expand in place (laptops) ----
+   The alternative to the dialog: the card the visitor picks takes its whole row
+   and grows to show everything, title across the top, summary on one side and the
+   details on the other, with an X to fold it back. The script locks the card to
+   the row it was in, so the cards that shared that row move below it and no row is
+   left with a hole. Phones keep their in-place accordion. */
+.card-close {
+    display: none;
+}
+
+@media screen and (min-width: 1000px) {
+    .project-grid > .project-card {
+        position: relative;
+    }
+
+    .project-grid > .project-card.expandable.is-open {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 40px;
+        padding: 28px 32px 30px;
+        cursor: default;
+        border-color: rgba(183, 102, 255, 0.55);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+        transform: none;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-card-head {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        margin-bottom: 14px;
+        padding-inline-end: 52px;          /* clear of the X */
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-title {
+        font-size: 1.5rem;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-outcome,
+    .project-grid > .project-card.expandable.is-open > .project-summary {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+        font-size: 1.05rem;
+        line-height: 1.65;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 2 / -1;
+        padding-inline-start: 34px;
+        border-inline-start: 1px solid rgba(183, 102, 255, 0.2);
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .expand-btn {
+        display: none;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .card-close {
+        position: absolute;
+        top: 18px;
+        inset-inline-end: 18px;
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 10px;
+        border: 1px solid rgba(183, 102, 255, 0.4);
+        background: rgba(2, 0, 4, 0.28);
+        color: var(--text-color);
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .card-close:hover {
+        background: rgba(183, 102, 255, 0.2);
+        border-color: rgba(183, 102, 255, 0.7);
+    }
 }
 
 /* The dialog lives inside the iframe, so its backdrop cannot reach the shell's bar
@@ -4371,7 +4503,7 @@ html[lang="ar"] .contact-v2 .contact-heading {
 
 .channel-main:hover {
     border-color: rgba(183, 102, 255, 0.55);
-    background: rgba(80, 37, 128, 0.45);
+    background: var(--surface-hover);
 }
 
 .channel-icon {
