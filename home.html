@@ -46,44 +46,63 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="i18n.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+    <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
     <title>Home - Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
-    <div class="home-container">
-        <div class="home-layout">
-            <div class="home-top-row">
-                <div class="home-text-box">
-                    <div class="home-content" id="type-target"></div>
-                </div>
-            </div>
+    <!-- The hero shows everything immediately. It used to be typed out character by
+         character, which took 6.4 seconds before the sentence saying who you are was
+         readable - longer than a recruiter's first scan. Motion now lives only in the
+         backdrop, where it cannot hold the content hostage.
 
-            <div class="home-highlights">
-                <div class="highlight-item">
-                    <div class="highlight-icon"><i class="fas fa-chess"></i></div>
-                    <div class="highlight-text" data-ar="الاستراتيجية الرقمية">Digital Strategy</div>
-                </div>
-                <div class="highlight-item">
-                    <div class="highlight-icon"><i class="fas fa-robot"></i></div>
-                    <div class="highlight-text" data-ar="الذكاء الاصطناعي والأتمتة">AI & Automation</div>
-                </div>
-                <div class="highlight-item">
-                    <div class="highlight-icon"><i class="fas fa-database"></i></div>
-                    <div class="highlight-text">SAP SuccessFactors</div>
-                </div>
-            </div>
+         Every number here is already stated elsewhere on the site, and labelled the
+         way the site states it: 70% is a target ("aiming for"), not a result. -->
+    <main class="home-container hero-page">
+        <section class="hero" aria-labelledby="hero-name">
+            <p class="hero-eyebrow" data-ar="أخصائي أول تقنيات الموارد البشرية · نيوم">People Technology Senior Specialist · NEOM</p>
+            <h2 class="hero-name" id="hero-name" data-ar="إبراهيم شاهين">Ibrahim Shaheen</h2>
+            <p class="hero-role" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية">Digital Transformation · AI · HRIS</p>
+            <p class="hero-summary" data-ar="متخصّص في التحوّل الرقمي مع تركيز على الذكاء الاصطناعي وأنظمة الموارد البشرية (HRIS) والرقمنة الاستراتيجية. أعمل حاليًا في نيوم، حيث أقود مبادرات تُحوّل العمليات المعقّدة إلى أنظمة ذكية ومؤتمتة.">A Digital Transformation professional specializing in AI, HRIS, and strategic digitalization. Currently at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems.</p>
 
+            <ul class="hero-stats">
+                <li class="stat">
+                    <span class="stat-value" dir="ltr">70%</span>
+                    <span class="stat-label" data-ar="مستهدف نسبة الأتمتة">Automation rate target</span>
+                </li>
+                <li class="stat">
+                    <span class="stat-value" dir="ltr">2024</span>
+                    <span class="stat-label" data-ar="جائزة SAP لأفضل ابتكار وأتمتة في الموارد البشرية">SAP Best HCM Innovation &amp; Automation Award</span>
+                </li>
+                <li class="stat">
+                    <span class="stat-value" data-ar="عامان ونصف">2.5 yrs</span>
+                    <span class="stat-label" data-ar="من متدرّب إلى أخصائي أول في نيوم">Intern to Senior Specialist at NEOM</span>
+                </li>
+                <li class="stat">
+                    <span class="stat-value" dir="ltr">3</span>
+                    <span class="stat-label" data-ar="لغات عمل: العربية والإنجليزية واليابانية">Working languages: Arabic, English, Japanese</span>
+                </li>
+            </ul>
+
+            <!-- Three weights for three intents: one filled primary for the action that
+                 matters most, an outline for browsing on, and a quiet download. They
+                 used to be identical, so "Get In Touch" read no louder than a nav pill. -->
             <div class="cta-buttons">
-                <a href="projects.html" onclick="event.preventDefault(); parent.loadContent('projects.html')" class="cta-button" data-ar="عرض المشاريع">View Projects</a>
-                <a href="contact.html" onclick="event.preventDefault(); parent.loadContent('contact.html')" class="cta-button" data-ar="تواصل معي">Get In Touch</a>
+                <a href="contact.html" onclick="event.preventDefault(); parent.loadContent('contact.html')" class="cta-button cta-primary" data-ar="تواصل معي">Get In Touch</a>
+                <a href="projects.html" onclick="event.preventDefault(); parent.loadContent('projects.html')" class="cta-button cta-secondary" data-ar="عرض المشاريع">View Projects</a>
+                <a href="files/Ibrahim-Shaheen-CV.pdf" download target="_blank" rel="noopener" class="cta-button cta-ghost"><i class="fas fa-download" aria-hidden="true"></i><span data-ar="تحميل السيرة الذاتية (بالإنجليزية)">Download CV</span></a>
             </div>
-        </div>
-    </div>
-    <script src="typewriter.js"></script>
+
+            <ul class="hero-focus" aria-label="Focus areas">
+                <li><i class="fas fa-chess" aria-hidden="true"></i><span data-ar="الاستراتيجية الرقمية">Digital Strategy</span></li>
+                <li><i class="fas fa-robot" aria-hidden="true"></i><span data-ar="الذكاء الاصطناعي والأتمتة">AI &amp; Automation</span></li>
+                <li><i class="fas fa-database" aria-hidden="true"></i><span>SAP SuccessFactors</span></li>
+            </ul>
+        </section>
+    </main>
 </body>
 </html>

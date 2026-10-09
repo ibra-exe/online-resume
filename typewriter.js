@@ -1,30 +1,18 @@
 /**
- * Reusable typewriter effect
+ * Puts the About intro on the page.
+ *
+ * This used to type the text out a character at a time. On About that took 10.1
+ * seconds before the paragraph was readable - longer than most visitors give a page
+ * before deciding whether to stay - so the text now appears at once. The name is kept
+ * so the call sites below did not have to change.
+ *
  * @param {string} targetId - The ID of the target element
- * @param {string} text - The text to type
- * @param {number} speed - Typing speed in milliseconds
+ * @param {string} text - The text to show
  */
-function initTypewriter(targetId, text, speed = 20) {
+function initTypewriter(targetId, text) {
     const typeTarget = document.getElementById(targetId);
     if (!typeTarget) return;
-    
     typeTarget.textContent = text;
-    const fullHeight = typeTarget.scrollHeight;
-    typeTarget.style.height = fullHeight + "px";
-    typeTarget.style.minHeight = fullHeight + "px";
-    typeTarget.textContent = "";
-    
-    let charIndex = 0;
-
-    function typeChar() {
-        if (charIndex < text.length) {
-            typeTarget.textContent = text.slice(0, charIndex + 1);
-            charIndex++;
-            setTimeout(typeChar, speed);
-        }
-    }
-
-    typeChar();
 }
 
 // Define text constants

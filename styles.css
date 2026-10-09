@@ -2594,3 +2594,612 @@ html[lang="ar"] .contact-icon {
 html[lang="ar"] .contact-heading {
     margin-bottom: 12px;
 }
+
+
+/* ============================================================================
+   REDESIGN (branch: redesign)
+   Everything for the redesign lives in this one block, so it can be reviewed,
+   tuned or reverted as a unit. It is at the end of the file on purpose: earlier
+   base rules sit after several early media blocks, so only rules placed here are
+   guaranteed to win.
+   ============================================================================ */
+
+/* ---- 1. Type: one professional family instead of a sci-fi display face ----
+   Orbitron read as gaming, which worked against the business-professional brief;
+   Plex is a corporate-technical face, so it keeps a technical note without looking
+   like a game. Plex Mono carries small labels. Cairo stays for Arabic, where it
+   already pairs well with a geometric sans. */
+:root {
+    --font-main: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-special: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --accent: #b766ff;
+    --accent-strong: #cfa2ff;       /* accent as TEXT on dark: brighter, readable */
+    --muted: rgba(230, 230, 242, 0.74);
+    --surface: rgba(80, 37, 128, 0.30);
+    --surface-border: rgba(183, 102, 255, 0.22);
+}
+
+html[lang="ar"] {
+    --font-main: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+    --font-special: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+/* The neon glow went with the display face. */
+header,
+.about-heading,
+.contact-heading,
+.projects-section-title,
+.notfound-heading {
+    text-shadow: none;
+}
+
+.about-heading,
+.contact-heading,
+.projects-section-title {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+/* Plex Mono has no Arabic. Anything set in mono that carries Arabic text goes back
+   to the Arabic face in Arabic, or it would fall to a system default. */
+html[lang="ar"] .hero-eyebrow,
+html[lang="ar"] .project-outcome,
+html[lang="ar"] .company-tenure,
+html[lang="ar"] .expand-btn {
+    font-family: var(--font-main);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* ---- 2. One compact bar instead of a large name on every page ----
+   The old stacked header cost 161px (18% of a 900px screen) before any content,
+   on every page. */
+.site-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 28px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(183, 102, 255, 0.14);
+    background: rgba(2, 0, 4, 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.site-bar header {
+    font-family: var(--font-special);
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-align: start;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.bar-name {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.bar-name:hover {
+    color: var(--accent-strong);
+}
+
+/* On Home the hero carries the name large, so the bar does not repeat it. Hidden
+   rather than removed so the nav does not shift between pages. */
+html[data-page="home"] .site-bar .bar-name {
+    visibility: hidden;
+}
+
+.bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* The toggles used to be position:fixed in the corner; in the bar they are in flow. */
+.site-bar .lang-toggle,
+.site-bar .backdrop-toggle {
+    position: static;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+/* Desktop keeps the backdrop toggle in the footer; the bar copy is for phones. */
+.site-bar .bar-only {
+    display: none;
+}
+
+/* Nav as quiet text with an underline on the current page, not a row of filled
+   pills. Desktop only: below 600px .navbar is the bottom tab bar, with its own rules. */
+@media screen and (min-width: 601px) {
+    .site-bar .navbar {
+        display: flex;
+        gap: 2px;
+        margin: 0;
+        margin-inline-start: auto;
+        padding: 0;
+        text-align: initial;
+    }
+
+    .site-bar .navbar a {
+        position: relative;
+        margin: 0;
+        padding: 8px 12px;
+        background: transparent;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 500;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .site-bar .navbar a:hover {
+        color: var(--text-color);
+        background: rgba(183, 102, 255, 0.08);
+        transform: none;
+    }
+
+    .site-bar .navbar a[aria-current="page"] {
+        color: var(--text-color);
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .site-bar .navbar a[aria-current="page"]::after {
+        content: '';
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 1px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--accent);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* No blur on phones, and this is load-bearing. Below 600px .navbar becomes the
+       bottom tab bar via position:fixed, and it now lives INSIDE .site-bar. A
+       backdrop-filter - like transform or filter - makes its element the containing
+       block for fixed descendants, so the tab bar pinned itself to the bottom of the
+       bar instead of the bottom of the screen: it rendered at the top, under the
+       toggles, with Contact hidden behind them. */
+    .site-bar {
+        padding: 10px 14px;
+        gap: 10px;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: rgba(2, 0, 4, 0.55);
+    }
+
+    /* One line on a phone instead of stranding "NEOM" on its own. */
+    .hero-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.03em;
+    }
+
+    /* Override the 124px lane the old fixed toggles needed; they are in flow now. */
+    .site-bar header {
+        font-size: 1.05rem;
+        padding: 0;
+    }
+
+    .site-bar .bar-controls {
+        margin-inline-start: auto;
+    }
+
+    .site-bar .bar-only {
+        display: inline-flex;
+    }
+}
+
+/* The footer copy of the backdrop toggle, sized as one more utility icon. */
+footer .backdrop-toggle {
+    position: static;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid rgba(183, 102, 255, 0.35);
+}
+
+footer .backdrop-toggle .backdrop-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.social-links-footer {
+    align-items: center;
+}
+
+.footer-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(230, 230, 242, 0.25);
+}
+
+/* ---- 3. Home hero: readable at once, with proof stats ---- */
+.home-container.hero-page {
+    min-height: 100vh;              /* the iframe's own viewport: the space the shell gives it */
+    align-items: center;            /* fills the empty lower half instead of leaving it */
+    justify-content: center;
+    padding: 32px 28px 40px;
+}
+
+.hero {
+    width: 100%;
+    max-width: 880px;
+}
+
+.hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 14px;
+}
+
+.hero-name {
+    font-family: var(--font-special);
+    font-size: clamp(2.4rem, 5.6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text-color);
+    margin: 0 0 10px;
+}
+
+.hero-role {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 0 0 16px;
+}
+
+.hero-summary {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 28px;
+}
+
+/* Explicit 2 or 4 columns, never auto-fit: auto-fit lands on 3 at tablet widths,
+   which leaves the fourth stat alone on a second row. */
+.hero-stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 0 0 28px;
+    padding: 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.stat-value {
+    font-family: var(--font-special);
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+@media screen and (min-width: 900px) {
+    .hero-stats {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* An older 700px rule gives every .cta-button width:100% capped at 320px, so two of
+   them cannot share a row on a tablet and they stack. Buttons size to their label
+   here; phones (below) still get full-width, which is right for thumbs. */
+@media screen and (min-width: 601px) {
+    .hero .cta-button {
+        width: auto;
+        max-width: none;
+    }
+}
+
+.hero .cta-buttons {
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: auto;
+    max-width: none;
+    margin: 0 0 24px;
+}
+
+.hero-focus {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
+.hero-focus li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-focus i {
+    color: var(--accent);
+}
+
+@media screen and (max-width: 600px) {
+    .home-container.hero-page {
+        min-height: auto;
+        align-items: flex-start;
+        padding: 22px 16px 28px;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .stat {
+        padding: 12px 13px;
+    }
+
+    .stat-value {
+        font-size: 1.4rem;
+    }
+
+    .hero .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero .cta-button {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* ---- 4. Button hierarchy: weight follows importance ----
+   They used to share one purple fill, so "Get In Touch" - the conversion goal -
+   read no louder than a nav pill. Dark text on the primary: white on #b766ff is
+   about 3:1, which fails AA; dark text is well above it. */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.cta-primary {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #14061f;
+}
+
+.cta-primary:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    box-shadow: 0 6px 20px rgba(183, 102, 255, 0.35);
+}
+
+.cta-secondary {
+    background: transparent;
+    border: 1px solid rgba(183, 102, 255, 0.55);
+    color: var(--text-color);
+}
+
+.cta-secondary:hover {
+    background: rgba(183, 102, 255, 0.12);
+    box-shadow: none;
+}
+
+.cta-ghost {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+}
+
+.cta-ghost:hover {
+    background: rgba(183, 102, 255, 0.08);
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+/* "View details" as a text link: it is a disclosure, not an action. */
+.expand-btn {
+    padding: 4px 0;
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+}
+
+.expand-btn:hover {
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-color);
+}
+
+/* ---- 5. About: the content is the page, not a box inside it ----
+   .about-info was capped at 400px with its own scrollbar on desktop, showing 398px
+   of 1,243px: 68% of About, including the award and languages, behind an inner
+   scroll that also hijacked the trackpad. */
+@media screen and (min-width: 901px) {
+    .about-info {
+        max-height: none;
+        overflow: visible;
+    }
+}
+
+/* ---- 6. Experience: one employer, a visible progression ---- */
+.company-tenure {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin: 2px 0 16px;
+}
+
+.role-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.role {
+    position: relative;
+    padding-inline-start: 22px;
+    padding-bottom: 18px;
+}
+
+.role:last-child {
+    padding-bottom: 0;
+}
+
+/* Current role a filled node, earlier ones hollow, joined by a thin line: the
+   promotion path reads at a glance. */
+.role::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: transparent;
+}
+
+.role:first-child::before {
+    background: var(--accent);
+}
+
+.role::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 4px;
+    top: 19px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(183, 102, 255, 0.3);
+}
+
+.role:last-child::after {
+    display: none;
+}
+
+/* The existing reveal rules are all `.content.expanded ...`. The grouped roles are
+   li.role, not .content, so without these they would never open. */
+.role.expanded .exp-details {
+    grid-template-rows: 1fr;
+}
+
+.role.expanded .expand-chevron {
+    transform: rotate(180deg);
+}
+
+.role.expanded .expand-more {
+    display: none;
+}
+
+.role.expanded .expand-less {
+    display: inline;
+}
+
+/* ---- 7. Projects: two columns on desktop, outcomes up front ----
+   17 cards in one column was 3.6 screens of mostly-empty cards. */
+@media screen and (min-width: 1000px) {
+    .projects-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        align-items: start;          /* expanding one card does not stretch its neighbour */
+        max-width: 1120px;
+    }
+
+    .projects-section-title,
+    .projects-section-subtitle {
+        grid-column: 1 / -1;
+    }
+
+    .projects-container .project-card {
+        margin: 0;
+        max-width: none;
+    }
+}
+
+.project-outcome {
+    display: inline-block;
+    margin: 2px 0 8px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(183, 102, 255, 0.12);
+    border: 1px solid rgba(183, 102, 255, 0.3);
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+}
+
+/* ---- 8. Contact: centred in the space it has, not stuck to the top ---- */
+@media screen and (min-width: 701px) {
+    .contact-container {
+        min-height: 100vh;
+        justify-content: center;
+    }
+}
+
+/* ---- 9. Keyboard focus you can actually see ----
+   The stylesheet had no :focus rule at all, so tabbing through gave no indication
+   of where you were. :focus-visible keeps rings off mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
