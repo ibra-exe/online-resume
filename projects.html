@@ -44,10 +44,9 @@
     </script>
     <noscript><style>html{background-color:#020004}</style></noscript>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
     <script src="i18n.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
     <title>Projects - Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
@@ -55,35 +54,73 @@
 
         <h2 class="projects-section-title" data-ar="الأعمال المهنية">Professional Work</h2>
         <p class="projects-section-subtitle" data-ar="نماذج مختارة من أثر عملي في التحوّل الرقمي والذكاء الاصطناعي وأنظمة الموارد البشرية لدى نيوم. انقر على البطاقة للتفاصيل.">Selected impact from my work in Digital Transformation, AI, and HRIS at NEOM. Tap a card for details.</p>
+        <div class="project-grid">
 
-        <div class="project-card expandable" tabindex="0">
+        <!-- Highlight card: the vision, four figures, three pillars. -->
+        <div class="project-card expandable project-feature-card">
             <div class="project-card-head">
-                <h3 class="project-title">HR Super App - <em><span data-ar="قيد التنفيذ">In Progress</span></em> 🚧</h3>
+                <span class="feature-kicker" data-ar="العمل الأبرز">Highlight</span>
+                <h3 class="project-title" data-ar="استراتيجية التحوّل الرقمي">Digital Transformation Strategy</h3>
             </div>
-            <p class="project-summary" data-ar="منصّة الموارد البشرية الموحّدة لنيوم: كل خدمات الموارد البشرية في واجهة واحدة ذكية تضع الموظّف أولًا.">NEOM's unified HR platform: every HR service in one intelligent, employee-first interface.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <p class="project-outcome project-status" data-ar="قيد التنفيذ · 2024–2028">In progress · 2024–2028</p>
+            <span class="feature-label feature-vision-label" data-ar="الرؤية">The vision</span>
+            <p class="project-summary feature-vision" data-ar="بيئة عمل سلسة وذكية، تقوم على توحيد منظومة نيوم الرقمية وأتمتتها، ويكون فيها الذكاء الاصطناعي الواجهةَ المركزية لكل موظّف.">A seamless, intelligent workplace, built by unifying and automating NEOM's digital ecosystem, with AI as the central interface for every employee.</p>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
-                    <ul class="project-points">
-                        <li data-ar="أبني منصّة الموارد البشرية الموحّدة لنيوم، بجمع وحدات SAP SuccessFactors (Employee Central و Goals و Time Off وغيرها) وخدمات ServiceNow والتعلّم والرواتب والتأهيل معًا.">Building NEOM's unified HR platform, bringing together SAP SuccessFactors modules (Employee Central, Goals, Time Off, and more), ServiceNow services, learning, payroll, and onboarding.</li>
-                        <li data-ar="أدمج الأنظمة المتفرّقة عبر أتمتة العمليات الروبوتية (RPA) في واجهة واحدة ذكية تضع الموظّف أولًا.">Integrating fragmented systems through RPA into a single, intelligent, employee-first interface.</li>
-                    </ul>
-                    <div class="project-tags">
-                        <span>SAP SuccessFactors</span>
-                        <span>ServiceNow</span>
-                        <span>RPA</span>
-                        <span data-ar="تجربة الموظّف">Employee Experience</span>
+                    <div class="feature-figures">
+                        <div class="figure">
+                            <span class="figure-value" dir="ltr">100+</span>
+                            <span class="figure-label" data-ar="عملية موارد بشرية">HR processes</span>
+                        </div>
+                        <div class="figure">
+                            <span class="figure-value" dir="ltr">5,000+</span>
+                            <span class="figure-label" data-ar="موظّف">employees</span>
+                        </div>
+                        <div class="figure">
+                            <span class="figure-value" dir="ltr">100%</span>
+                            <span class="figure-label" data-ar="رقمنة">digitalized</span>
+                        </div>
+                        <div class="figure">
+                            <span class="figure-value" dir="ltr">90%</span>
+                            <span class="figure-label" data-ar="أتمتة">automated</span>
+                        </div>
+                    </div>
+                    <div class="feature-pillars">
+                        <h4 class="feature-label" data-ar="ثلاث ركائز">Three pillars</h4>
+                        <div class="pillar">
+                            <span class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" focusable="false"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg></span>
+                            <div>
+                                <strong data-ar="التوحيد">Unify</strong>
+                                <span data-ar="التخلّص من المنصّات غير الضرورية، وبناء ما ينقص داخليًا، وربط الباقي في منظومة واحدة.">Cut the platforms nobody needs, build the missing pieces in-house, and connect the rest into one ecosystem.</span>
+                            </div>
+                        </div>
+                        <div class="pillar">
+                            <span class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 12a8 8 0 0 1 13.7-5.6M20 12a8 8 0 0 1-13.7 5.6"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span>
+                            <div>
+                                <strong data-ar="الأتمتة">Automate</strong>
+                                <span data-ar="رقمنة كل عملية، ثم أتمتة المهام الروتينية، ليتفرّغ الناس لما يستحق وقتهم.">Digitize every process, then automate the routine, so people spend their time where it counts.</span>
+                            </div>
+                        </div>
+                        <div class="pillar">
+                            <span class="pillar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M10 10h4v4h-4zM9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></span>
+                            <div>
+                                <strong data-ar="الذكاء الاصطناعي واجهةً أولى">AI at the front door</strong>
+                                <span data-ar="بوابة ذكاء اصطناعي واحدة بدلًا من متاهة من البوابات، عبر القنوات التي يستخدمها الناس أصلًا.">One AI front door instead of a maze of portals, on the channels people already use.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="مساعدو الذكاء الاصطناعي للموارد البشرية">AI Assistants for HR</h3>
             </div>
+            <p class="project-outcome" data-ar="إرشاد للموظفين على مدار الساعة">24/7 employee guidance</p>
             <p class="project-summary" data-ar="مساعدون مدعومون بتقنية GPT يقدّمون للموظفين إرشادًا فوريًّا على مدار الساعة.">GPT-powered assistants giving employees instant, 24/7 guidance.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <ul class="project-points">
@@ -101,34 +138,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
-            <div class="project-card-head">
-                <h3 class="project-title" data-ar="استراتيجية التحوّل الرقمي">Digital Transformation Strategy</h3>
-            </div>
-            <p class="project-summary" data-ar="استراتيجية رقمنة مؤسسية تستهدف نسبة أتمتة تبلغ 70%.">An enterprise digitalization strategy aiming for a 70% automation rate.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
-            <div class="project-details">
-                <div class="project-details-inner">
-                    <ul class="project-points">
-                        <li data-ar="صمّمتُ وقدتُ استراتيجية شاملة للرقمنة، موحّدًا المنصّات المتفرّقة في منظومة رقمية متماسكة.">Architected and led a comprehensive digitalization strategy, unifying fragmented platforms into one coherent digital ecosystem.</li>
-                        <li data-ar="استهداف نسبة أتمتة تبلغ 70% عبر عمليات الموارد البشرية.">Aiming for a <strong>70% automation rate</strong> across HR operations.</li>
-                        <li data-ar="حصلتُ على جائزة SAP لأفضل ابتكار وأتمتة في نظام SAP SuccessFactors (المملكة العربية السعودية، 2024).">Earned <strong>SAP's Best HCM Innovation &amp; Automation Award</strong> (KSA, 2024).</li>
-                    </ul>
-                    <div class="project-tags">
-                        <span data-ar="الاستراتيجية الرقمية">Digital Strategy</span>
-                        <span data-ar="تحسين العمليات">Process Optimization</span>
-                        <span data-ar="إدارة التغيير">Change Management</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="الهيكل التنظيمي والأتمتة على SAP SuccessFactors">SAP SuccessFactors Org Structure & Automation</h3>
             </div>
             <p class="project-summary" data-ar="عدّة عمليات إعادة هيكلة وأتمتة على SAP SuccessFactors.">Multiple SuccessFactors restructures and automation across NEOM.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <ul class="project-points">
@@ -145,12 +160,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="أتمتة العمليات الروبوتية">Robotic Process Automation</h3>
             </div>
             <p class="project-summary" data-ar="مبادرات RPA أزالت العمل اليدوي المتكرر من عمليات الموارد البشرية.">RPA initiatives that removed repetitive manual work from HR operations.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <ul class="project-points">
@@ -166,12 +181,13 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="أتمتة التأمين الصحي">Health Insurance Automation</h3>
             </div>
+            <p class="project-outcome" data-ar="دون أي تدخّل بشري">Zero human intervention</p>
             <p class="project-summary" data-ar="أتمتة كاملة لتسجيل التأمين الطبّي للموظّفين الجدد ومرافقيهم، دون أي تدخّل بشري.">Fully automated medical enrollment for new joiners and their dependents, with zero human intervention.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <ul class="project-points">
@@ -187,12 +203,13 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="بوابة خدمات الأفراد">People Services Portal</h3>
             </div>
+            <p class="project-outcome" data-ar="قائم على اتفاقيات مستوى الخدمة">SLA-driven</p>
             <p class="project-summary" data-ar="نظام تذاكر مركزي قائم على اتفاقيات مستوى الخدمة (SLA) لجميع خدمات الموارد البشرية، مبنيّ على ServiceNow.">A centralized, SLA-driven ticketing system for all HR services, built on ServiceNow.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <ul class="project-points">
@@ -208,12 +225,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title">PeopleHub</h3>
             </div>
             <p class="project-summary" data-ar="قاعدة معرفة على SharePoint تجمع كل سياسات الموارد البشرية وإرشاداتها ووثائقها.">A SharePoint knowledge base consolidating all HR policies, guidelines, and documentation.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <ul class="project-points">
@@ -228,21 +245,24 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <h2 class="projects-section-title" data-ar="مشاريع شخصية">Personal Projects</h2>
         <p class="projects-section-subtitle" data-ar="أشياء أبنيها لاستكشاف الأفكار وللمتعة. انقر على البطاقة للتفاصيل.">Things I build to explore ideas and for fun. Tap a card for details.</p>
+        <div class="project-grid">
 
         <!-- Request TestFlight, not a store link: the app is on TestFlight, not the
              App Store. target="_top" is load-bearing for exactly the reason the Contact
              page documents — this runs inside the shell's iframe, and iOS Safari drops a
              mailto: handed off from a subframe, so the tap would silently do nothing.
              _blank, which every other project link uses, would not save it. -->
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
-                <h3 class="project-title">Ember - <em><span data-ar="قيد التنفيذ">In Progress</span></em> 🚧</h3>
+                <h3 class="project-title">Ember</h3>
             </div>
+            <p class="project-outcome project-status" data-ar="قيد التنفيذ">In progress</p>
             <p class="project-summary" data-ar="مكان هادئ تضع فيه ما تودّ العودة إليه لاحقًا: روابط ومنتجات ومقاطع وملاحظات وأماكن.">A quiet place to put down things you want to come back to later: links, products, videos, notes, places.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="تطبيق iOS أصلي مكتوب بـ SwiftUI و SwiftData، بلا خادم ولا حسابات ولا اعتماديات خارجية. الحفظ يتم من ورقة المشاركة: من Safari إلى Ember ثم حفظ، فتعود إلى Safari خلال ثانية تقريبًا، لأن ملحق المشاركة يكتب ويخرج دون أن يتصل بالشبكة إطلاقًا. الإثراء يجري بعدها داخل التطبيق: يقرأ JSON-LD و Open Graph ليملأ العنوان والصورة والمصدر في مكانها. وكل عنصر محفوظ يمكن فتحه أو الاحتفاظ به أو التخلّي عنه مع تراجع خلال أربع ثوانٍ.">A native iOS app in SwiftUI and SwiftData, with no backend, no accounts and no third-party dependencies. Saving happens from the iOS share sheet: Safari → Share → Ember → Save puts you back in Safari in about a second, because the share extension writes and exits without ever touching the network. Enrichment runs afterwards inside the app, reading JSON-LD and Open Graph to fill in the title, thumbnail and source in place. Anything saved can be opened, kept, or let go with a four-second undo.</p>
@@ -260,12 +280,13 @@
 
         <!-- Live Demo but no Source Code link: the repo is private, same as Life OS
              below, so a source link would 404 for every visitor. -->
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
-                <h3 class="project-title">Momentum - <em><span data-ar="قيد التنفيذ">In Progress</span></em> 🚧</h3>
+                <h3 class="project-title">Momentum</h3>
             </div>
+            <p class="project-outcome project-status" data-ar="قيد التنفيذ">In progress</p>
             <p class="project-summary" data-ar="أداة لإدارة المشاريع والمهام، مع مساعد ذكاء اصطناعي يحوّل جملة واحدة إلى تعديلات على مهامك.">A project and task manager with an AI assistant that turns a sentence into changes to your work.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="أداة لإدارة المشاريع والمهام مبنية على Next.js و TypeScript مع Prisma. المساعد يعمل بالأدوات عبر واجهة Claude: يُنشئ المهام ويعدّلها ويحذفها ويعيد جدولتها دفعةً واحدة، ويطلب توضيحًا عند الغموض. الجملة الواحدة تُسجَّل كتراجع واحد مهما غيّرت من أشياء، مع احتساب تكلفة الرموز لكل نموذج. الصلاحيات تُفرض على الخادم لا في الواجهة: لوحة الإدارة تُعيد 404 لمن لا يملك الصلاحية بدل إخفاء الزر. والجلسات صفوف في قاعدة البيانات، فيخرج المستخدم فور إزالته لا عند انتهاء صلاحية رمز.">A project and task manager built on Next.js and TypeScript with Prisma. The assistant is tool-calling over the Claude API: it creates, edits, deletes and bulk-reschedules tasks, and asks for clarification rather than guessing. A whole sentence is recorded as a single undo no matter how many things it changed, and token cost is metered per model. Access is enforced on the server rather than in the interface: the admin area returns a 404 to anyone without the role instead of just hiding the button. Sessions are database rows, so removing someone signs them out on their next request instead of whenever a token would have expired.</p>
@@ -281,12 +302,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title" data-ar="السيرة الذاتية الإلكترونية">Online Resume</h3>
             </div>
             <p class="project-summary" data-ar="هذا الموقع: موقع سيرة ذاتية أنيق موجّه للأعمال، بُني من الصفر بلغة JavaScript خالصة.">This site: a clean, business-focused resume site built from scratch in vanilla JavaScript.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="سيرة ذاتية إلكترونية متجاوبة بُنيت من الصفر باستخدام HTML و CSS و JavaScript خالصة، دون أطر عمل. تتميّز بثيم داكن هادئ مستوحى من الفضاء، ومقدّمة بأثر الكتابة، وبطاقات خبرات ومشاريع قابلة للتوسيع، وشريط تبويب سفلي للجوال.">A responsive online resume built from scratch with HTML, CSS, and Vanilla JavaScript. No frameworks. Features a calm, space-inspired dark theme, a typewriter intro, expandable experience and project cards, and a mobile tab-bar layout.</p>
@@ -300,12 +321,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title">Life OS</h3>
             </div>
             <p class="project-summary" data-ar="لوحة تحكّم حياتية بأسلوب الألعاب تحوّل أهدافك إلى عادات ومهام يومية.">A gamified life dashboard that turns your goals into daily habits and quests.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="لوحة تحكّم حياتية بأسلوب الألعاب تنظّم حياتك في ركائز وتحوّل أهدافك إلى عادات ومهام يومية. اكسب نقاط الخبرة (XP)، وارتقِ بمستواك، واحصل على إرشاد من مدرّب ذكاء اصطناعي، وتتبّع تدريبك وتغذيتك وأموالك وتذكيراتك في مكان واحد.">A gamified life dashboard that organizes your life into pillars and turns your goals into daily habits and quests. Earn XP, level up, get guidance from an AI coach, and track your training, nutrition, money, and reminders in one place.</p>
@@ -319,12 +340,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title">Swift Comprehension Practice</h3>
             </div>
             <p class="project-summary" data-ar="تطبيق تدريبي لاختبار القدرات Saville Swift Comprehension.">A practice app for the Saville Swift Comprehension aptitude test.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="تطبيق تدريبي لاختبار القدرات Saville Swift Comprehension. يضم ثلاثة أقسام مؤقّتة: الاستدلال اللفظي، والاستدلال العددي، وتدقيق الأخطاء، مصمّم لتدريب الدقة تحت ضغط الوقت.">A practice app for the Saville Swift Comprehension aptitude test. Features three timed section types, Verbal Reasoning, Numerical Reasoning, and Error Checking, built to train accuracy under time pressure.</p>
@@ -337,12 +358,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title">Star Wars: Project Holocron</h3>
             </div>
             <p class="project-summary" data-ar="نظام تفاعلي لمعرفة عالم Star Wars يمتد عبر 13 حقبة.">An interactive Star Wars lore intelligence system spanning 13 eras.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="نظام تفاعلي لمعرفة عالم Star Wars يغطّي 13 حقبة، والشخصيات، والكواكب، والسفن، والفصائل، والأجناس، والتحف، وسلالات القوة، والمزيد. قاعدة معرفية غنية للمجرّة البعيدة.">An interactive Star Wars lore intelligence system covering 13 eras, characters, planets, ships, factions, species, artifacts, Force lineages, and more. A deep-dive knowledge base for the galaxy far, far away.</p>
@@ -355,12 +376,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title">Pixelator</h3>
             </div>
             <p class="project-summary" data-ar="تطبيق ولعبة رسم فنّ البكسل داخل المتصفح.">A browser-based pixel-art painting app and game.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="تطبيق ولعبة رسم فنّ البكسل مبنيّان بالكامل داخل المتصفح. أنشئ فنّ بكسل مخصّصًا بمجموعة أدوات رسم، واحفظ إبداعاتك، واستمتع بمشغّل موسيقى مدمج، ومفاجأة MegaMan الراقص، والمزيد.">A pixel art painting app and game built entirely in the browser. Create custom pixel art using a suite of drawing tools, save your creations, enjoy a built-in music player, a dancing MegaMan easter egg, and more.</p>
@@ -373,12 +394,12 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
                 <h3 class="project-title">Called Out</h3>
             </div>
             <p class="project-summary" data-ar="لعبة جماعية اجتماعية يصوّت فيها الأصدقاء على من ينطبق عليه كل سؤال.">A social party game where friends vote on who fits each question.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="لعبة جماعية اجتماعية يصوّت فيها الأصدقاء على من ينطبق عليه كل سؤال أكثر. مصمّمة لإثارة الضحك والأحاديث الصادقة، بواجهة ويب أنيقة وتفاعلية.">A social party game where friends vote on who best fits each question. Designed to spark laughs and honest conversations, with a clean and interactive web interface.</p>
@@ -391,12 +412,13 @@
             </div>
         </div>
 
-        <div class="project-card expandable" tabindex="0">
+        <div class="project-card expandable">
             <div class="project-card-head">
-                <h3 class="project-title">Unmasked - <em><span data-ar="قيد التنفيذ">In Progress</span></em> 🚧</h3>
+                <h3 class="project-title">Unmasked</h3>
             </div>
+            <p class="project-outcome project-status" data-ar="قيد التنفيذ">In progress</p>
             <p class="project-summary" data-ar="لعبة جماعية رقمية لسحب البطاقات تساعد الناس على التواصل.">A digital card-pulling party game to help people connect.</p>
-            <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+            <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
             <div class="project-details">
                 <div class="project-details-inner">
                     <p class="project-description" data-ar="لعبة جماعية رقمية لسحب البطاقات مصمّمة لمساعدة الناس على التعارف. بُنيت كتطبيق ويب متكامل بآلية كشف بطاقات أنيقة وتفاعلية لإثارة أحاديث ذات معنى.">A digital card-pulling party game designed to help people get to know each other. Built as a full web application with a clean, interactive card-reveal mechanic to spark meaningful conversations.</p>
@@ -407,25 +429,250 @@
                 </div>
             </div>
         </div>
+        </div>
 
     </div>
 
+
+    <!-- On laptop widths a card opens here instead of expanding in place. Expanding in
+         place is what made the grid ragged: one card grew, its row-mate did not, and the
+         rows below shifted. Phones keep the in-place expand, which reads well in one
+         column. Filled by cloning the clicked card, so there is one copy of the content. -->
+    <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title">
+        <button type="button" class="dialog-close" data-ar="إغلاق" aria-label="Close">Close</button>
+        <div class="dialog-body"></div>
+    </dialog>
     <script>
         (function () {
+            const AR = document.documentElement.lang === 'ar';
             const cards = document.querySelectorAll('.project-card.expandable');
-            cards.forEach(function (card) {
-                card.addEventListener('click', function (e) {
-                    // Don't toggle when following a link inside the card
-                    if (e.target.closest('a, .project-link-static')) return;
-                    card.classList.toggle('expanded');
-                });
-                card.addEventListener('keydown', function (e) {
-                    // Only the card itself toggles; let Enter/Space reach links and buttons inside
-                    if (e.target !== card) return;
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        card.classList.toggle('expanded');
+            const wide = window.matchMedia('(min-width: 1000px)');
+            const threeCols = window.matchMedia('(min-width: 1320px)');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+            /* On laptops a card opens in a centred dialog. The expand-in-place version
+               (the card grows across its row) is parked for later work and can be tried
+               with ?cards=expand on the address bar; the shell keeps that parameter as
+               you move between pages. */
+            let MODE = 'dialog';
+            try {
+                const host = window.parent !== window ? window.parent : window;
+                if (new URLSearchParams(host.location.search).get('cards') === 'expand') MODE = 'expand';
+            } catch (e) {}
+
+            /* ---------- dialog mode ---------- */
+            const dialog = document.getElementById('project-dialog');
+            const dialogBody = dialog.querySelector('.dialog-body');
+            const closeBtn = dialog.querySelector('.dialog-close');
+            let opener = null;
+
+            // The shell dims its own bar and footer while a dialog is open in here.
+            function tellShell(open) {
+                try {
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ type: 'project-dialog', open: open }, location.origin);
                     }
+                } catch (e) {}
+            }
+
+            function openDialog(card) {
+                dialogBody.innerHTML = '';
+                // Title, outcome, summary, then everything that is in the details.
+                ['.project-title', '.project-outcome', '.project-summary'].forEach(function (sel) {
+                    const el = card.querySelector(sel);
+                    if (el) dialogBody.appendChild(el.cloneNode(true));
+                });
+                const inner = card.querySelector('.project-details-inner');
+                if (inner) Array.prototype.forEach.call(inner.children, function (c) {
+                    dialogBody.appendChild(c.cloneNode(true));
+                });
+                const title = dialogBody.querySelector('.project-title');
+                if (title) title.id = 'project-dialog-title';
+                opener = card.querySelector('.expand-btn');
+                document.body.classList.add('dialog-open');
+                dialog.showModal();
+                tellShell(true);
+                closeBtn.focus();
+            }
+            function closeDialog() { if (dialog.open) dialog.close(); }
+            dialog.addEventListener('close', function () {
+                document.body.classList.remove('dialog-open');
+                tellShell(false);
+                if (opener) opener.focus();
+            });
+            closeBtn.addEventListener('click', closeDialog);
+            // A click on the backdrop lands on the dialog element itself.
+            dialog.addEventListener('click', function (e) { if (e.target === dialog) closeDialog(); });
+            closeBtn.setAttribute('aria-label', AR ? 'إغلاق' : 'Close');
+
+            /* ---------- expand mode ---------- */
+            let openCard = null;
+            const EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
+
+            // Which grid row a card sits in now: the rank of its top among all tops.
+            function rowOf(card) {
+                const tops = [];
+                Array.prototype.forEach.call(card.parentElement.children, function (c) {
+                    const t = Math.round(c.offsetTop);
+                    if (tops.indexOf(t) === -1) tops.push(t);
+                });
+                tops.sort(function (a, b) { return a - b; });
+                return tops.indexOf(Math.round(card.offsetTop)) + 1;
+            }
+
+            /* FLIP: measure everything, change the layout, measure again, then play
+               each element from where it was to where it is. The opened card is not
+               scaled (that would stretch its text): it starts clipped to its old size
+               at its old spot and opens out to its full size. */
+            function animateLayout(change, opened, closed) {
+                const els = Array.prototype.slice.call(document.querySelectorAll(
+                    '.project-grid > .project-card, .projects-section-title, .projects-section-subtitle'));
+                const before = new Map(els.map(function (e) { return [e, e.getBoundingClientRect()]; }));
+                change();
+                if (reduceMotion.matches) return;
+                const rtl = document.documentElement.dir === 'rtl';
+                els.forEach(function (e) {
+                    const a = before.get(e), b = e.getBoundingClientRect();
+                    if (e === opened) {
+                        const dx = rtl ? a.right - b.right : a.left - b.left;
+                        const dy = a.top - b.top;
+                        const cutW = Math.max(0, b.width - a.width), cutH = Math.max(0, b.height - a.height);
+                        const r = getComputedStyle(e).borderTopLeftRadius;
+                        const from = rtl ? 'inset(0 0 ' + cutH + 'px ' + cutW + 'px round ' + r + ')'
+                                         : 'inset(0 ' + cutW + 'px ' + cutH + 'px 0 round ' + r + ')';
+                        e.animate([
+                            { transform: 'translate(' + dx + 'px, ' + dy + 'px)', clipPath: from },
+                            { transform: 'none', clipPath: 'inset(0 0 0 0 round ' + r + ')' }
+                        ], { duration: 480, easing: EASE });
+                        // the newly visible content arrives a beat after the box
+                        e.querySelectorAll('.project-details, .project-summary').forEach(function (part) {
+                            part.animate([{ opacity: 0 }, { opacity: 1 }],
+                                { duration: 320, delay: 160, easing: 'ease', fill: 'backwards' });
+                        });
+                        return;
+                    }
+                    const dx = a.left - b.left, dy = a.top - b.top;
+                    if (e === closed) {
+                        e.animate([
+                            { transform: 'translate(' + dx + 'px, ' + dy + 'px)', opacity: 0.35 },
+                            { transform: 'none', opacity: 1 }
+                        ], { duration: 400, easing: EASE });
+                        return;
+                    }
+                    if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+                        e.animate([{ transform: 'translate(' + dx + 'px, ' + dy + 'px)' }, { transform: 'none' }],
+                            { duration: 480, easing: EASE });
+                    }
+                });
+            }
+
+            function setOpen(next) {
+                const prev = openCard;
+                if (prev === next) return;
+                animateLayout(function () {
+                    if (prev) {
+                        prev.classList.remove('is-open');
+                        prev.style.gridRow = '';
+                    }
+                    if (next) {
+                        // Lock it to the row it is in now (measured after prev closed), so
+                        // the cards beside it move below rather than leaving a hole.
+                        const row = rowOf(next);
+                        next.classList.add('is-open');
+                        next.style.gridRow = String(row);
+                    }
+                    openCard = next;
+                    if (prev) sync(prev);
+                    if (next) sync(next);
+                }, next, prev);
+                if (next) {
+                    next.querySelector('.card-close').focus({ preventScroll: true });
+                    // once it has settled, bring it fully into view if it is not
+                    setTimeout(function () {
+                        if (openCard === next) next.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'nearest' });
+                    }, reduceMotion.matches ? 0 : 500);
+                } else if (prev) {
+                    const b = prev.querySelector('.expand-btn');
+                    if (b) b.focus({ preventScroll: true });
+                }
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && openCard) setOpen(null);
+            });
+            // Leaving the laptop layout: fold away without animating.
+            wide.addEventListener('change', function () {
+                if (!wide.matches && openCard) {
+                    openCard.classList.remove('is-open');
+                    openCard.style.gridRow = '';
+                    const c = openCard;
+                    openCard = null;
+                    sync(c);
+                }
+            });
+            // Two columns to three (or back): re-find the open card's row.
+            threeCols.addEventListener('change', function () {
+                if (!openCard) return;
+                openCard.style.gridRow = '';
+                openCard.style.gridRow = String(rowOf(openCard));
+            });
+
+            /* ---------- every card ---------- */
+            /* The button is the disclosure control on phones and in expand mode
+               (aria-expanded) and opens a dialog in dialog mode (aria-haspopup). Clicking
+               anywhere on the card does the same as the button, as a mouse convenience;
+               a keyboard press on the button fires the same click. */
+            function sync(card) {
+                const btn = card.querySelector('.expand-btn');
+                const details = card.querySelector('.project-details');
+                if (!btn) return;
+                if (wide.matches && MODE === 'dialog') {
+                    btn.setAttribute('aria-haspopup', 'dialog');
+                    btn.removeAttribute('aria-expanded');
+                    btn.removeAttribute('aria-controls');
+                    card.classList.remove('expanded');
+                } else {
+                    btn.removeAttribute('aria-haspopup');
+                    btn.setAttribute('aria-controls', details.id);
+                    const open = wide.matches ? card.classList.contains('is-open') : card.classList.contains('expanded');
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                }
+            }
+
+            const X_ICON = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">' +
+                '<path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
+            cards.forEach(function (card, i) { card.id = card.id || 'project-' + i; });
+
+
+            cards.forEach(function (card, i) {
+                const btn = card.querySelector('.expand-btn');
+                const details = card.querySelector('.project-details');
+                if (details) details.id = details.id || 'project-details-' + i;
+
+                const x = document.createElement('button');
+                x.type = 'button';
+                x.className = 'card-close';
+                x.innerHTML = X_ICON;
+                x.setAttribute('aria-label', AR ? 'إغلاق التفاصيل' : 'Close details');
+                x.addEventListener('click', function (e) { e.stopPropagation(); setOpen(null); });
+                card.appendChild(x);
+
+                sync(card);
+                wide.addEventListener('change', function () { sync(card); });
+
+                card.addEventListener('click', function (e) {
+                    // Don't act when following a link inside the card
+                    if (e.target.closest('a, .project-link-static')) return;
+                    if (wide.matches) {
+                        // a featured lead card already shows its details inline
+                        if (!card.classList.contains('is-open') && getComputedStyle(details).display !== 'none') return;
+                        if (MODE === 'dialog') { openDialog(card); return; }
+                        if (!card.classList.contains('is-open')) setOpen(card);
+                        return;
+                    }
+                    card.classList.toggle('expanded');
+                    sync(card);
                 });
             });
         })();

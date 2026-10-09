@@ -75,17 +75,19 @@
         return localStorage.getItem("backdrop") !== "off";
     }
 
+    /* Every .backdrop-toggle, not one id: the shell has two (footer on desktop,
+       bar on phones, where the footer is hidden), and 404.html has its own. */
     function applyBackdropState(doc) {
-        var btn = doc.getElementById("backdrop-toggle");
-        if (!btn) return;  // only the shell and 404 have the control
+        var btns = doc.querySelectorAll(".backdrop-toggle");
+        if (!btns.length) return;  // only the shell and 404 have the control
         var on = backdropOn();
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-        btn.setAttribute(
-            "aria-label",
-            currentLang() === "ar"
-                ? (on ? "إخفاء الخلفية" : "إظهار الخلفية")
-                : (on ? "Turn off the background" : "Turn on the background")
-        );
+        var label = currentLang() === "ar"
+            ? (on ? "إخفاء الخلفية" : "إظهار الخلفية")
+            : (on ? "Turn off the background" : "Turn on the background");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].setAttribute("aria-pressed", on ? "true" : "false");
+            btns[i].setAttribute("aria-label", label);
+        }
     }
 
     /* Keep the address bar in step with the current view, so the URL is always
@@ -118,9 +120,14 @@
         syncPrefUrl("lang", currentLang() === "ar" ? "ar" : null);
         var frame = document.getElementById("contentFrame");
         if (frame) {
-            // reload the sub-page so its content (incl. the typewriter) re-renders
-            try { frame.contentWindow.location.reload(); }
-            catch (e) { frame.src = frame.src; }
+            // reload the sub-page so its content re-renders in the new language,
+            // through the shell's page transition when it has one
+            var reload = function () {
+                try { frame.contentWindow.location.reload(); }
+                catch (e) { frame.src = frame.src; }
+            };
+            if (window.swapFrame) window.swapFrame(reload);
+            else reload();
         }
     }
 
@@ -134,8 +141,10 @@
         var lang = doc.getElementById("lang-toggle");
         if (lang) lang.addEventListener("click", toggleLang);
 
-        var backdrop = doc.getElementById("backdrop-toggle");
-        if (backdrop) backdrop.addEventListener("click", toggleBackdrop);
+        var backdrops = doc.querySelectorAll(".backdrop-toggle");
+        for (var i = 0; i < backdrops.length; i++) {
+            backdrops[i].addEventListener("click", toggleBackdrop);
+        }
     }
 
     window.i18nApply = applyLang;

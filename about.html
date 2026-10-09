@@ -44,109 +44,128 @@
     </script>
     <noscript><style>html{background-color:#020004}</style></noscript>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
     <script src="i18n.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <title>About - Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
-    <div class="about-container">
-        <div class="about-content">
-            <h2 class="about-heading" data-ar="نبذة عني">About Me</h2>
-            
-            <div class="about-grid">
-                <div class="profile-container">
+    <!-- The whole page is the layout now. Before, the right column held everything and
+         scrolled inside a 400px box while the left held only the photo, so either the
+         box scrolled on its own or, unboxed, one side of the page ran on while the other
+         sat empty. Here the photo leads top-left beside the intro, and the credentials
+         spread across the full width as a grid of cards.
+ -->
+    <div class="about-container about-v2">
+        <h2 class="about-heading" data-ar="نبذة عني">About Me</h2>
+
+        <section class="about-intro">
+            <div class="profile-container">
                     <div class="profile-frame">
                         <img src="files/profile-thobe.webp" alt="Ibrahim Shaheen" id="profile-pic" width="600" height="600" fetchpriority="high">
                     </div>
-                    <div class="social-links">
-                        <a href="https://github.com/ibra-exe" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/ibrahim-shaheen/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <!-- X (hidden for now)
-                        <a href="https://x.com/ibrahimium" target="_blank" rel="noopener" aria-label="X"><i class="fab fa-x-twitter"></i></a>
-                        -->
-                    </div>
                 </div>
-                
-                <div class="about-info">
-                    <div class="about-text" id="about-type-target"></div>
-                    
-                    <div class="skills-section">
-                        <h3 class="skills-heading" data-ar="التعليم">Education</h3>
-                        <div class="skill-item" style="margin-bottom: 10px;">
+            <div class="about-text" id="about-type-target"></div>
+        </section>
+
+        <div class="about-bento">
+            <section class="bento-card bento-education">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-graduation-cap"></i></span>
+                <h3 class="skills-heading" data-ar="التعليم">Education</h3>
+                <div class="skill-item" style="margin-bottom: 10px;">
                             <i class="fas fa-graduation-cap"></i>
                             <div>
                                 <div data-ar="بكالوريوس هندسة البرمجيات">B.Sc. Software Engineering</div>
-                                <div style="font-size: 0.85rem; opacity: 0.75;" data-ar="جامعة طوكيو للتكنولوجيا · 2014 – 2019">Tokyo University of Technology &nbsp;·&nbsp; 2014 – 2019</div>
+                                <div style="font-size: 0.85rem; opacity: 0.75;" data-ar="جامعة طوكيو للتكنولوجيا · 2014 –⁠ 2019">Tokyo University of Technology &nbsp;·&nbsp; 2014&nbsp;–&#8288;&nbsp;2019</div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="skills-section">
-                        <h3 class="skills-heading" data-ar="الجوائز">Awards</h3>
-                        <div class="skill-item" style="margin-bottom: 10px;">
+            </section>
+            <section class="bento-card bento-award">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-trophy"></i></span>
+                <h3 class="skills-heading" data-ar="الجوائز">Awards</h3>
+                <div class="skill-item" style="margin-bottom: 10px;">
                             <i class="fas fa-trophy" style="color: gold;"></i>
                             <div>
                                 <div data-ar="جائزة أفضل ابتكار وأتمتة في نظام SAP SuccessFactors - المملكة العربية السعودية">Best HCM Innovation & Automation Award - KSA</div>
                                 <div style="font-size: 0.85rem; opacity: 0.75;" data-ar="SAP SuccessFactors · نوفمبر 2024">SAP SuccessFactors &nbsp;·&nbsp; November 2024</div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="skills-section">
-                        <h3 class="skills-heading" data-ar="اللغات">Languages</h3>
-                        <div class="skills-grid">
+            </section>
+            <section class="bento-card bento-languages">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-language"></i></span>
+                <h3 class="skills-heading" data-ar="اللغات">Languages</h3>
+                <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-language"></i> <span data-ar="العربية - اللغة الأم">Arabic - Native</span></div>
                             <div class="skill-item"><i class="fas fa-language"></i> <span data-ar="الإنجليزية - بطلاقة">English - Fluent</span></div>
                             <div class="skill-item"><i class="fas fa-language"></i> <span data-ar="اليابانية - متقدّم">Japanese - Advanced</span></div>
                         </div>
-                    </div>
-
-                    <div class="skills-section">
-                        <h3 class="skills-heading" data-ar="التحوّل الرقمي والاستراتيجية">Digital Transformation & Strategy</h3>
-                        <div class="skills-grid">
+            </section>
+            <section class="bento-card bento-skill">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-chess"></i></span>
+                <h3 class="skills-heading" data-ar="التحوّل الرقمي والاستراتيجية">Digital Transformation & Strategy</h3>
+                <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-globe"></i> <span data-ar="التحوّل الرقمي">Digital Transformation</span></div>
                             <div class="skill-item"><i class="fas fa-chess"></i> <span data-ar="الاستراتيجية الرقمية">Digital Strategy</span></div>
                             <div class="skill-item"><i class="fas fa-chart-line"></i> <span data-ar="تحسين العمليات">Process Optimization</span></div>
                             <div class="skill-item"><i class="fas fa-people-arrows"></i> <span data-ar="إدارة التغيير">Change Management</span></div>
                         </div>
-
-                        <h3 class="skills-heading" style="margin-top: 15px;" data-ar="أنظمة الموارد البشرية (HRIS)">HRIS</h3>
-                        <div class="skills-grid">
+            </section>
+            <section class="bento-card bento-skill">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-users-cog"></i></span>
+                <h3 class="skills-heading" data-ar="أنظمة الموارد البشرية (HRIS)">HRIS</h3>
+                <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-users-cog"></i> <span data-ar="رقمنة الموارد البشرية">HR Digitalization</span></div>
+                            <div class="skill-item"><i class="fas fa-id-card"></i> <span>SAP SuccessFactors Employee Central</span></div>
+                            <div class="skill-item"><i class="fas fa-sitemap"></i> <span data-ar="الهياكل التنظيمية والبيانات الأساسية">Org Structures &amp; Foundation Data</span></div>
                             <div class="skill-item"><i class="fas fa-chart-bar"></i> <span data-ar="تحليلات الموارد البشرية">People Analytics</span></div>
                         </div>
-
-                        <h3 class="skills-heading" style="margin-top: 15px;" data-ar="الذكاء الاصطناعي والأتمتة">AI & Automation</h3>
-                        <div class="skills-grid">
+            </section>
+            <section class="bento-card bento-skill">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-robot"></i></span>
+                <h3 class="skills-heading" data-ar="الذكاء الاصطناعي والأتمتة">AI & Automation</h3>
+                <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-brain"></i> <span data-ar="الذكاء الاصطناعي التطبيقي وحل المشكلات">Applied AI & Problem Solving</span></div>
                             <div class="skill-item"><i class="fas fa-robot"></i> <span data-ar="بناء وكلاء الذكاء الاصطناعي">AI Agent Development</span></div>
                             <div class="skill-item"><i class="fas fa-cogs"></i> <span data-ar="استراتيجية الأتمتة و RPA">Automation & RPA Strategy</span></div>
                         </div>
-
-                        <!-- Tools and platforms last, after the capability groups: the
-                             groups above say what he does, this says what he does it
-                             with. No data-ar on the items themselves — product names
-                             stay Latin in Arabic, the same convention the HRIS and
-                             project cards already follow, so only the heading swaps.
-                             SAP SuccessFactors moved down here out of the HRIS group
-                             rather than being listed in both places on one page. -->
-                        <h3 class="skills-heading" style="margin-top: 15px;" data-ar="الأدوات والمنصّات">Tools & Platforms</h3>
-                        <div class="skills-grid">
+            </section>
+            <section class="bento-card bento-tools">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-toolbox"></i></span>
+                <h3 class="skills-heading" data-ar="الأدوات والمنصّات">Tools & Platforms</h3>
+                <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-database"></i> SAP SuccessFactors</div>
                             <div class="skill-item"><i class="fas fa-diagram-project"></i> ServiceNow</div>
                             <div class="skill-item"><i class="fab fa-microsoft"></i> SharePoint</div>
-                            <div class="skill-item"><i class="fas fa-robot"></i> Copilot Studio</div>
+                            <div class="skill-item"><i class="fas fa-arrows-spin"></i> Power Automate</div>
+                        </div>
+            </section>
+            <!-- Builders first, assistants second: what he makes with AI leads, the
+                 everyday assistants follow. Product names stay Latin in Arabic. -->
+            <section class="bento-card bento-ai">
+                <span class="bento-icon" aria-hidden="true"><i class="fas fa-wand-magic-sparkles"></i></span>
+                <h3 class="skills-heading" data-ar="أدوات الذكاء الاصطناعي">AI Tools</h3>
+                <div class="ai-groups">
+                    <div class="ai-group">
+                        <h4 class="ai-group-label" data-ar="البناء والأتمتة">Building &amp; automation</h4>
+                        <div class="skills-grid">
                             <div class="skill-item"><i class="fas fa-terminal"></i> Claude Code</div>
+                            <div class="skill-item"><i class="fas fa-robot"></i> Microsoft Copilot Studio</div>
+                        </div>
+                    </div>
+                    <div class="ai-group">
+                        <h4 class="ai-group-label" data-ar="المساعدون الأذكياء والبحث">Assistants &amp; research</h4>
+                        <div class="skills-grid">
+                            <div class="skill-item"><i class="fas fa-comment-dots"></i> Claude</div>
+                            <div class="skill-item"><i class="fas fa-comments"></i> ChatGPT</div>
+                            <div class="skill-item"><i class="fas fa-magnifying-glass"></i> Perplexity</div>
+                            <div class="skill-item"><i class="fas fa-bolt"></i> Grok Bot</div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
     <script src="typewriter.js"></script>

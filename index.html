@@ -61,25 +61,13 @@
         })();
         </script>
         <link rel="stylesheet" href="styles.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet" />
         <script src="i18n.js" defer></script>
         <script src="circuit-bg.js" defer></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap"
-            rel="preload"
-            as="style"
-            onload="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-        <link
-            rel="preload"
-            as="style"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-            onload="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -140,13 +128,29 @@
         <div class="bright-star bright-star-6"></div>
         -->
 
-        <!-- One backdrop control, not a switchboard. The icon is the backdrop in
-             miniature — trace lines with a few lit cells on them — rather than a
-             glyph that happens to be square-ish. Inline SVG, not Font Awesome: it
-             is four paths, it inherits the button's colour through currentColor,
-             and 404.html loads no icon font at all. -->
-        <button id="backdrop-toggle" class="backdrop-toggle" aria-pressed="true" aria-label="Turn off the background">
-            <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+        
+
+        <!-- One compact bar on every page: name (also the way home), nav, controls.
+             The large name used to sit on its own row above the nav on every page,
+             costing 161px - 18% of a 900px screen - before any content started.
+             It now appears large only in the Home hero, where it is the headline.
+
+             The backdrop toggle is in the footer on desktop; it is a preference, not
+             something anyone visits a CV to do, so it does not earn the top-right
+             corner. Phones hide the footer, so they keep a copy here (.bar-only), and
+             i18n.js wires every .backdrop-toggle rather than a single id. -->
+        <div class="site-bar">
+            <header><h1><a href="home.html" class="bar-name" onclick="event.preventDefault(); loadContent('home.html')" data-ar="إبراهيم شاهين">Ibrahim Shaheen</a></h1></header>
+            <nav class="navbar" aria-label="Primary">
+            <a href="home.html" onclick="event.preventDefault(); loadContent('home.html')"><i class="fas fa-house"></i><span data-ar="الرئيسية">Home</span></a>
+            <a href="about.html" onclick="event.preventDefault(); loadContent('about.html')"><i class="fas fa-user"></i><span data-ar="نبذة">About</span></a>
+            <a href="experience.html" onclick="event.preventDefault(); loadContent('experience.html')"><i class="fas fa-briefcase"></i><span data-ar="الخبرة">Experience</span></a>
+            <a href="projects.html" onclick="event.preventDefault(); loadContent('projects.html')"><i class="fas fa-folder-open"></i><span data-ar="المشاريع">Projects</span></a>
+            <a href="contact.html" onclick="event.preventDefault(); loadContent('contact.html')"><i class="fas fa-envelope"></i><span data-ar="تواصل">Contact</span></a>
+        </nav>
+            <div class="bar-controls">
+                <button type="button" class="backdrop-toggle bar-only" aria-pressed="true" aria-label="Turn off the background">
+                    <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
                 <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.55" shape-rendering="crispEdges">
                     <path d="M8.5 0v24M15.5 0v24M0 8.5h24M0 15.5h24" />
                 </g>
@@ -156,16 +160,9 @@
                     <rect x="10" y="17.75" width="4" height="4" />
                 </g>
             </svg>
-        </button>
-        <button id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
-
-        <header><h1 data-ar="إبراهيم شاهين">Ibrahim Shaheen</h1></header>
-        <div class="navbar">
-            <a href="home.html" onclick="event.preventDefault(); loadContent('home.html')"><i class="fas fa-house"></i><span data-ar="الرئيسية">Home</span></a>
-            <a href="about.html" onclick="event.preventDefault(); loadContent('about.html')"><i class="fas fa-user"></i><span data-ar="نبذة">About</span></a>
-            <a href="experience.html" onclick="event.preventDefault(); loadContent('experience.html')"><i class="fas fa-briefcase"></i><span data-ar="الخبرة">Experience</span></a>
-            <a href="projects.html" onclick="event.preventDefault(); loadContent('projects.html')"><i class="fas fa-folder-open"></i><span data-ar="المشاريع">Projects</span></a>
-            <a href="contact.html" onclick="event.preventDefault(); loadContent('contact.html')"><i class="fas fa-envelope"></i><span data-ar="تواصل">Contact</span></a>
+                </button>
+                <button type="button" id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
+            </div>
         </div>
 
         <iframe id="contentFrame" src="home.html" title="Page Content" allowtransparency="true"></iframe>
@@ -181,6 +178,19 @@
 
                 <div class="footer-section">
                     <div class="social-links-footer">
+                        <button type="button" class="backdrop-toggle footer-only" aria-pressed="true" aria-label="Turn off the background">
+                            <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.55" shape-rendering="crispEdges">
+                    <path d="M8.5 0v24M15.5 0v24M0 8.5h24M0 15.5h24" />
+                </g>
+                <g fill="currentColor">
+                    <rect x="2.25" y="10" width="4" height="4" />
+                    <rect x="17.75" y="2.25" width="4" height="4" />
+                    <rect x="10" y="17.75" width="4" height="4" />
+                </g>
+            </svg>
+                        </button>
+                        <span class="footer-divider" aria-hidden="true"></span>
                         <a
                             href="https://github.com/ibra-exe"
                             target="_blank"
@@ -226,6 +236,24 @@
             })();
 
             const frame = document.getElementById("contentFrame");
+
+            /* Page changes animate (styles.css, 1b): fade the current page out, run the
+               navigation, and let the load handler below rise the new page in. The
+               frame starts hidden so the first page gets the same entrance instead of
+               painting and then animating. A safety timer shows the frame again if a
+               load event never arrives. Also used by i18n.js for the language switch. */
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+            let leaveTimer = null, safetyTimer = null;
+            frame.classList.add("is-leaving");
+            function swapFrame(navigate, instant) {
+                clearTimeout(leaveTimer);
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-entering");
+                frame.classList.add("is-leaving");
+                leaveTimer = setTimeout(navigate, instant || reduceMotion.matches ? 0 : 140);
+                safetyTimer = setTimeout(function () { frame.classList.remove("is-leaving"); }, 4000);
+            }
+            window.swapFrame = swapFrame;
 
             function resizeFrame() {
                 try {
@@ -276,8 +304,9 @@
                src (even to the value it already has) starts a navigation and pushes a
                history entry. Seeded with the value hardcoded in the markup. */
             let currentPage = "home";
+            document.documentElement.dataset.page = "home";
 
-            function applyPage(page, history_mode) {
+            function applyPage(page, history_mode, instant) {
                 if (currentPage !== page) {
                     /* location.replace, not frame.src: assigning src pushes a session
                        history entry for the iframe, so every tab change cost TWO
@@ -285,9 +314,12 @@
                        still. replace() swaps the frame's entry in place, leaving our
                        pushState entries as the only ones Back/Forward walks. */
                     const target = page + ".html";
-                    try { frame.contentWindow.location.replace(target); }
-                    catch (e) { frame.src = target; }
+                    swapFrame(function () {
+                        try { frame.contentWindow.location.replace(target); }
+                        catch (e) { frame.src = target; }
+                    }, instant);
                     frame.dataset.page = page;
+                    document.documentElement.dataset.page = page;
                     currentPage = page;
                 }
                 document.title = TITLES[page];
@@ -315,10 +347,23 @@
                 applyPage(pageFromUrl(), null);
             });
 
-            // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS)
-            applyPage(pageFromUrl(), "replaceState");
+            // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS).
+            // Instant: the frame is already hidden, so there is nothing to fade out.
+            applyPage(pageFromUrl(), "replaceState", true);
+
+            // Projects opens its details in a dialog inside the frame; dim the bar and
+            // footer around it. Same-origin messages only.
+            window.addEventListener("message", function (e) {
+                if (e.origin !== location.origin || !e.data || e.data.type !== "project-dialog") return;
+                document.documentElement.classList.toggle("frame-modal", !!e.data.open);
+            });
 
             frame.addEventListener("load", function () {
+                document.documentElement.classList.remove("frame-modal");
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-leaving", "is-entering");
+                void frame.offsetWidth;            // restart the entrance animation
+                frame.classList.add("is-entering");
                 resizeFrame();
                 try { window.i18nApply(frame.contentDocument); } catch(e) {}
                 try {

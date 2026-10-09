@@ -751,14 +751,6 @@ footer a:hover {
         justify-content: center;
     }
 
-    .social-links a {
-        min-width: 44px;
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .contact-grid {
         grid-template-columns: 1fr;
     }
@@ -939,24 +931,6 @@ footer a:hover {
 
 .fade-in {
     opacity: 1 !important;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.social-links a {
-    color: var(--text-color);
-    font-size: 1.5rem;
-    transition: color 0.3s, transform 0.3s;
-}
-
-.social-links a:hover {
-    color: var(--glow-color);
-    transform: translateY(-3px);
 }
 
 .about-info {
@@ -2189,13 +2163,6 @@ html[lang="ar"] .notfound-heading {
     }
 }
 
-/* Status shown beside a project title ("HR Super App - In Progress"). The status
-   reads lighter than the name so the title still dominates. Was an inline
-   style="font-weight:400" on each <em>; now that two cards use the pattern it
-   belongs here, where a media query can reach it. */
-.project-title em {
-    font-weight: 400;
-}
 
 /* Nothing on a sub-page is meant to scroll sideways. Pinning that down stops a
    stray out-of-flow box from ever shifting the layout horizontally — the second
@@ -2593,4 +2560,2345 @@ html[lang="ar"] .contact-icon {
    so there is nothing to fix on that side. */
 html[lang="ar"] .contact-heading {
     margin-bottom: 12px;
+}
+
+
+/* ============================================================================
+   REDESIGN (branch: redesign)
+   Everything for the redesign lives in this one block, so it can be reviewed,
+   tuned or reverted as a unit. It is at the end of the file on purpose: earlier
+   base rules sit after several early media blocks, so only rules placed here are
+   guaranteed to win.
+   ============================================================================ */
+
+/* ---- 1. Type: one professional family instead of a sci-fi display face ----
+   Orbitron read as gaming, which worked against the business-professional brief;
+   Plex is a corporate-technical face, so it keeps a technical note without looking
+   like a game. Plex Mono carries small labels. Cairo stays for Arabic, where it
+   already pairs well with a geometric sans. */
+:root {
+    --font-main: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-special: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --accent: #b766ff;
+    --accent-strong: #cfa2ff;       /* accent as TEXT on dark: brighter, readable */
+    --muted: rgba(230, 230, 242, 0.74);
+    /* One card surface for every page: a deep, nearly opaque purple, easy on the
+       eye, and the moving squares never show through text. --surface-solid is kept
+       as an alias for older rules. */
+    --surface: rgba(25, 11, 41, 0.88);
+    --surface-solid: var(--surface);
+    --surface-hover: rgba(40, 18, 64, 0.92);
+    --surface-border: rgba(183, 102, 255, 0.22);
+}
+
+/* The two card types that predate the token used their own translucent purple. */
+.project-card,
+.experience-container .content {
+    background-color: var(--surface);
+    border-color: var(--surface-border);
+}
+
+html[lang="ar"] {
+    --font-main: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+    --font-special: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+/* The neon glow went with the display face. */
+header,
+.about-heading,
+.contact-heading,
+.projects-section-title,
+.notfound-heading {
+    text-shadow: none;
+}
+
+.about-heading,
+.contact-heading,
+.projects-section-title {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+/* Plex Mono has no Arabic. Anything set in mono that carries Arabic text goes back
+   to the Arabic face in Arabic, or it would fall to a system default. */
+html[lang="ar"] .hero-eyebrow,
+html[lang="ar"] .project-outcome,
+html[lang="ar"] .company-tenure,
+html[lang="ar"] .expand-btn {
+    font-family: var(--font-main);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* ---- 1b. Page changes ----
+   The shell swaps the iframe's page, and a new document paints nothing until its
+   fonts are in, so a plain swap read as a blink. Now the old page fades out, the
+   new one loads hidden, and it rises in once its load event says it is ready. */
+#contentFrame {
+    transition: opacity 0.14s ease;
+}
+
+#contentFrame.is-leaving {
+    opacity: 0;
+}
+
+#contentFrame.is-entering {
+    animation: frame-in 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes frame-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes frame-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #contentFrame.is-entering {
+        animation: frame-fade 0.15s ease both;
+    }
+}
+
+/* ---- 2. One compact bar instead of a large name on every page ----
+   The old stacked header cost 161px (18% of a 900px screen) before any content,
+   on every page. */
+.site-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 28px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(183, 102, 255, 0.14);
+    background: rgba(2, 0, 4, 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.site-bar header {
+    font-family: var(--font-special);
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-align: start;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.bar-name {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.bar-name:hover {
+    color: var(--accent-strong);
+}
+
+/* On Home the hero carries the name large, so the bar does not repeat it. Hidden
+   rather than removed so the nav does not shift between pages. */
+html[data-page="home"] .site-bar .bar-name {
+    visibility: hidden;
+}
+
+.bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* The toggles used to be position:fixed in the corner; in the bar they are in flow. */
+.site-bar .lang-toggle,
+.site-bar .backdrop-toggle {
+    position: static;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+/* Desktop keeps the backdrop toggle in the footer; the bar copy is for phones. */
+.site-bar .bar-only {
+    display: none;
+}
+
+/* Nav as quiet text with an underline on the current page, not a row of filled
+   pills. Desktop only: below 600px .navbar is the bottom tab bar, with its own rules. */
+@media screen and (min-width: 601px) {
+    .site-bar .navbar {
+        display: flex;
+        gap: 2px;
+        margin: 0;
+        margin-inline-start: auto;
+        padding: 0;
+        text-align: initial;
+    }
+
+    .site-bar .navbar a {
+        position: relative;
+        margin: 0;
+        padding: 8px 12px;
+        background: transparent;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 500;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .site-bar .navbar a:hover {
+        color: var(--text-color);
+        background: rgba(183, 102, 255, 0.08);
+        transform: none;
+    }
+
+    .site-bar .navbar a[aria-current="page"] {
+        color: var(--text-color);
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .site-bar .navbar a[aria-current="page"]::after {
+        content: '';
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 1px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--accent);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* No blur on phones, and this is load-bearing. Below 600px .navbar becomes the
+       bottom tab bar via position:fixed, and it now lives INSIDE .site-bar. A
+       backdrop-filter - like transform or filter - makes its element the containing
+       block for fixed descendants, so the tab bar pinned itself to the bottom of the
+       bar instead of the bottom of the screen: it rendered at the top, under the
+       toggles, with Contact hidden behind them. */
+    .site-bar {
+        padding: 10px 14px;
+        gap: 10px;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: rgba(2, 0, 4, 0.55);
+    }
+
+    /* One line on a phone instead of stranding "NEOM" on its own. */
+    .hero-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.03em;
+    }
+
+    /* Override the 124px lane the old fixed toggles needed; they are in flow now. */
+    .site-bar header {
+        font-size: 1.05rem;
+        padding: 0;
+    }
+
+    .site-bar .bar-controls {
+        margin-inline-start: auto;
+    }
+
+    .site-bar .bar-only {
+        display: inline-flex;
+    }
+}
+
+/* The footer copy of the backdrop toggle, sized as one more utility icon. */
+footer .backdrop-toggle {
+    position: static;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid rgba(183, 102, 255, 0.35);
+}
+
+footer .backdrop-toggle .backdrop-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.social-links-footer {
+    align-items: center;
+}
+
+.footer-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(230, 230, 242, 0.25);
+}
+
+/* ---- 3. Home hero: readable at once, with proof stats ---- */
+.home-container.hero-page {
+    min-height: 100vh;              /* the iframe's own viewport: the space the shell gives it */
+    align-items: center;            /* fills the empty lower half instead of leaving it */
+    justify-content: center;
+    padding: 32px 28px 40px;
+}
+
+.hero {
+    width: 100%;
+    max-width: 880px;
+}
+
+.hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 14px;
+}
+
+.hero-name {
+    font-family: var(--font-special);
+    font-size: clamp(2.4rem, 5.6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text-color);
+    margin: 0 0 10px;
+}
+
+.hero-role {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 0 0 16px;
+}
+
+.hero-summary {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 28px;
+}
+
+/* The live Experience counter spans the full width on top; the three single-figure
+   stats share one row under it. Explicit columns, never auto-fit, which lands on
+   awkward counts at tablet widths. */
+.hero-stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 0 0 28px;
+    padding: 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.stat-value {
+    font-family: var(--font-special);
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.stat-experience {
+    grid-column: 1 / -1;
+    gap: 10px;
+}
+
+.stat-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+}
+
+html[lang="ar"] .stat-kicker {
+    font-family: var(--font-main);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.exp-counter {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+}
+
+.seg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px 7px;
+    border-radius: 8px;
+    background: rgba(183, 102, 255, 0.07);
+    border: 1px solid rgba(183, 102, 255, 0.14);
+}
+
+/* Tabular mono digits: every digit the same width, so the counter does not jitter
+   sideways as it ticks. */
+.seg-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.35rem, 3.4vw, 2rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--text-color);
+}
+
+.seg-live .seg-num {
+    color: var(--accent-strong);
+}
+
+.seg-unit {
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .seg-unit {
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 0.72rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Short laptop screens (a 1280x720 display leaves the iframe about 605px): the
+   counter card added a row, which pushed the focus chips below the fold. Trim the
+   spacing rather than drop anything, so the whole hero still fits in one view. */
+@media screen and (min-width: 601px) and (max-height: 700px) {
+    .home-container.hero-page {
+        padding: 18px 28px 22px;
+    }
+
+    .hero-eyebrow {
+        margin-bottom: 10px;
+    }
+
+    .hero-name {
+        font-size: clamp(2.4rem, 5vw, 3.2rem);
+        margin-bottom: 6px;
+    }
+
+    .hero-role {
+        margin-bottom: 12px;
+    }
+
+    .hero-summary {
+        margin-bottom: 18px;
+    }
+
+    .hero-stats {
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .stat {
+        padding: 10px 14px;
+        gap: 4px;
+    }
+
+    .stat-experience {
+        gap: 8px;
+    }
+
+    .stat-value {
+        font-size: 1.45rem;
+    }
+
+    .seg {
+        padding: 6px 4px 5px;
+    }
+
+    .seg-num {
+        font-size: clamp(1.3rem, 3vw, 1.65rem);
+    }
+
+    .hero .cta-buttons {
+        margin-bottom: 16px;
+    }
+}
+
+/* An older 700px rule gives every .cta-button width:100% capped at 320px, so two of
+   them cannot share a row on a tablet and they stack. Buttons size to their label
+   here; phones (below) still get full-width, which is right for thumbs. */
+@media screen and (min-width: 601px) {
+    .hero .cta-button {
+        width: auto;
+        max-width: none;
+    }
+}
+
+.hero .cta-buttons {
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: auto;
+    max-width: none;
+    margin: 0 0 24px;
+}
+
+.hero-focus {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
+.hero-focus li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-focus i {
+    color: var(--accent);
+}
+
+@media screen and (max-width: 600px) {
+    .home-container.hero-page {
+        min-height: auto;
+        align-items: flex-start;
+        padding: 22px 16px 28px;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .stat {
+        padding: 12px 13px;
+    }
+
+    .stat:not(.stat-experience) {
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .stat-value {
+        font-size: 1.4rem;
+        min-width: 2.35em;      /* as wide as "2024", so the three labels line up */
+    }
+
+    .exp-counter {
+        gap: 4px;
+    }
+
+    .seg {
+        padding: 7px 2px 6px;
+    }
+
+    .seg-unit {
+        font-size: 0.56rem;
+        letter-spacing: 0.02em;
+    }
+
+    .hero .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero .cta-button {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* ---- 4. Button hierarchy: weight follows importance ----
+   They used to share one purple fill, so "Get In Touch" - the conversion goal -
+   read no louder than a nav pill. Dark text on the primary: white on #b766ff is
+   about 3:1, which fails AA; dark text is well above it. */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.cta-primary {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #14061f;
+}
+
+.cta-primary:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    box-shadow: 0 6px 20px rgba(183, 102, 255, 0.35);
+}
+
+.cta-secondary {
+    background: transparent;
+    border: 1px solid rgba(183, 102, 255, 0.55);
+    color: var(--text-color);
+}
+
+.cta-secondary:hover {
+    background: rgba(183, 102, 255, 0.12);
+    box-shadow: none;
+}
+
+.cta-tertiary {
+    background: rgba(183, 102, 255, 0.12);
+    border: 1px solid rgba(183, 102, 255, 0.32);
+    color: var(--text-color);
+}
+
+.cta-tertiary:hover {
+    background: rgba(183, 102, 255, 0.2);
+    box-shadow: none;
+}
+
+.cta-tertiary i {
+    color: var(--accent-strong);
+}
+
+/* "View details" as a text link: it is a disclosure, not an action. */
+.expand-btn {
+    padding: 4px 0;
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+}
+
+.expand-btn:hover {
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-color);
+}
+
+/* ---- 5. About: the photo leads, the credentials fill the width ----
+   Neither old option worked: boxed, 68% of About sat behind an inner scroll that
+   captured the trackpad; unboxed, one column ran on while the photo column sat empty.
+   Photo top-left beside the intro, then a grid of cards across the full width. */
+.about-container.about-v2 {
+    display: block;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 28px 40px;
+}
+
+.about-v2 .about-heading {
+    text-align: start;
+    margin: 0 0 22px;
+}
+
+.about-intro {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 28px;
+}
+
+.about-intro .profile-container {
+    align-items: flex-start;
+}
+
+.about-intro .profile-frame {
+    max-width: 250px;
+    margin-bottom: 0;
+}
+
+/* Side by side, the photo takes the full height of the text card, so their tops and
+   bottoms line up. The image is lifted out of the flow (it would otherwise set the
+   row's height itself) and cropped to fill, keeping the face in frame. */
+@media screen and (min-width: 641px) {
+    .about-intro {
+        align-items: stretch;
+    }
+
+    .about-intro .profile-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-intro .profile-frame {
+        flex: 1 1 auto;
+        min-height: 250px;
+    }
+
+    .about-intro #profile-pic {
+        position: absolute;
+        inset: 5px;
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+        aspect-ratio: auto;
+        object-fit: cover;
+        object-position: 50% 22%;
+    }
+}
+
+.about-v2 .about-text {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    white-space: pre-line;
+    max-width: none;
+    margin: 0;              /* an older rule's bottom margin made the row taller than the card */
+    padding: 26px 36px;     /* wide side padding keeps lines near 80 characters */
+    border-radius: 14px;
+    background: var(--surface-solid);       /* the backdrop moved behind the words */
+    border: 1px solid var(--surface-border);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.about-bento {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.bento-card {
+    position: relative;
+    padding: 18px 18px 16px;
+    border-radius: 14px;
+    background: var(--surface-solid);     /* same material as the intro card above */
+    border: 1px solid var(--surface-border);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.bento-card .skills-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+    padding-inline-end: 34px;          /* clear of the corner icon */
+}
+
+.bento-icon {
+    position: absolute;
+    top: 16px;
+    inset-inline-end: 16px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(183, 102, 255, 0.14);
+    color: var(--accent-strong);
+    font-size: 0.85rem;
+}
+
+/* Inside a card the items read as a list, not a grid of pills. */
+.bento-card .skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bento-card .skill-item {
+    margin: 0;
+    background: rgba(2, 0, 4, 0.28);
+}
+
+/* The award is the strongest single credential on the page, so it gets a warm edge. */
+.bento-award {
+    border-color: rgba(255, 205, 90, 0.38);
+    background: linear-gradient(160deg, rgba(255, 205, 90, 0.10), var(--surface-solid) 55%);
+}
+
+.bento-award .bento-icon {
+    background: rgba(255, 205, 90, 0.16);
+    color: #ffd166;
+}
+
+/* Languages as chips too. As a three-row list it set the height of the whole first
+   row, leaving Education and Awards with an empty lower half. */
+.bento-languages .skills-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bento-languages .skill-item {
+    width: auto;
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+
+/* The card already carries the language icon; one per chip only made them too wide
+   to share a row. */
+.bento-languages .skill-item i {
+    display: none;
+}
+
+/* Last row: Tools & Platforms (a list, like the skill cards) beside AI Tools, which
+   spans the other two columns. Two groups of chips inside, builders first. */
+.bento-ai {
+    grid-column: span 2;
+}
+
+.ai-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ai-group-label {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .ai-group-label {
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.bento-ai .skills-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bento-ai .skill-item {
+    width: auto;
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+
+@media screen and (max-width: 1000px) {
+    .about-bento {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* eight cards in two columns: every card one cell, so no row has a hole */
+    .bento-ai {
+        grid-column: auto;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .about-container.about-v2 {
+        padding: 20px 16px 28px;
+    }
+
+    .about-intro {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .about-intro .profile-container {
+        align-items: center;
+    }
+
+    .about-v2 .about-text {
+        padding: 16px 18px;
+    }
+
+    .about-bento {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- 6. Experience: one employer, a visible progression ---- */
+.company-tenure {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin: 2px 0 16px;
+}
+
+.role-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.role {
+    position: relative;
+    padding-inline-start: 22px;
+    padding-bottom: 18px;
+}
+
+.role:last-child {
+    padding-bottom: 0;
+}
+
+/* Current role a filled node, earlier ones hollow, joined by a thin line: the
+   promotion path reads at a glance. */
+.role::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: transparent;
+}
+
+.role:first-child::before {
+    background: var(--accent);
+}
+
+.role::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 4px;
+    top: 19px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(183, 102, 255, 0.3);
+}
+
+.role:last-child::after {
+    display: none;
+}
+
+/* The existing reveal rules are all `.content.expanded ...`. The grouped roles are
+   li.role, not .content, so without these they would never open. */
+.role.expanded .exp-details {
+    grid-template-rows: 1fr;
+}
+
+.role.expanded .expand-chevron {
+    transform: rotate(180deg);
+}
+
+.role.expanded .expand-more {
+    display: none;
+}
+
+.role.expanded .expand-less {
+    display: inline;
+}
+
+/* ---- 6b. Experience: a heading, then a list of roles beside one role in focus ----
+   Laptops get the list and a detail panel (built by a script in experience.html from
+   the same markup); below 1000px the stacked timeline shows instead, since a list
+   beside a panel needs the width. An earlier version led with a time-axis strip of
+   bars; it was hard to read (three-month roles became specks, overlaps needed a
+   second lane) and has been dropped. The NEOM progression it tried to show now
+   lives in the panel as a path, which says the same thing in words.
+
+   Panels use the shared --surface (section 1), like every other card. */
+
+.exp-header {
+    margin: 4px 0 22px;
+}
+
+.exp-heading {
+    font-family: var(--font-special);
+    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--text-color);
+    text-shadow: none;
+    margin: 0 0 6px;
+}
+
+.exp-subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.exp-desktop {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .exp-header {
+        margin: 0 0 14px;
+    }
+
+    .exp-heading {
+        font-size: 1.6rem;
+    }
+
+    .exp-subtitle {
+        font-size: 0.88rem;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .experience-container {
+        max-width: 1180px;
+        padding: 28px 32px 40px;
+    }
+
+    .exp-desktop {
+        display: block;
+    }
+
+    .experience-container .timeline {
+        display: none;
+    }
+
+    .exp-split {
+        display: grid;
+        grid-template-columns: minmax(300px, 370px) minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+    }
+
+    /* the list */
+    .exp-list {
+        padding: 16px 14px;
+        border-radius: 16px;
+        background: var(--surface-solid);
+        border: 1px solid var(--surface-border);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    .list-employer + .list-employer {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(183, 102, 255, 0.14);
+    }
+
+    .list-company {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 2px 8px 8px;
+    }
+
+    /* Logos sit in a fixed slot, centred, so wide wordmarks (Tokyo, Cuore) do not
+       push their names out of line with the square marks. */
+    .list-company img {
+        width: 58px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .list-company-text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .list-company-name {
+        font-size: 0.97rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .list-company-tenure {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--muted);
+    }
+
+    .list-roles {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .list-roles li {
+        position: relative;
+    }
+
+    .list-roles li + li {
+        margin-top: 2px;
+    }
+
+    /* The rail: a node per role, joined by a line from one node to the next, the
+       same marks as the phone timeline. */
+    .list-roles li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        inset-inline-start: 22px;      /* node centre: 1px border + 16px + 6px, less 1px */
+        top: 27px;                     /* node bottom */
+        bottom: -17px;                 /* next node top: 2px gap + 1px border + 14px */
+        width: 2px;
+        background: rgba(183, 102, 255, 0.28);
+        pointer-events: none;
+    }
+
+    .list-role {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: 100%;
+        padding: 8px 12px;
+        padding-inline-start: 38px;
+        text-align: start;
+        font-family: var(--font-main);
+        color: var(--text-color);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .list-role::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: 16px;
+        top: 14px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface-solid);
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .list-role:hover {
+        background: rgba(183, 102, 255, 0.08);
+    }
+
+    .list-role.is-selected {
+        background: rgba(183, 102, 255, 0.16);
+        border-color: rgba(183, 102, 255, 0.38);
+    }
+
+    .list-role.is-selected::before {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(183, 102, 255, 0.22);
+    }
+
+    .list-role-title {
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.35;
+    }
+
+    .list-role-period {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--muted);
+    }
+
+    /* the panel */
+    .exp-panel {
+        position: sticky;
+        top: 18px;
+        padding: 26px 30px 28px;
+        border-radius: 16px;
+        background: var(--surface-solid);
+        border: 1px solid var(--surface-border);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    .exp-panel.is-entering > * {
+        animation: exp-panel-in 0.28s ease both;
+    }
+
+    @keyframes exp-panel-in {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+    }
+
+    .panel-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(183, 102, 255, 0.16);
+    }
+
+    .panel-head img {
+        width: 96px;
+        height: 52px;
+        object-fit: contain;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    .panel-title {
+        margin: 0 0 4px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+    }
+
+    .panel-meta {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+    }
+
+    .panel-period {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--muted);
+    }
+
+    .panel-badge {
+        padding: 2px 9px;
+        border-radius: 999px;
+        font-family: var(--font-main);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #8ff0b0;
+        background: rgba(143, 240, 176, 0.1);
+        border: 1px solid rgba(143, 240, 176, 0.35);
+    }
+
+    .panel-label {
+        margin: 0 0 12px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-strong);
+    }
+
+    /* The path: one step per role, oldest first, joined by a line. Steps before the
+       one in view are filled, the one in view is ringed, later ones are hollow. */
+    .panel-path {
+        margin-bottom: 22px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(183, 102, 255, 0.16);
+    }
+
+    .path-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    /* Earlier steps share the width; the last one is only as wide as its label and
+       sits at the far end, so the line runs the full width of the panel. */
+    .path-step {
+        position: relative;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .path-step:last-child {
+        flex: 0 0 auto;
+    }
+
+    .path-step:last-child .path-btn {
+        padding-inline-end: 0;
+    }
+
+    .path-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 7px;
+        inset-inline-start: 20px;
+        inset-inline-end: 4px;
+        height: 2px;
+        background: rgba(183, 102, 255, 0.22);
+        pointer-events: none;
+    }
+
+    .path-step.is-done::after {
+        background: rgba(183, 102, 255, 0.6);
+    }
+
+    .path-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        width: 100%;
+        padding: 0;
+        padding-inline-end: 10px;
+        text-align: start;
+        font-family: var(--font-main);
+        color: var(--text-color);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .path-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface-solid);
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .path-step.is-done .path-dot {
+        background: rgba(183, 102, 255, 0.6);
+    }
+
+    .path-step.is-current .path-dot {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(183, 102, 255, 0.25);
+    }
+
+    .path-title {
+        font-size: 0.88rem;
+        font-weight: 500;
+        line-height: 1.3;
+        color: var(--muted);
+        transition: color 0.2s;
+    }
+
+    .path-step.is-current .path-title,
+    .path-btn:hover .path-title {
+        color: var(--text-color);
+    }
+
+    .path-year {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--muted);
+    }
+
+    .exp-panel .description-lead {
+        font-size: 1rem;
+        margin-bottom: 18px;
+    }
+
+    .exp-panel .description li {
+        margin-bottom: 10px;
+    }
+
+    html[lang="ar"] .list-company-tenure,
+    html[lang="ar"] .list-role-period,
+    html[lang="ar"] .panel-period,
+    html[lang="ar"] .panel-label {
+        font-family: var(--font-main);
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    html[lang="ar"] .panel-label {
+        font-size: 0.82rem;
+    }
+}
+
+/* Short laptop screens (1280x720 leaves the page about 605px): tighten the panel
+   so a long role still fits in view while it is pinned. */
+@media screen and (min-width: 1000px) and (max-height: 760px) {
+    .exp-header {
+        margin-bottom: 16px;
+    }
+
+    .exp-panel {
+        top: 12px;
+        padding: 20px 26px 22px;
+    }
+
+    .panel-head {
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+    }
+
+    .panel-head img {
+        width: 80px;
+        height: 44px;
+    }
+
+    .panel-title {
+        font-size: 1.25rem;
+    }
+
+    .panel-path {
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+    }
+
+    .exp-panel .description li {
+        margin-bottom: 7px;
+    }
+}
+
+/* Below the laptop view: the stacked cards get the same near-opaque surface, so the
+   backdrop stops showing through the text, and lose the hover lift, which looks
+   wrong on a card as tall as NEOM's. The "select a role" line belongs to the list
+   view; here each card has its own View details. */
+@media screen and (max-width: 999px) {
+    .experience-container .content:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .exp-subtitle {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .exp-panel.is-entering > * {
+        animation: none;
+    }
+}
+
+/* ---- 7. Projects: an even grid on laptops, details in a dialog ----
+   The first two-column attempt was ragged for two reasons. Cards expanded in place,
+   so one card in a row grew and its neighbour did not. And a section whose card count
+   does not divide by the column count leaves a hole at the end of its last row.
+   On laptops a card now opens in a dialog, so every card stays the same height. The
+   FIRST card of a section widens to soak up the leftover columns, worked out from the
+   card count, so the grid stays gap-free however many projects are added later.
+   Phones keep the single column with in-place expand. */
+.project-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (min-width: 1000px) {
+    .projects-container {
+        max-width: 1180px;
+        align-items: stretch;
+    }
+
+    /* the heading rule runs the width of the grid it introduces */
+    .projects-section-title,
+    .projects-section-subtitle {
+        max-width: none;
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        align-items: stretch;
+        margin-bottom: 34px;
+    }
+
+    .project-grid > .project-card {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        max-width: none;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    /* Two columns: an odd count makes the first card a full-width lead. A lead that
+       wide would be mostly empty with just a title and a summary, so it shows its
+       details in a second column instead of behind a button (see the featured rules
+       below; the script skips the dialog when the details are already visible). */
+    .project-grid > .project-card:first-child:nth-last-child(odd) {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 34px;
+        cursor: default;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > :not(.project-details) {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / -1;
+        padding-inline-start: 30px;
+        border-inline-start: 1px solid rgba(183, 102, 255, 0.2);
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .expand-btn {
+        display: none;
+    }
+
+    /* Summaries clamp to three lines so cards in a row agree on height; the full
+       text is one click away in the dialog. */
+    .project-grid .project-summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .project-grid .project-details {
+        display: none;
+    }
+
+    .project-grid .expand-btn {
+        margin-top: auto;
+        padding-top: 12px;
+        align-self: flex-start;
+    }
+
+    .project-grid .expand-chevron {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1320px) {
+    .project-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Undo the two-column rule (span and featured layout), then size the lead card
+       for three columns: 3k+2 cards -> the first spans two; 3k+1 -> the first takes
+       the whole row. Either way it is wide, so it gets the featured layout. */
+    .project-grid > .project-card:first-child:nth-last-child(odd) {
+        grid-column: auto;
+        display: flex;
+        cursor: pointer;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .project-details {
+        display: none;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .expand-btn {
+        display: inline-flex;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2),
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) {
+        grid-column: 1 / -1;  /* narrowed to two columns for 3k+2 below */
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 34px;
+        cursor: default;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) {
+        grid-column: span 2;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > :not(.project-details),
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > :not(.project-details) {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > .project-details,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / -1;
+        padding-inline-start: 30px;
+        border-inline-start: 1px solid rgba(183, 102, 255, 0.2);
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) .project-details-inner,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) .project-summary,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > .expand-btn,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > .expand-btn {
+        display: none;
+    }
+
+}
+
+/* ---- 7b. Projects, expand in place (laptops) ----
+   The alternative to the dialog: the card the visitor picks takes its whole row
+   and grows to show everything, title across the top, summary on one side and the
+   details on the other, with an X to fold it back. The script locks the card to
+   the row it was in, so the cards that shared that row move below it and no row is
+   left with a hole. Phones keep their in-place accordion. */
+.card-close {
+    display: none;
+}
+
+@media screen and (min-width: 1000px) {
+    .project-grid > .project-card {
+        position: relative;
+    }
+
+    .project-grid > .project-card.expandable.is-open {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 40px;
+        padding: 28px 32px 30px;
+        cursor: default;
+        border-color: rgba(183, 102, 255, 0.55);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+        transform: none;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-card-head {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        margin-bottom: 14px;
+        padding-inline-end: 52px;          /* clear of the X */
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-title {
+        font-size: 1.5rem;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-outcome,
+    .project-grid > .project-card.expandable.is-open > .project-summary {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+        font-size: 1.05rem;
+        line-height: 1.65;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 2 / -1;
+        padding-inline-start: 34px;
+        border-inline-start: 1px solid rgba(183, 102, 255, 0.2);
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .expand-btn {
+        display: none;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .card-close {
+        position: absolute;
+        top: 18px;
+        inset-inline-end: 18px;
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 10px;
+        border: 1px solid rgba(183, 102, 255, 0.4);
+        background: rgba(2, 0, 4, 0.28);
+        color: var(--text-color);
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .card-close:hover {
+        background: rgba(183, 102, 255, 0.2);
+        border-color: rgba(183, 102, 255, 0.7);
+    }
+}
+
+/* ---- 7d. "In progress" tag ----
+   The purple chip under a title, the same as an outcome chip, with a dot ahead of
+   the words so it reads as a status. Replaces the old "- In Progress 🚧" title
+   suffix on Ember, Momentum and Unmasked, and marks the strategy card. */
+/* .project-outcome is declared later in the file as inline-block; doubling the
+   class keeps this layout winning. */
+.project-outcome.project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.project-outcome.project-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-strong);
+    box-shadow: 0 0 0 3px rgba(207, 162, 255, 0.2);
+    flex-shrink: 0;
+}
+
+/* ---- 7c. The highlight card (Digital Transformation Strategy) ----
+   The first card of Professional Work, always the full row on laptops, where its
+   details are always open: the vision on one side, four figures on the other, and
+   the three pillars across the full width. Phones and the dialog stack the same
+   blocks. (The full-row rule is this card's own; the count-based lead rules agree
+   with it while Professional Work has an odd number of cards.) */
+.feature-kicker {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+}
+
+.project-feature-card .project-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+.feature-label {
+    display: block;
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .feature-kicker,
+html[lang="ar"] .feature-label {
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* the vision, set as a quote: label above, accent rule beside */
+.feature-vision-label {
+    margin: 14px 0 6px;
+}
+
+.project-feature-card .feature-vision {
+    margin: 0 0 4px;
+    padding-inline-start: 16px;
+    border-inline-start: 3px solid var(--accent);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+html[lang="ar"] .project-feature-card .feature-vision {
+    font-style: normal;
+}
+
+.feature-figures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.figure {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(183, 102, 255, 0.09);
+    border: 1px solid var(--surface-border);
+}
+
+/* sized to its digits: a dir="ltr" value stretched across the tile would sit on the
+   wrong side in Arabic */
+.figure-value {
+    align-self: flex-start;
+    font-family: var(--font-special);
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--accent-strong);
+}
+
+.figure-label {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.feature-pillars {
+    display: grid;
+    gap: 12px;
+}
+
+.pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.pillar-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(183, 102, 255, 0.14);
+    color: var(--accent-strong);
+}
+
+.pillar strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.pillar div span {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+@media screen and (min-width: 1000px) {
+    .project-grid > .project-card.project-feature-card.expandable {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        grid-template-rows: none;
+        column-gap: 48px;
+        padding: 32px 36px 32px;
+        cursor: default;
+        border-color: rgba(183, 102, 255, 0.45);
+    }
+
+    /* Lift the details' blocks into the card's own grid, so the figures can sit
+       beside the vision and the pillars can run the full width. */
+    .project-grid > .project-card.project-feature-card.expandable > .project-details,
+    .project-grid > .project-card.project-feature-card.expandable .project-details-inner {
+        display: contents;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-card-head {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .project-title {
+        font-size: 1.8rem;
+        letter-spacing: -0.015em;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-status {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: start;
+        margin: 10px 0 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .feature-vision-label {
+        grid-column: 1;
+        grid-row: 3;
+        margin-top: 22px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-summary {
+        grid-column: 1;
+        grid-row: 4;
+        align-self: start;
+        display: block;
+        -webkit-line-clamp: unset;
+        font-size: 1.12rem;
+        line-height: 1.6;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-figures {
+        grid-column: 2;
+        grid-row: 1 / span 4;
+        align-self: center;
+        margin: 0;
+        gap: 12px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .figure {
+        padding: 20px 22px 18px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .figure-value {
+        font-size: 2.5rem;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-pillars {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px 30px;
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(183, 102, 255, 0.16);
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-pillars .feature-label {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .expand-btn {
+        display: none;
+    }
+}
+
+/* The dialog lives inside the iframe, so its backdrop cannot reach the shell's bar
+   and footer. The page tells the shell when a dialog opens; the shell dims both
+   (opacity, not filter: a filter would make the bar a containing block for the
+   fixed phone nav inside it). */
+html.frame-modal .site-bar,
+html.frame-modal footer {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.site-bar,
+footer {
+    transition: opacity 0.2s ease;
+}
+
+/* margin:auto is how the browser centres a modal dialog; the reset at the top of
+   this file zeroes every margin, which left the dialog pinned to the top-left. */
+.project-dialog {
+    margin: auto;
+    width: min(720px, calc(100vw - 48px));
+    max-height: min(84vh, 780px);
+    padding: 28px 28px 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(183, 102, 255, 0.35);
+    background: #140a22;
+    color: var(--text-color);
+    overflow: auto;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.project-dialog::backdrop {
+    background: rgba(2, 0, 4, 0.66);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.project-dialog .project-title {
+    font-size: 1.45rem;
+    padding-inline-end: 70px;          /* clear of the close button */
+    margin-bottom: 10px;
+}
+
+.project-dialog .project-summary {
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.dialog-close {
+    position: absolute;
+    top: 18px;
+    inset-inline-end: 18px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(183, 102, 255, 0.4);
+    background: transparent;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.dialog-close:hover {
+    background: rgba(183, 102, 255, 0.14);
+}
+
+body.dialog-open {
+    overflow: hidden;
+}
+
+.project-outcome {
+    display: inline-block;
+    align-self: flex-start;     /* in the laptop grid the card is a flex column, which
+                                   would otherwise stretch the chip across the card */
+    justify-self: start;        /* and the featured lead card is a grid */
+    margin: 2px 0 8px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(183, 102, 255, 0.12);
+    border: 1px solid rgba(183, 102, 255, 0.3);
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+}
+
+/* ---- 8. Contact: two panels, centred in the space the shell gives it ----
+   The kicker spans both columns, so the two columns start together at the heading.
+   They also share a height: the action buttons sit at the bottom of the left column
+   and the channel rows share out the right one, so the bottom of the buttons and the
+   bottom of the last channel land on the same line whichever side has more text. */
+.contact-container.contact-v2 {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 0 44px;
+    align-items: stretch;
+    align-content: center;
+    max-width: 1040px;
+    min-height: 100vh;               /* the iframe's own viewport */
+    margin: 0 auto;
+    padding: 32px 28px;
+}
+
+.contact-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 16px;           /* the heading below is trimmed to its cap height */
+    grid-column: 1 / -1;
+}
+
+.contact-lead {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-lead .contact-actions {
+    margin-top: auto;
+}
+
+/* Letter-spacing pulls Arabic letters apart and breaks the joins between them. */
+html[lang="ar"] .contact-kicker {
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* text-box trims the line box to the cap height, so the top of the letters, not
+   the top of the line, is what lines up with the first channel row. */
+.contact-v2 .contact-heading {
+    text-align: start;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0 0 20px;
+    text-box: trim-both cap alphabetic;
+}
+
+/* The trim measures the gap from the baseline, and Arabic letters such as ع and ي
+   dip well below it, so Arabic needs more room before the intro. (Also outranks the
+   older html[lang="ar"] .contact-heading margin, which is more specific.) */
+html[lang="ar"] .contact-v2 .contact-heading {
+    margin-bottom: 30px;
+}
+
+.contact-v2 .contact-intro {
+    text-align: start;
+    max-width: 46ch;
+    margin: 0 0 24px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.contact-facts {
+    display: grid;
+    gap: 0;
+    margin: 0 0 24px;
+}
+
+.contact-facts div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(183, 102, 255, 0.14);
+}
+
+.contact-facts div:first-child {
+    border-top: 1px solid rgba(183, 102, 255, 0.14);
+}
+
+.contact-facts dt {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.contact-facts dd {
+    margin: 0;
+    font-weight: 500;
+    text-align: end;
+}
+
+.based-in .fa-arrows-left-right {
+    font-size: 0.8em;
+    margin: 0 0.2em;
+    color: var(--accent-strong);
+}
+
+.local-time {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+}
+
+.contact-facts .ampm {
+    font-size: 0.85em;
+    margin-inline-start: 0.3em;
+}
+
+.tz {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-inline-start: 4px;
+}
+
+.contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Fill the row, so the pair lines up with the edges of the facts above, and a button
+   that wraps (the longer Arabic label) still spans the column instead of hanging. */
+.contact-actions .cta-button {
+    flex: 1 1 auto;
+    justify-content: center;
+    width: auto;
+    max-width: none;            /* an older phone rule caps every .cta-button at 320px */
+}
+
+.channels {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.channel {
+    flex: 1 1 auto;               /* rows share the column's height evenly */
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.channel-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--text-color);
+    text-decoration: none;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.channel-main:hover {
+    border-color: rgba(183, 102, 255, 0.55);
+    background: var(--surface-hover);
+}
+
+.channel-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(183, 102, 255, 0.14);
+    color: var(--accent-strong);
+    font-size: 1.15rem;
+}
+
+.channel-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.channel-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+/* Sized to its text rather than stretched: a value marked dir="ltr" (phone, handles)
+   aligns to ITS start, the left, so stretched it sat on the far side in Arabic while
+   the email beside it sat on the right. */
+.channel-value {
+    align-self: flex-start;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.channel-go {
+    color: var(--muted);
+    transition: transform 0.2s, color 0.2s;
+}
+
+.channel-main:hover .channel-go {
+    color: var(--accent-strong);
+    transform: translateX(3px);
+}
+
+/* The arrow points the way the page reads. */
+[dir="rtl"] .channel-go i {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .channel-main:hover .channel-go {
+    transform: translateX(-3px);
+}
+
+.channel-copy {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--muted);
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.channel-copy:hover {
+    color: var(--text-color);
+    border-color: rgba(183, 102, 255, 0.55);
+    background: rgba(183, 102, 255, 0.08);
+}
+
+.channel-copy.copied {
+    color: #8ff0b0;
+    border-color: rgba(143, 240, 176, 0.5);
+}
+
+@media screen and (max-width: 900px) {
+    .contact-container.contact-v2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+        min-height: auto;
+        padding: 22px 16px 28px;
+    }
+
+    .channels {
+        margin-top: 26px;
+    }
+
+    .channel-main {
+        gap: 12px;
+        padding: 12px 13px;
+    }
+
+    .channel-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .channel-value {
+        font-size: 0.92rem;
+    }
+
+    /* Icon-only Copy on phones, so the address keeps the width; the button still has
+       its aria-label, so it is not anonymous. */
+    .channel-copy {
+        padding: 0 13px;
+    }
+
+    .channel-copy .copy-text {
+        display: none;
+    }
+
+}
+
+/* ---- 9. Keyboard focus you can actually see ----
+   The stylesheet had no :focus rule at all, so tabbing through gave no indication
+   of where you were. :focus-visible keeps rings off mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+    border-radius: 6px;
 }

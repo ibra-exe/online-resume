@@ -44,43 +44,49 @@
     </script>
     <noscript><style>html{background-color:#020004}</style></noscript>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
     <script src="i18n.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Chakra+Petch:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
     <title>Experience - Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
     <div class="experience-container">
+        <div class="exp-header">
+            <h2 class="exp-heading" data-ar="الخبرة المهنية">Experience</h2>
+            <p class="exp-subtitle" data-ar="اختر دورًا لعرض تفاصيله.">Select a role to see what I worked on.</p>
+        </div>
         <div class="timeline">
+            <!-- One block for NEOM rather than four cards. Four separate cards repeated the logo
+             and the name four times and, worse, hid the strongest thing on the page:
+             Intern in March 2021 to Senior Specialist by September 2023. Stacked inside
+             one employer, newest first, it reads as the progression it is. -->
             <div class="container right">
-                <div class="content expandable expanded" tabindex="0">
+                <div class="content company-group">
                     <div class="company-row"><img class="company-logo" src="files/logo-neom.webp" alt="" width="41" height="40" loading="lazy" decoding="async"><h3 class="company" data-ar="نيوم">NEOM</h3></div>
-                    <div class="position" data-ar="أخصائي أول تقنيات الموارد البشرية">People Technology Senior Specialist</div>
-                    <div class="period" data-ar="سبتمبر 2023 - حتى الآن">Sep 2023 - Present</div>
-                    <div class="location" data-ar="نيوم، المملكة العربية السعودية">NEOM, Saudi Arabia</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
-                    <div class="exp-details">
+                    <div class="company-tenure" data-ar="مارس 2021 - حتى الآن · 4 أدوار">Mar 2021 - Present · 4 roles</div>
+                    <ol class="role-list">
+                    <li class="role expandable expanded" data-start="2023-09" data-end="present">
+                        <div class="position" data-ar="أخصائي أول تقنيات الموارد البشرية">People Technology Senior Specialist</div>
+                        <div class="period" data-ar="سبتمبر 2023 - حتى الآن">Sep 2023 - Present</div>
+                        <div class="location" data-ar="نيوم، المملكة العربية السعودية">NEOM, Saudi Arabia</div>
+                        <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                        <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
-                                <li data-ar="صمّمتُ وقدتُ استراتيجية شاملة لرقمنة الموارد البشرية تستهدف نسبة أتمتة تبلغ 70% عبر توحيد المنصّات الاستراتيجي والأتمتة المدفوعة بالذكاء الاصطناعي">Architected and led a comprehensive HR digitalization strategy aiming for a 70% automation rate through strategic platform unification and AI-driven automation</li>
+                                <li data-ar="صمّمتُ وقدتُ استراتيجية شاملة لرقمنة الموارد البشرية رقمنت عملياتها بالكامل وأتمتت 90% منها، عبر توحيد المنصّات الاستراتيجي والأتمتة المدفوعة بالذكاء الاصطناعي">Architected and led a comprehensive HR digitalization strategy that fully digitalized HR processes and automated 90% of them, through strategic platform unification and AI-driven automation</li>
                                 <li data-ar="قدتُ عدّة عمليات إعادة هيكلة لنظام SAP SuccessFactors ومبادرات أتمتة، مع تحسين سير العمل التشغيلي وتعزيز تجربة المستخدم">Orchestrated multiple SAP SuccessFactors system restructures and automation initiatives, optimizing operational workflows and enhancing user experience</li>
                                 <li data-ar="قدتُ مشاريع على مستوى المؤسسة شملت تجديد PeopleHub، وترحيل منصّة الاستبيانات، وتنظيم برنامج دولي لبرنامج NEOM HiPo في اليابان">Led enterprise-scale projects including PeopleHub revamp, survey platform migration, and international program organization for the NEOM HiPo Program in Japan</li>
                                 <li data-ar="حاصل على جائزة SAP المرموقة لأفضل ابتكار وأتمتة في نظام SAP SuccessFactors عن تطبيقه في المملكة العربية السعودية (2024)">Recipient of SAP's prestigious Best HCM Innovation &amp; Automation Award (2024) for SuccessFactors implementation in Saudi Arabia</li>
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="container left">
-                <div class="content expandable" tabindex="0">
-                    <div class="company-row"><img class="company-logo" src="files/logo-neom.webp" alt="" width="41" height="40" loading="lazy" decoding="async"><h3 class="company" data-ar="نيوم">NEOM</h3></div>
-                    <div class="position" data-ar="أخصائي تقنيات الموارد البشرية">People Technology Specialist</div>
-                    <div class="period" data-ar="سبتمبر 2022 - سبتمبر 2023">Sep 2022 - Sep 2023</div>
-                    <div class="location" data-ar="نيوم، المملكة العربية السعودية">NEOM, Saudi Arabia</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
-                    <div class="exp-details">
+                    </li>
+                    <li class="role expandable" data-start="2022-09" data-end="2023-09">
+                        <div class="position" data-ar="أخصائي تقنيات الموارد البشرية">People Technology Specialist</div>
+                        <div class="period" data-ar="سبتمبر 2022 - سبتمبر 2023">Sep 2022 - Sep 2023</div>
+                        <div class="location" data-ar="نيوم، المملكة العربية السعودية">NEOM, Saudi Arabia</div>
+                        <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                        <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
                                 <li data-ar="ابتكرتُ PeopleGPT، مساعد ذكاء اصطناعي متقدّم يستفيد من تقنية GPT لتبسيط الإرشاد بسياسات الموارد البشرية وحل الاستفسارات">Pioneered PeopleGPT, an advanced AI assistant leveraging GPT technology to streamline HR policy guidance and query resolution</li>
@@ -90,17 +96,13 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="container right">
-                <div class="content expandable" tabindex="0">
-                    <div class="company-row"><img class="company-logo" src="files/logo-neom.webp" alt="" width="41" height="40" loading="lazy" decoding="async"><h3 class="company" data-ar="نيوم">NEOM</h3></div>
-                    <div class="position" data-ar="محلّل تقنيات الموارد البشرية">People Technology Analyst</div>
-                    <div class="period" data-ar="يونيو 2021 - سبتمبر 2022">Jun 2021 - Sep 2022</div>
-                    <div class="location" data-ar="نيوم، المملكة العربية السعودية">NEOM, Saudi Arabia</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
-                    <div class="exp-details">
+                    </li>
+                    <li class="role expandable" data-start="2021-06" data-end="2022-09">
+                        <div class="position" data-ar="محلّل تقنيات الموارد البشرية">People Technology Analyst</div>
+                        <div class="period" data-ar="يونيو 2021 - سبتمبر 2022">Jun 2021 - Sep 2022</div>
+                        <div class="location" data-ar="نيوم، المملكة العربية السعودية">NEOM, Saudi Arabia</div>
+                        <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                        <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
                                 <li data-ar="أنشأتُ الهيكل التنظيمي لهيئة نيوم داخل SAP SuccessFactors، مؤسِّسًا القاعدة لعمليات الموارد البشرية على مستوى المؤسسة">Established the NEOM Authority organizational structure within SAP SuccessFactors, creating the foundation for enterprise-wide HR operations</li>
@@ -110,17 +112,13 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="container left">
-                <div class="content expandable" tabindex="0">
-                    <div class="company-row"><img class="company-logo" src="files/logo-neom.webp" alt="" width="41" height="40" loading="lazy" decoding="async"><h3 class="company" data-ar="نيوم">NEOM</h3></div>
-                    <div class="position" data-ar="متدرّب تقنيات الموارد البشرية">People Technology Intern</div>
-                    <div class="period" data-ar="مارس 2021 - يونيو 2021">Mar 2021 - Jun 2021</div>
-                    <div class="location" data-ar="الرياض، المملكة العربية السعودية">Riyadh, Saudi Arabia</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
-                    <div class="exp-details">
+                    </li>
+                    <li class="role expandable" data-start="2021-03" data-end="2021-06">
+                        <div class="position" data-ar="متدرّب تقنيات الموارد البشرية">People Technology Intern</div>
+                        <div class="period" data-ar="مارس 2021 - يونيو 2021">Mar 2021 - Jun 2021</div>
+                        <div class="location" data-ar="الرياض، المملكة العربية السعودية">Riyadh, Saudi Arabia</div>
+                        <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                        <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
                                 <li data-ar="تعاونتُ مع فرق متعدّدة التخصصات لتشخيص مشكلات المستخدمين وحلّها، مساهمًا في تعزيز موثوقية النظام ورضا المستخدمين">Collaborated with cross-functional teams to diagnose and resolve user issues, contributing to enhanced system reliability and user satisfaction</li>
@@ -129,16 +127,18 @@
                             </ul>
                         </div>
                     </div>
+                    </li>
+                    </ol>
                 </div>
             </div>
 
-            <div class="container right">
-                <div class="content expandable" tabindex="0">
+            <div class="container left">
+                <div class="content expandable" data-start="2020-11" data-end="2021-03">
                     <div class="company-row"><img class="company-logo" src="files/logo-misk.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><h3 class="company" data-ar="أكاديمية مسك">Misk Academy</h3></div>
                     <div class="position" data-ar="متدرّب هندسة برمجيات">Software Engineer Intern</div>
                     <div class="period" data-ar="نوفمبر 2020 - مارس 2021">Nov 2020 - Mar 2021</div>
                     <div class="location" data-ar="عن بُعد">Remote</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                    <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
                     <div class="exp-details">
                         <div class="exp-details-inner">
                             <p class="description-lead" data-ar="أكملتُ تدريبًا مكثّفًا قائمًا على المشاريع لمدة 480 ساعة برعاية وزارة الاتصالات وتقنية المعلومات:">Completed an intensive 480-hour project-based internship sponsored by the Ministry of Communication &amp; Information Technology:</p>
@@ -153,13 +153,13 @@
                 </div>
             </div>
 
-            <div class="container left">
-                <div class="content expandable" tabindex="0">
+            <div class="container right">
+                <div class="content expandable" data-start="2019-10" data-end="2020-01">
                     <div class="company-row"><img class="company-logo" src="files/logo-crystal.webp" alt="" width="41" height="40" loading="lazy" decoding="async"><h3 class="company">Crystal Inspection Services</h3></div>
                     <div class="position" data-ar="مدير تقنية المعلومات">IT Manager</div>
                     <div class="period" data-ar="أكتوبر 2019 - يناير 2020">Oct 2019 - Jan 2020</div>
                     <div class="location" data-ar="جدة، المملكة العربية السعودية">Jeddah, Saudi Arabia</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                    <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
                     <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
@@ -172,13 +172,13 @@
                 </div>
             </div>
 
-            <div class="container right">
-                <div class="content expandable" tabindex="0">
+            <div class="container left">
+                <div class="content expandable" data-start="2016-03" data-end="2019-03">
                     <div class="company-row"><img class="company-logo" src="files/logo-tokyo.webp" alt="" width="108" height="40" loading="lazy" decoding="async"><h3 class="company" data-ar="جامعة طوكيو للتكنولوجيا">Tokyo University of Technology</h3></div>
                     <div class="position" data-ar="مُحاضر متعاون - علوم الحاسب">Collaborative Instructor - Computer Science</div>
                     <div class="period" data-ar="مارس 2016 - مارس 2019">Mar 2016 - Mar 2019</div>
                     <div class="location" data-ar="طوكيو، اليابان">Tokyo, Japan</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                    <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
                     <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
@@ -191,13 +191,13 @@
                 </div>
             </div>
 
-            <div class="container left">
-                <div class="content expandable" tabindex="0">
+            <div class="container right">
+                <div class="content expandable" data-start="2018-05" data-end="2018-09">
                     <div class="company-row"><img class="company-logo" src="files/logo-cuore.webp" alt="" width="108" height="40" loading="lazy" decoding="async"><h3 class="company">株式会社クオーレ (Cuore Inc.)</h3></div>
                     <div class="position" data-ar="مطوّر واجهات أمامية، ومدير وسائل تواصل اجتماعي، ومترجم">Front End Developer, Social Media Manager & Interpreter</div>
                     <div class="period" data-ar="مايو 2018 - سبتمبر 2018">May 2018 - Sep 2018</div>
                     <div class="location" data-ar="طوكيو، اليابان">Tokyo, Japan</div>
-                    <button type="button" class="expand-btn" tabindex="-1"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
+                    <button type="button" class="expand-btn"><span class="expand-more" data-ar="عرض التفاصيل">View details</span><span class="expand-less" data-ar="إظهار أقل">Show less</span><span class="expand-chevron" aria-hidden="true">▾</span></button>
                     <div class="exp-details">
                         <div class="exp-details-inner">
                             <ul class="description">
@@ -214,20 +214,248 @@
 
     <script>
         (function () {
-            document.querySelectorAll('.content.expandable').forEach(function (card) {
+            /* The button is the disclosure control: focusable, and it reports its state
+               through aria-expanded. Clicking anywhere on the card still toggles, as a
+               mouse convenience; a keyboard press on the button fires the same click.
+               It used to be the other way round - the card took focus and the real
+               button was tabindex="-1" - which told assistive tech nothing. */
+            document.querySelectorAll('.expandable').forEach(function (card, i) {
+                var btn = card.querySelector('.expand-btn');
+                var details = card.querySelector('.exp-details');
+                if (btn && details) {
+                    details.id = details.id || 'exp-details-' + i;
+                    btn.setAttribute('aria-controls', details.id);
+                }
+                function sync() {
+                    if (btn) btn.setAttribute('aria-expanded', card.classList.contains('expanded') ? 'true' : 'false');
+                }
+                sync();
                 card.addEventListener('click', function (e) {
                     if (e.target.closest('a')) return;
                     card.classList.toggle('expanded');
-                });
-                card.addEventListener('keydown', function (e) {
-                    // Only the card itself toggles; let Enter/Space reach links and buttons inside
-                    if (e.target !== card) return;
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        card.classList.toggle('expanded');
-                    }
+                    sync();
                 });
             });
+        })();
+    </script>
+
+    <script>
+        /* Laptop view (1000px and up): the roles as a list beside a detail panel, built
+           from the timeline markup above at load. Nothing is duplicated in the HTML, so
+           the content lives in one place.
+
+           Runs inline at the end of <body>, BEFORE the deferred i18n.js. Every piece of
+           text it creates carries both languages (data-ar, and the English in
+           data-en-html), so it reads correctly whether i18n has run yet or not; the
+           cloned bullet lists carry their own data-ar the same way.
+           Below 1000px this view is hidden and the stacked timeline shows instead. */
+        (function () {
+            var roles = [].slice.call(document.querySelectorAll('[data-start]'));
+            var container = document.querySelector('.experience-container');
+            var timeline = container && container.querySelector('.timeline');
+            if (!roles.length || !timeline) return;
+            var AR = document.documentElement.lang === 'ar';
+
+            function el(tag, cls) { var n = document.createElement(tag); if (cls) n.className = cls; return n; }
+            function escapeHtml(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+            function bi(tag, cls, en, ar) {
+                var n = el(tag, cls);
+                n.textContent = AR ? ar : en;
+                n.setAttribute('data-ar', ar);
+                n.setAttribute('data-en-html', escapeHtml(en));
+                return n;
+            }
+            // English and Arabic of a node. Read at build time, before i18n has
+            // touched anything, so the node's own text is still the English.
+            function pair(node) {
+                if (!node) return null;
+                var en = node.textContent.replace(/\s+/g, ' ').trim();
+                return { en: en, ar: node.getAttribute('data-ar') || en };
+            }
+            // "People Technology Intern" ... "People Technology Senior Specialist" ->
+            // "Intern" ... "Senior Specialist": drop the words every title shares, at
+            // the front (English) or the back (Arabic), keeping at least one word.
+            function shorten(titles) {
+                var w = titles.map(function (t) { return t.split(' '); });
+                var min = Math.min.apply(null, w.map(function (x) { return x.length; }));
+                var lead = 0, tail = 0;
+                while (lead < min - 1 && w.every(function (x) { return x[lead] === w[0][lead]; })) lead++;
+                while (tail < min - 1 - lead && w.every(function (x) {
+                    return x[x.length - 1 - tail] === w[0][w[0].length - 1 - tail];
+                })) tail++;
+                return w.map(function (x) { return x.slice(lead, x.length - tail).join(' '); });
+            }
+
+            var items = roles.map(function (r, i) {
+                var group = r.closest('.company-group');
+                var row = (group || r).querySelector('.company-row');
+                return {
+                    idx: i, row: row,
+                    start: r.dataset.start,
+                    current: r.dataset.end === 'present',
+                    logo: row.querySelector('img'),
+                    company: pair(row.querySelector('.company')),
+                    tenure: group ? pair(group.querySelector('.company-tenure')) : null,
+                    position: pair(r.querySelector('.position')),
+                    period: pair(r.querySelector('.period')),
+                    location: pair(r.querySelector('.location')),
+                    lead: r.querySelector('.description-lead'),
+                    list: r.querySelector('ul.description')
+                };
+            });
+
+            // Consecutive roles at one employer form a group: NEOM's four, everyone else's one.
+            var groups = [];
+            items.forEach(function (it) {
+                var g = groups[groups.length - 1];
+                if (!g || g.row !== it.row) { g = { row: it.row, items: [] }; groups.push(g); }
+                g.items.push(it);
+                it.group = g;
+            });
+            groups.forEach(function (g) {
+                if (g.items.length < 2) return;
+                // oldest first, for the progression shown in the panel
+                g.path = g.items.slice().sort(function (a, b) { return a.start < b.start ? -1 : 1; });
+                var en = shorten(g.path.map(function (x) { return x.position.en; }));
+                var ar = shorten(g.path.map(function (x) { return x.position.ar; }));
+                g.path.forEach(function (x, n) { x.short = { en: en[n], ar: ar[n] }; });
+            });
+
+            var view = el('section', 'exp-desktop');
+            var split = el('div', 'exp-split');
+            var list = el('div', 'exp-list');
+            var panel = el('div', 'exp-panel');
+            panel.id = 'exp-panel';
+            panel.setAttribute('aria-live', 'polite');
+
+            /* ---- the list: one block per employer, roles on a rail ---- */
+            groups.forEach(function (g) {
+                var first = g.items[0];
+                var block = el('div', 'list-employer');
+                var head = el('div', 'list-company');
+                if (first.logo) head.appendChild(first.logo.cloneNode(true));
+                var text = el('div', 'list-company-text');
+                text.appendChild(bi('span', 'list-company-name', first.company.en, first.company.ar));
+                var sub = g.items.length > 1 && first.tenure ? first.tenure : first.period;
+                text.appendChild(bi('span', 'list-company-tenure', sub.en, sub.ar));
+                head.appendChild(text);
+                block.appendChild(head);
+
+                var ol = el('ol', 'list-roles');
+                g.items.forEach(function (it) {
+                    var li = el('li');
+                    var b = el('button', 'list-role');
+                    b.type = 'button';
+                    b.dataset.idx = it.idx;
+                    b.setAttribute('aria-controls', 'exp-panel');
+                    b.appendChild(bi('span', 'list-role-title', it.position.en, it.position.ar));
+                    // a lone role's dates are already in the employer line above
+                    if (g.items.length > 1) b.appendChild(bi('span', 'list-role-period', it.period.en, it.period.ar));
+                    it.tab = b;
+                    li.appendChild(b);
+                    ol.appendChild(li);
+                });
+                block.appendChild(ol);
+                list.appendChild(block);
+            });
+
+            /* ---- the panel ---- */
+            function select(idx, focusFrom) {
+                var it = items[idx];
+                items.forEach(function (x) {
+                    var on = x === it;
+                    x.tab.classList.toggle('is-selected', on);
+                    x.tab.setAttribute('aria-current', on ? 'true' : 'false');
+                });
+
+                panel.innerHTML = '';
+                var head = el('div', 'panel-head');
+                if (it.logo) head.appendChild(it.logo.cloneNode(true));
+                var ht = el('div', 'panel-head-text');
+                ht.appendChild(bi('h3', 'panel-title', it.position.en, it.position.ar));
+                // "NEOM, Saudi Arabia" already names the employer; don't say NEOM twice.
+                var co = it.location.en.indexOf(it.company.en) === 0;
+                ht.appendChild(bi('p', 'panel-meta',
+                    (co ? '' : it.company.en + ' · ') + it.location.en,
+                    (co ? '' : it.company.ar + ' · ') + it.location.ar));
+                var per = el('p', 'panel-period');
+                per.appendChild(bi('span', '', it.period.en, it.period.ar));
+                if (it.current) per.appendChild(bi('span', 'panel-badge', 'Current role', 'الدور الحالي'));
+                ht.appendChild(per);
+                head.appendChild(ht);
+                panel.appendChild(head);
+
+                // The promotion path, for an employer with more than one role.
+                var g = it.group;
+                if (g.path) {
+                    var wrap = el('div', 'panel-path');
+                    wrap.appendChild(bi('h4', 'panel-label',
+                        'Path at ' + g.items[0].company.en, 'المسار في ' + g.items[0].company.ar));
+                    var steps = el('ol', 'path-steps');
+                    var at = g.path.indexOf(it);
+                    g.path.forEach(function (s, n) {
+                        var li = el('li', 'path-step' + (n < at ? ' is-done' : n === at ? ' is-current' : ''));
+                        var b = el('button', 'path-btn');
+                        b.type = 'button';
+                        b.dataset.idx = s.idx;
+                        if (n === at) b.setAttribute('aria-current', 'step');
+                        b.appendChild(el('span', 'path-dot'));
+                        b.appendChild(bi('span', 'path-title', s.short.en, s.short.ar));
+                        var yr = el('span', 'path-year');
+                        yr.textContent = s.start.slice(0, 4);
+                        b.appendChild(yr);
+                        li.appendChild(b);
+                        steps.appendChild(li);
+                    });
+                    wrap.appendChild(steps);
+                    panel.appendChild(wrap);
+                }
+
+                // A lead introduces its list (Misk's ends with a colon), so a label
+                // goes in only when there is no lead to do that job.
+                if (it.lead) panel.appendChild(it.lead.cloneNode(true));
+                if (it.list) {
+                    if (!it.lead) panel.appendChild(bi('h4', 'panel-label', 'Highlights', 'أبرز ما قمتُ به'));
+                    panel.appendChild(it.list.cloneNode(true));
+                }
+
+                // replay the entrance, so a change of role reads as a change
+                panel.classList.remove('is-entering');
+                void panel.offsetWidth;
+                panel.classList.add('is-entering');
+
+                if (focusFrom === 'list') it.tab.focus();
+                if (focusFrom === 'path') {
+                    var again = panel.querySelector('.path-btn[data-idx="' + idx + '"]');
+                    if (again) again.focus();
+                }
+            }
+
+            list.addEventListener('click', function (e) {
+                var b = e.target.closest('.list-role');
+                if (b) select(+b.dataset.idx);
+            });
+            panel.addEventListener('click', function (e) {
+                var b = e.target.closest('.path-btn');
+                if (b) select(+b.dataset.idx, 'path');
+            });
+            // Up and Down walk the roles, Home and End jump to the ends.
+            list.addEventListener('keydown', function (e) {
+                var b = e.target.closest('.list-role');
+                if (!b) return;
+                var i = +b.dataset.idx, n = items.length, to = null;
+                if (e.key === 'ArrowDown') to = (i + 1) % n;
+                else if (e.key === 'ArrowUp') to = (i - 1 + n) % n;
+                else if (e.key === 'Home') to = 0;
+                else if (e.key === 'End') to = n - 1;
+                if (to !== null) { e.preventDefault(); select(to, 'list'); }
+            });
+
+            split.appendChild(list);
+            split.appendChild(panel);
+            view.appendChild(split);
+            container.insertBefore(view, timeline);
+            select(0);
         })();
     </script>
 </body>
