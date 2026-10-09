@@ -44,14 +44,12 @@
     </script>
     <noscript><style>html{background-color:#020004}</style></noscript>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
     <script src="i18n.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
-    <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <title>Home - Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
@@ -69,7 +67,23 @@
             <p class="hero-role" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية">Digital Transformation · AI · HRIS</p>
             <p class="hero-summary" data-ar="متخصّص في التحوّل الرقمي مع تركيز على الذكاء الاصطناعي وأنظمة الموارد البشرية (HRIS) والرقمنة الاستراتيجية. أعمل حاليًا في نيوم، حيث أقود مبادرات تُحوّل العمليات المعقّدة إلى أنظمة ذكية ومؤتمتة.">A Digital Transformation professional specializing in AI, HRIS, and strategic digitalization. Currently at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems.</p>
 
+            <!-- Experience counts live from data-since, measured on the Riyadh wall clock
+                 (no DST there, so the arithmetic never skips or repeats an hour).
+                 The default is the earliest role on the Experience page; change the one
+                 attribute to count from somewhere else. -->
             <ul class="hero-stats">
+                <li class="stat stat-experience" data-since="2016-03-01">
+                    <span class="stat-kicker" data-ar="الخبرة">Experience</span>
+                    <span class="sr-only exp-summary"></span>
+                    <div class="exp-counter" aria-hidden="true">
+                        <span class="seg"><span class="seg-num" data-unit="y">00</span><span class="seg-unit" data-ar="سنوات">Years</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="mo">00</span><span class="seg-unit" data-ar="أشهر">Months</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="d">00</span><span class="seg-unit" data-ar="أيام">Days</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="h">00</span><span class="seg-unit" data-ar="ساعات">Hours</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="m">00</span><span class="seg-unit" data-ar="دقائق">Minutes</span></span>
+                        <span class="seg seg-live"><span class="seg-num" data-unit="s">00</span><span class="seg-unit" data-ar="ثوانٍ">Seconds</span></span>
+                    </div>
+                </li>
                 <li class="stat">
                     <span class="stat-value" dir="ltr">70%</span>
                     <span class="stat-label" data-ar="مستهدف نسبة الأتمتة">Automation rate target</span>
@@ -77,10 +91,6 @@
                 <li class="stat">
                     <span class="stat-value" dir="ltr">2024</span>
                     <span class="stat-label" data-ar="جائزة SAP لأفضل ابتكار وأتمتة في الموارد البشرية">SAP Best HCM Innovation &amp; Automation Award</span>
-                </li>
-                <li class="stat">
-                    <span class="stat-value" data-ar="عامان ونصف">2.5 yrs</span>
-                    <span class="stat-label" data-ar="من متدرّب إلى أخصائي أول في نيوم">Intern to Senior Specialist at NEOM</span>
                 </li>
                 <li class="stat">
                     <span class="stat-value" dir="ltr">3</span>
@@ -94,7 +104,7 @@
             <div class="cta-buttons">
                 <a href="contact.html" onclick="event.preventDefault(); parent.loadContent('contact.html')" class="cta-button cta-primary" data-ar="تواصل معي">Get In Touch</a>
                 <a href="projects.html" onclick="event.preventDefault(); parent.loadContent('projects.html')" class="cta-button cta-secondary" data-ar="عرض المشاريع">View Projects</a>
-                <a href="files/Ibrahim-Shaheen-CV.pdf" download target="_blank" rel="noopener" class="cta-button cta-ghost"><i class="fas fa-download" aria-hidden="true"></i><span data-ar="تحميل السيرة الذاتية (بالإنجليزية)">Download CV</span></a>
+                <a href="files/Ibrahim-Shaheen-CV.pdf" download target="_blank" rel="noopener" class="cta-button cta-tertiary"><i class="fas fa-download" aria-hidden="true"></i><span data-ar="تحميل السيرة الذاتية (بالإنجليزية)">Download CV</span></a>
             </div>
 
             <ul class="hero-focus" aria-label="Focus areas">
@@ -104,5 +114,58 @@
             </ul>
         </section>
     </main>
+
+    <script>
+        /* Live experience counter. Calendar-true: whole years, then whole months,
+           then the remainder as days, hours, minutes and seconds, the way you would
+           say it aloud, rather than dividing milliseconds by an average month.
+
+           Everything runs on the Riyadh wall clock (UTC+3, no daylight saving), with
+           both instants shifted into it and read through the UTC getters, so a
+           visitor's own DST changes can never make it skip or repeat an hour.
+
+           The ticking digits are aria-hidden: a screen reader announcing every second
+           would be unbearable. It gets one static sentence instead. */
+        (function () {
+            var card = document.querySelector('.stat-experience');
+            if (!card) return;
+            var OFFSET = 3 * 3600 * 1000;
+            var since = Date.parse(card.getAttribute('data-since') + 'T00:00:00Z');
+            var cells = {};
+            card.querySelectorAll('.seg-num').forEach(function (el) { cells[el.dataset.unit] = el; });
+
+            function addMonthsUTC(t, n) {
+                var d = new Date(t), day = d.getUTCDate();
+                d.setUTCDate(1);
+                d.setUTCMonth(d.getUTCMonth() + n);
+                var last = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+                d.setUTCDate(Math.min(day, last));
+                return d.getTime();
+            }
+            function parts(now) {
+                var cur = since, y = 0, mo = 0;
+                while (addMonthsUTC(cur, 12) <= now) { cur = addMonthsUTC(cur, 12); y++; }
+                while (addMonthsUTC(cur, 1) <= now) { cur = addMonthsUTC(cur, 1); mo++; }
+                var ms = now - cur;
+                var d = Math.floor(ms / 864e5); ms -= d * 864e5;
+                var h = Math.floor(ms / 36e5);  ms -= h * 36e5;
+                var m = Math.floor(ms / 6e4);   ms -= m * 6e4;
+                return { y: y, mo: mo, d: d, h: h, m: m, s: Math.floor(ms / 1000) };
+            }
+            function pad(n) { return n < 10 ? '0' + n : String(n); }
+            function render() {
+                var p = parts(Date.now() + OFFSET);
+                for (var k in p) if (cells[k]) cells[k].textContent = pad(p[k]);
+                return p;
+            }
+            var first = render();
+            var ar = document.documentElement.lang === 'ar';
+            card.querySelector('.exp-summary').textContent = ar
+                ? 'أكثر من ' + first.y + (first.y >= 3 && first.y <= 10 ? ' سنوات' : ' سنة') + ' من الخبرة'
+                : 'More than ' + first.y + ' years of experience';
+            // Line the ticks up with the real second boundary, then keep time.
+            setTimeout(function () { render(); setInterval(render, 1000); }, 1000 - (Date.now() % 1000));
+        })();
+    </script>
 </body>
 </html>

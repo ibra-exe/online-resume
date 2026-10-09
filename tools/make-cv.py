@@ -30,8 +30,11 @@ def read(name):
 
 
 def text(fragment):
-    """Visible text of an HTML fragment, entities decoded, whitespace collapsed."""
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", fragment))).strip()
+    """Visible text of an HTML fragment, entities decoded, whitespace collapsed.
+    Word joiners (U+2060, used on the site to stop "2014 - 2019" wrapping) are
+    invisible but would sit in the PDF's text layer, where an ATS could trip on them."""
+    plain = html.unescape(re.sub(r"<[^>]+>", " ", fragment)).replace("\u2060", "")
+    return re.sub(r"\s+", " ", plain).strip()
 
 
 def esc(s):

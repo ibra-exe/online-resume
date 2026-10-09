@@ -44,10 +44,9 @@
     </script>
     <noscript><style>html{background-color:#020004}</style></noscript>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
     <script src="i18n.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
     <title>Projects - Ibrahim Shaheen</title>
 </head>
 <body class="transparent-bg">
@@ -55,6 +54,7 @@
 
         <h2 class="projects-section-title" data-ar="الأعمال المهنية">Professional Work</h2>
         <p class="projects-section-subtitle" data-ar="نماذج مختارة من أثر عملي في التحوّل الرقمي والذكاء الاصطناعي وأنظمة الموارد البشرية لدى نيوم. انقر على البطاقة للتفاصيل.">Selected impact from my work in Digital Transformation, AI, and HRIS at NEOM. Tap a card for details.</p>
+        <div class="project-grid">
 
         <div class="project-card expandable">
             <div class="project-card-head">
@@ -232,9 +232,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
         <h2 class="projects-section-title" data-ar="مشاريع شخصية">Personal Projects</h2>
         <p class="projects-section-subtitle" data-ar="أشياء أبنيها لاستكشاف الأفكار وللمتعة. انقر على البطاقة للتفاصيل.">Things I build to explore ideas and for fun. Tap a card for details.</p>
+        <div class="project-grid">
 
         <!-- Request TestFlight, not a store link: the app is on TestFlight, not the
              App Store. target="_top" is load-bearing for exactly the reason the Contact
@@ -411,9 +413,19 @@
                 </div>
             </div>
         </div>
+        </div>
 
     </div>
 
+
+    <!-- On laptop widths a card opens here instead of expanding in place. Expanding in
+         place is what made the grid ragged: one card grew, its row-mate did not, and the
+         rows below shifted. Phones keep the in-place expand, which reads well in one
+         column. Filled by cloning the clicked card, so there is one copy of the content. -->
+    <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title">
+        <button type="button" class="dialog-close" data-ar="إغلاق" aria-label="Close">Close</button>
+        <div class="dialog-body"></div>
+    </dialog>
     <script>
         (function () {
             /* The button is the disclosure control: focusable, reporting its state through
@@ -421,20 +433,69 @@
                convenience; a keyboard press on the button fires the same click. It used
                to be the card that took focus while the real button was tabindex="-1". */
             const cards = document.querySelectorAll('.project-card.expandable');
+            const wide = window.matchMedia('(min-width: 1000px)');
+            const dialog = document.getElementById('project-dialog');
+            const dialogBody = dialog.querySelector('.dialog-body');
+            const closeBtn = dialog.querySelector('.dialog-close');
+            let opener = null;
+
+            function openDialog(card) {
+                dialogBody.innerHTML = '';
+                // Title, outcome, summary, then everything that is in the details.
+                ['.project-title', '.project-outcome', '.project-summary'].forEach(function (sel) {
+                    const el = card.querySelector(sel);
+                    if (el) dialogBody.appendChild(el.cloneNode(true));
+                });
+                const inner = card.querySelector('.project-details-inner');
+                if (inner) Array.prototype.forEach.call(inner.children, function (c) {
+                    dialogBody.appendChild(c.cloneNode(true));
+                });
+                const title = dialogBody.querySelector('.project-title');
+                if (title) title.id = 'project-dialog-title';
+                opener = card.querySelector('.expand-btn');
+                document.body.classList.add('dialog-open');
+                dialog.showModal();
+                closeBtn.focus();
+            }
+            function closeDialog() { if (dialog.open) dialog.close(); }
+            dialog.addEventListener('close', function () {
+                document.body.classList.remove('dialog-open');
+                if (opener) opener.focus();
+            });
+            closeBtn.addEventListener('click', closeDialog);
+            // A click on the backdrop lands on the dialog element itself.
+            dialog.addEventListener('click', function (e) { if (e.target === dialog) closeDialog(); });
+            closeBtn.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'إغلاق' : 'Close');
+
+            /* The button is the disclosure control on phones (aria-expanded) and opens a
+               dialog on laptops (aria-haspopup). Clicking anywhere on the card does the
+               same as the button, as a mouse convenience; a keyboard press on the button
+               fires the same click. */
             cards.forEach(function (card, i) {
-                var btn = card.querySelector('.expand-btn');
-                var details = card.querySelector('.project-details');
+                const btn = card.querySelector('.expand-btn');
+                const details = card.querySelector('.project-details');
                 if (btn && details) {
                     details.id = details.id || 'project-details-' + i;
-                    btn.setAttribute('aria-controls', details.id);
                 }
                 function sync() {
-                    if (btn) btn.setAttribute('aria-expanded', card.classList.contains('expanded') ? 'true' : 'false');
+                    if (!btn) return;
+                    if (wide.matches) {
+                        btn.setAttribute('aria-haspopup', 'dialog');
+                        btn.removeAttribute('aria-expanded');
+                        btn.removeAttribute('aria-controls');
+                        card.classList.remove('expanded');
+                    } else {
+                        btn.removeAttribute('aria-haspopup');
+                        btn.setAttribute('aria-controls', details.id);
+                        btn.setAttribute('aria-expanded', card.classList.contains('expanded') ? 'true' : 'false');
+                    }
                 }
                 sync();
+                wide.addEventListener('change', sync);
                 card.addEventListener('click', function (e) {
-                    // Don't toggle when following a link inside the card
+                    // Don't act when following a link inside the card
                     if (e.target.closest('a, .project-link-static')) return;
+                    if (wide.matches) { openDialog(card); return; }
                     card.classList.toggle('expanded');
                     sync();
                 });
