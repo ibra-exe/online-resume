@@ -81,12 +81,15 @@
         var btns = doc.querySelectorAll(".backdrop-toggle");
         if (!btns.length) return;  // only the shell and 404 have the control
         var on = backdropOn();
+        // It governs all decorative motion (the backdrop and Home's typed role line),
+        // and says so; the title gives mouse users the same words as a tooltip.
         var label = currentLang() === "ar"
-            ? (on ? "إخفاء الخلفية" : "إظهار الخلفية")
-            : (on ? "Turn off the background" : "Turn on the background");
+            ? (on ? "إيقاف الخلفية والحركة" : "تشغيل الخلفية والحركة")
+            : (on ? "Turn off background & animation" : "Turn on background & animation");
         for (var i = 0; i < btns.length; i++) {
             btns[i].setAttribute("aria-pressed", on ? "true" : "false");
             btns[i].setAttribute("aria-label", label);
+            btns[i].setAttribute("title", label);
         }
     }
 
@@ -112,6 +115,11 @@
         syncPrefUrl("backdrop", backdropOn() ? null : "off");
         // Start or cancel the pixel loop with it, so a hidden backdrop costs nothing
         if (window.circuitBgSync) window.circuitBgSync();
+        // and stop or allow Home's typed role line, which lives in the frame
+        try {
+            var f = document.getElementById("contentFrame");
+            if (f && f.contentWindow && f.contentWindow.typedSync) f.contentWindow.typedSync();
+        } catch (e) {}
     }
 
     function toggleLang() {
