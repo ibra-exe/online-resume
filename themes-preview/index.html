@@ -382,8 +382,17 @@
                               ["teal", "Teal", "#2dd4bf"], ["amber", "Amber", "#f5b84a"], ["graphite", "Graphite", "#cbd5e1"], ["emerald", "Emerald", "#34d399"], ["sky", "Sky", "#38bdf8"], ["rose", "Rose", "#fb7185"], ["crimson", "Crimson", "#ef4444"], ["fuchsia", "Fuchsia", "#e879f9"], ["copper", "Copper", "#fb923c"], ["sage", "Sage", "#86c598"]];
                 var box = document.createElement("div");
                 box.className = "theme-picker";
-                box.innerHTML = "<span>Theme (preview only)</span>";
+                var collapsed = false;
+                try { collapsed = localStorage.getItem("themePickerCollapsed") === "1"; } catch (e) {}
+                var toggle = document.createElement("button");
+                toggle.type = "button";
+                toggle.className = "tp-toggle";
+                var row = document.createElement("div");
+                row.className = "tp-swatches";
+                box.appendChild(toggle);
+                box.appendChild(row);
                 function current() { return document.documentElement.getAttribute("data-theme") || "purple"; }
+                function label(name) { for (var k = 0; k < THEMES.length; k++) if (THEMES[k][0] === name) return THEMES[k]; return THEMES[0]; }
                 function set(doc, name) {
                     if (!doc) return;
                     if (name === "purple") doc.documentElement.removeAttribute("data-theme");
@@ -402,17 +411,29 @@
                     sync();
                 }
                 function sync() {
-                    box.querySelectorAll("button").forEach(function (b) {
+                    var t = label(current());
+                    toggle.innerHTML = '<i style="background:' + t[2] + '"></i><b>' + t[1] + '</b><em>' + (collapsed ? "▸" : "◂") + '</em>';
+                    toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+                    toggle.setAttribute("aria-label", "Theme: " + t[1] + (collapsed ? ". Show colours" : ". Hide colours"));
+                    box.classList.toggle("is-collapsed", collapsed);
+                    row.querySelectorAll("button").forEach(function (b) {
                         b.setAttribute("aria-pressed", b.dataset.theme === current() ? "true" : "false");
                     });
                 }
+                toggle.addEventListener("click", function () {
+                    collapsed = !collapsed;
+                    try { localStorage.setItem("themePickerCollapsed", collapsed ? "1" : "0"); } catch (e) {}
+                    sync();
+                });
                 THEMES.forEach(function (t) {
                     var b = document.createElement("button");
                     b.type = "button";
                     b.dataset.theme = t[0];
-                    b.innerHTML = '<i style="background:' + t[2] + '"></i>' + t[1];
+                    b.title = t[1];
+                    b.setAttribute("aria-label", t[1]);
+                    b.style.background = t[2];
                     b.addEventListener("click", function () { apply(t[0]); });
-                    box.appendChild(b);
+                    row.appendChild(b);
                 });
                 document.body.appendChild(box);
                 sync();
