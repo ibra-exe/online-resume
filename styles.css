@@ -3331,8 +3331,12 @@ html[lang="ar"] .seg-unit {
 
 /* Side by side, the photo takes the full height of the text card, so their tops and
    bottoms line up. The image is lifted out of the flow (it would otherwise set the
-   row's height itself) and cropped to fill, keeping the face in frame. */
-@media screen and (min-width: 641px) {
+   row's height itself) and cropped to fill, keeping the face in frame.
+   The stretch is capped: on narrower screens the text column gets tall, and an
+   uncapped photo became a thin sliver of a face (250x654 at 641px). Past the cap the
+   photo stays at the cap and sits centred against the card. Below 880px the two
+   stack instead (next block), so the photo keeps its square. */
+@media screen and (min-width: 881px) {
     .about-intro {
         align-items: stretch;
     }
@@ -3340,11 +3344,13 @@ html[lang="ar"] .seg-unit {
     .about-intro .profile-container {
         display: flex;
         flex-direction: column;
+        justify-content: center;
     }
 
     .about-intro .profile-frame {
         flex: 1 1 auto;
         min-height: 250px;
+        max-height: 340px;
     }
 
     .about-intro #profile-pic {
@@ -3492,6 +3498,18 @@ html[lang="ar"] .ai-group-label {
     width: auto;
     padding: 8px 14px;
     border-radius: 999px;
+}
+
+/* Stacked below 880px: the photo, square and centred, above a full-width card. */
+@media screen and (max-width: 880px) {
+    .about-intro {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .about-intro .profile-container {
+        align-items: center;
+    }
 }
 
 @media screen and (max-width: 1000px) {
