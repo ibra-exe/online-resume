@@ -1,0 +1,174 @@
+/**
+ * Lightweight EN/AR internationalisation + RTL toggle for the static site.
+ * English is the source of truth (the element's own markup); Arabic lives in
+ * data-ar="…" as plain text. The original English markup is snapshotted into
+ * data-en-html so switching back restores inline tags like <strong>.
+ * Language preference is stored in localStorage and shared across the shell
+ * and the iframe sub-pages (same origin).
+ */
+(function () {
+    function currentLang() {
+        return localStorage.getItem("lang") === "ar" ? "ar" : "en";
+    }
+
+    function applyLang(doc) {
+        var lang = currentLang();
+        var html = doc.documentElement;
+        html.setAttribute("lang", lang);
+        html.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+
+        var nodes = doc.querySelectorAll("[data-ar]");
+        for (var i = 0; i < nodes.length; i++) {
+            var el = nodes[i];
+
+            /* Snapshot the original English *markup* once, before anything
+               overwrites it. Some data-ar elements wrap inline markup — e.g.
+               <li data-ar="…">Led <strong>PeopleGPT</strong>, …</li> — and the
+               bold sits mid-sentence, so it cannot be split into leaf spans
+               without splitting the Arabic sentence too.
+
+               Kept on the element rather than in a JS Map because the shell and
+               each sub-page run their own copy of this script against the same
+               document; an attribute gives them one shared source of truth.
+               The sub-page's own copy always runs first (DOMContentLoaded
+               precedes the shell's iframe load handler), so the snapshot is
+               always taken from pristine English. */
+            if (!el.hasAttribute("data-en-html")) {
+                el.setAttribute("data-en-html", el.innerHTML);
+            }
+
+            if (lang === "ar") {
+                el.textContent = el.getAttribute("data-ar");
+            } else {
+                // Restore markup, not just text — assigning textContent here is
+                // what previously stripped every <strong> on the Projects page,
+                // in English as well as Arabic.
+                el.innerHTML = el.getAttribute("data-en-html");
+            }
+        }
+
+        var toggle = doc.getElementById("lang-toggle");
+        if (toggle) {
+            toggle.textContent = lang === "ar" ? "EN" : "ع";  // ع
+            toggle.setAttribute(
+                "aria-label",
+                lang === "ar" ? "Switch to English" : "التبديل إلى العربية"
+            );
+        }
+
+        // Keep the backdrop button's label in the current language
+        applyBackdropState(doc);
+    }
+
+    /* ---- Backdrop preference ---- */
+    /* The class itself is applied by a tiny inline script in each page's <head>
+       so there is never a flash of the backdrop before the preference takes effect.
+       This only handles the click and the button's label/state.
+
+       Named "backdrop" rather than after the visual, because what this governs is
+       the whole decorative layer — the purple wash and nebula clouds as well as the
+       trace grid and its pixels — so naming it "circuit" or "grid" would undersell
+       what switching it off actually does. The layers themselves are the circuit-*
+       classes in styles.css and circuit-bg.js. The pre-paint script still accepts
+       the old ?stars= param and starfield key so earlier links keep working. */
+    function backdropOn() {
+        return localStorage.getItem("backdrop") !== "off";
+    }
+
+    /* Every .backdrop-toggle, not one id: the shell has two (footer on desktop,
+       bar on phones, where the footer is hidden), and 404.html has its own. */
+    function applyBackdropState(doc) {
+        var btns = doc.querySelectorAll(".backdrop-toggle");
+        if (!btns.length) return;  // only the shell and 404 have the control
+        var on = backdropOn();
+        // It governs all decorative motion (the backdrop and Home's typed role line),
+        // and says so; the title gives mouse users the same words as a tooltip.
+        var label = currentLang() === "ar"
+            ? (on ? "إيقاف الخلفية والحركة" : "تشغيل الخلفية والحركة")
+            : (on ? "Turn off background & animation" : "Turn on background & animation");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].setAttribute("aria-pressed", on ? "true" : "false");
+            btns[i].setAttribute("aria-label", label);
+            btns[i].setAttribute("title", label);
+        }
+    }
+
+    /* Keep the address bar in step with the current view, so the URL is always
+       copy-pasteable as "what I am looking at right now". Defaults are omitted
+       rather than spelled out, so a plain visit keeps a clean URL.
+       Skipped inside the shell's iframe — that is not the URL the visitor sees,
+       and writing history from a frame would touch the frame's own entry. */
+    function syncPrefUrl(key, value) {
+        if (window.self !== window.top) return;
+        try {
+            var url = new URL(location.href);
+            if (value === null) url.searchParams.delete(key);
+            else url.searchParams.set(key, value);
+            history.replaceState(history.state, "", url);
+        } catch (e) {}
+    }
+
+    function toggleBackdrop() {
+        localStorage.setItem("backdrop", backdropOn() ? "off" : "on");
+        document.documentElement.classList.toggle("no-backdrop", !backdropOn());
+        applyBackdropState(document);
+        syncPrefUrl("backdrop", backdropOn() ? null : "off");
+        // Start or cancel the pixel loop with it, so a hidden backdrop costs nothing
+        if (window.circuitBgSync) window.circuitBgSync();
+        // and stop or allow Home's typed role line, which lives in the frame
+        try {
+            var f = document.getElementById("contentFrame");
+            if (f && f.contentWindow && f.contentWindow.typedSync) f.contentWindow.typedSync();
+        } catch (e) {}
+    }
+
+    function toggleLang() {
+        localStorage.setItem("lang", currentLang() === "ar" ? "en" : "ar");
+        applyLang(document);
+        syncPrefUrl("lang", currentLang() === "ar" ? "ar" : null);
+        var frame = document.getElementById("contentFrame");
+        if (frame) {
+            // reload the sub-page so its content re-renders in the new language,
+            // through the shell's page transition when it has one
+            var reload = function () {
+                try { frame.contentWindow.location.reload(); }
+                catch (e) { frame.src = frame.src; }
+            };
+            if (window.swapFrame) window.swapFrame(reload);
+            else reload();
+        }
+    }
+
+    /* Wire the header controls here rather than with inline onclick attributes.
+       This script is deferred, so it executes after the buttons are parsed —
+       with inline handlers there was a brief window where a button was painted
+       and clickable but the function did not exist yet, so the click silently
+       did nothing. Attaching the listener in the same task that defines the
+       handler closes that window by construction. */
+    function wireControls(doc) {
+        var lang = doc.getElementById("lang-toggle");
+        if (lang) lang.addEventListener("click", toggleLang);
+
+        var backdrops = doc.querySelectorAll(".backdrop-toggle");
+        for (var i = 0; i < backdrops.length; i++) {
+            backdrops[i].addEventListener("click", toggleBackdrop);
+        }
+    }
+
+    window.i18nApply = applyLang;
+    window.toggleLang = toggleLang;
+    window.toggleBackdrop = toggleBackdrop;
+
+    /* Only for this document — never for the iframe's, which has no controls and
+       whose applyLang runs via i18nApply (calling this there would double-bind). */
+    function init() {
+        applyLang(document);
+        wireControls(document);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Ibrahim Shaheen - Digital Transformation, AI & HRIS professional">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Pre-paint setup, before the browser draws anything:
+         1. language/direction, taken from ?lang= if present (so a shared Arabic link
+            opens in Arabic) otherwise the stored preference. Set here rather than in
+            i18n.js so an Arabic visitor never sees a frame of English LTR layout.
+         2. the backdrop preference, from ?backdrop= or storage, so the backdrop
+            never flashes in before being hidden.
+         3. opened directly (not inside the shell iframe)? then this page owns the
+            canvas and needs the site background instead of the browser default, which
+            is white in a light-mode browser. Inside the iframe we stay transparent so
+            the shell's backdrop shows through. -->
+    <script>
+    (function(){
+        var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+        try{S=localStorage}catch(e){}
+        // ?lang= wins over the stored preference, and is then remembered,
+        // so a shared Arabic link keeps working as the visitor browses on.
+        // ?theme= (experiment) wins over storage and is then remembered; purple is the default.
+        var tp=q.get("theme");var th=tp!==null?tp:(S&&S.getItem("theme"));if(tp!==null&&S){try{S.setItem("theme",tp)}catch(e){}}if(th&&th!=="purple")d.setAttribute("data-theme",th);
+        var lp=q.get("lang");
+        var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+        if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+        d.setAttribute("lang",lang);
+        d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+        // ?backdrop=off|on, same precedence. ?stars= is what this was called
+        // before the backdrop stopped being a starfield; still read so links
+        // shared earlier keep working. Safe to drop once none are in use.
+        var bp=q.get("backdrop");if(bp===null)bp=q.get("stars");
+        var bs=S&&(S.getItem("backdrop")||S.getItem("starfield"));
+        var bg=bp!==null?(bp==="off"?"off":"on"):(bs==="off"?"off":"on");
+        if(bp!==null&&S){try{S.setItem("backdrop",bg)}catch(e){}}
+        if(bg==="off")d.classList.add("no-backdrop");
+        // Opened directly rather than inside the shell iframe? Then this page owns
+        // the canvas and needs the site background, not the browser default.
+        if(window.self===window.top)d.classList.add("standalone");
+    })();
+    </script>
+    <noscript><style>html{background-color:#020004}</style></noscript>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
+    <script src="i18n.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Contact - Ibrahim Shaheen</title>
+</head>
+<body class="transparent-bg">
+    <!-- Two panels instead of a 2x2 of identical cards. Left: who you are reaching, where
+         they are and what time it is there, plus the two things a recruiter actually
+         wants to take away (a contact card and the CV). Right: every channel as a row
+         that says what it is AND shows the address, with Copy where copying is the
+         likely next step.
+
+         Load-bearing details carried over from the old cards:
+         - mailto: needs target="_top". This page runs inside the shell's iframe, and iOS
+           Safari will not hand a mailto: to the mail app from a subframe; the tap silently
+           does nothing. wa.me, LinkedIn and GitHub are https, so _blank is right for them.
+         - dir="ltr" on the phone number. In Arabic the bare string reorders to
+           "2594 966 +" because digits and + are neutral against an RTL paragraph.
+         - Copy buttons sit BESIDE the row link, never inside it: a button inside an <a>
+           is invalid nesting and screen readers announce it unpredictably. -->
+    <main class="contact-container contact-v2">
+        <p class="contact-kicker" data-ar="تواصل">Contact</p>
+        <section class="contact-lead">
+            <h2 class="contact-heading type-in"><span class="type-in-text" data-ar="تواصل معي">Get In Touch</span></h2>
+            <p class="contact-intro" data-ar="أنا دائمًا منفتح على الفرص الجديدة والتعاون. لا تتردّد في التواصل معي عبر أيٍّ من هذه القنوات.">I'm always open to new opportunities and collaborations. Feel free to reach out through any of these channels.</p>
+
+            <dl class="contact-facts">
+                <div>
+                    <dt data-ar="المقرّ">Based in</dt>
+                    <!-- Splits his time between three cities: two-way arrows on screen; screen
+                         readers get the plain sentence instead. -->
+                    <dd class="based-in"><span class="sr-only" data-ar="الرياض ونيوم وجدة، المملكة العربية السعودية">Riyadh, NEOM and Jeddah, Saudi Arabia</span><span aria-hidden="true"><span data-ar="الرياض">Riyadh</span> <i class="fas fa-arrows-left-right"></i> <span data-ar="نيوم">NEOM</span> <i class="fas fa-arrows-left-right"></i> <span data-ar="جدة، المملكة العربية السعودية">Jeddah, Saudi Arabia</span></span></dd>
+                </div>
+                <div>
+                    <dt data-ar="التوقيت المحلي">Local time</dt>
+                    <dd><span class="local-time" dir="ltr">--:--</span><span class="ampm"></span> <span class="tz" dir="ltr">UTC+3</span></dd>
+                </div>
+            </dl>
+
+            <div class="contact-actions">
+                <a href="files/ibrahim-shaheen.vcf" download class="cta-button cta-secondary"><i class="fas fa-address-card" aria-hidden="true"></i><span data-ar="حفظ جهة الاتصال">Save contact</span></a>
+                <a href="files/Ibrahim-Shaheen-CV.pdf" download target="_blank" rel="noopener" class="cta-button cta-tertiary"><i class="fas fa-download" aria-hidden="true"></i><span data-ar="تحميل السيرة الذاتية (بالإنجليزية)">Download CV</span></a>
+            </div>
+        </section>
+
+        <section class="channels" aria-label="Contact channels">
+            <div class="channel">
+                <a class="channel-main" href="mailto:contact@ibra.technology" target="_top">
+                    <span class="channel-icon"><i class="far fa-envelope" aria-hidden="true"></i></span>
+                    <span class="channel-text">
+                        <span class="channel-label" data-ar="البريد الإلكتروني">Email</span>
+                        <span class="channel-value">contact@ibra.technology</span>
+                    </span>
+                    <span class="channel-go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                </a>
+                <button type="button" class="channel-copy" data-copy="contact@ibra.technology" data-what="email"><i class="far fa-copy" aria-hidden="true"></i><span class="copy-text" data-ar="نسخ">Copy</span></button>
+            </div>
+
+            <div class="channel">
+                <a class="channel-main" href="https://wa.me/966505502594" target="_blank" rel="noopener">
+                    <span class="channel-icon"><i class="fab fa-whatsapp" aria-hidden="true"></i></span>
+                    <span class="channel-text">
+                        <span class="channel-label">WhatsApp</span>
+                        <span class="channel-value" dir="ltr">+966 50 550 2594</span>
+                    </span>
+                    <span class="channel-go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                </a>
+                <button type="button" class="channel-copy" data-copy="+966505502594" data-what="phone"><i class="far fa-copy" aria-hidden="true"></i><span class="copy-text" data-ar="نسخ">Copy</span></button>
+            </div>
+
+            <div class="channel">
+                <a class="channel-main" href="https://www.linkedin.com/in/ibrahim-shaheen/" target="_blank" rel="noopener">
+                    <span class="channel-icon"><i class="fab fa-linkedin" aria-hidden="true"></i></span>
+                    <span class="channel-text">
+                        <span class="channel-label">LinkedIn</span>
+                        <span class="channel-value" dir="ltr">in/ibrahim-shaheen</span>
+                    </span>
+                    <span class="channel-go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+
+            <div class="channel">
+                <a class="channel-main" href="https://github.com/ibra-exe" target="_blank" rel="noopener">
+                    <span class="channel-icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+                    <span class="channel-text">
+                        <span class="channel-label">GitHub</span>
+                        <span class="channel-value" dir="ltr">ibra-exe</span>
+                    </span>
+                    <span class="channel-go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+
+            <!-- X (hidden for now)
+            https://x.com/ibrahimium
+            -->
+            <p class="copy-status sr-only" aria-live="polite"></p>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            var ar = document.documentElement.lang === 'ar';
+
+            /* Local time where he is. Asia/Riyadh covers NEOM (both UTC+3, no DST).
+               12-hour clock with Western digits in both languages, as on the rest of
+               the site; only the AM/PM marker is translated (ص / م). */
+            var clock = document.querySelector('.local-time');
+            var fmt = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Riyadh', hour: 'numeric', minute: '2-digit', hour12: true });
+            // The digits sit in their own LTR span in the mono face. AM/PM is a sibling
+            // outside it, in the text face: the mono face has no Arabic, and outside the
+            // LTR span the bidi order puts "م" after the time in Arabic, as it is read.
+            var mark = document.querySelector('.contact-facts .ampm');
+            function tick() {
+                if (!clock) return;
+                var digits = '', period = '';
+                fmt.formatToParts(new Date()).forEach(function (p) {
+                    if (p.type === 'dayPeriod') period = p.value.toUpperCase();
+                    else if (p.type === 'hour' || p.type === 'minute' || p.value === ':') digits += p.value;
+                });
+                clock.textContent = digits;
+                if (mark) mark.textContent = ar ? (period === 'AM' ? 'ص' : 'م') : period;
+            }
+            tick();
+            setInterval(tick, 15000);
+
+            /* Copy, with a fallback for browsers that refuse the async clipboard inside a
+               frame, and a polite announcement so a screen reader hears it worked. */
+            var status = document.querySelector('.copy-status');
+            var LABEL = { email: ar ? 'نسخ البريد الإلكتروني' : 'Copy email address',
+                          phone: ar ? 'نسخ رقم الهاتف' : 'Copy phone number' };
+            var DONE  = { email: ar ? 'تم نسخ البريد الإلكتروني' : 'Email address copied',
+                          phone: ar ? 'تم نسخ رقم الهاتف' : 'Phone number copied' };
+            function fallbackCopy(text) {
+                var t = document.createElement('textarea');
+                t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+                document.body.appendChild(t); t.select();
+                var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+                t.remove(); return ok;
+            }
+            document.querySelectorAll('.channel-copy').forEach(function (btn) {
+                var what = btn.getAttribute('data-what');
+                btn.setAttribute('aria-label', LABEL[what]);
+                btn.addEventListener('click', function () {
+                    var text = btn.getAttribute('data-copy');
+                    var label = btn.querySelector('.copy-text');
+                    var original = label.textContent;
+                    function done() {
+                        btn.classList.add('copied');
+                        label.textContent = ar ? 'تم النسخ' : 'Copied';
+                        if (status) status.textContent = DONE[what];
+                        setTimeout(function () {
+                            btn.classList.remove('copied');
+                            label.textContent = original;
+                            if (status) status.textContent = '';
+                        }, 1600);
+                    }
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(done, function () { if (fallbackCopy(text)) done(); });
+                    } else if (fallbackCopy(text)) { done(); }
+                });
+            });
+        })();
+    </script>
+    <script src="typewriter.js"></script>
+</body>
+</html>

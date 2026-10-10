@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ibrahim Shaheen's personal website - Home page">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Pre-paint setup, before the browser draws anything:
+         1. language/direction, taken from ?lang= if present (so a shared Arabic link
+            opens in Arabic) otherwise the stored preference. Set here rather than in
+            i18n.js so an Arabic visitor never sees a frame of English LTR layout.
+         2. the backdrop preference, from ?backdrop= or storage, so the backdrop
+            never flashes in before being hidden.
+         3. opened directly (not inside the shell iframe)? then this page owns the
+            canvas and needs the site background instead of the browser default, which
+            is white in a light-mode browser. Inside the iframe we stay transparent so
+            the shell's backdrop shows through. -->
+    <script>
+    (function(){
+        var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+        try{S=localStorage}catch(e){}
+        // ?lang= wins over the stored preference, and is then remembered,
+        // so a shared Arabic link keeps working as the visitor browses on.
+        // ?theme= (experiment) wins over storage and is then remembered; purple is the default.
+        var tp=q.get("theme");var th=tp!==null?tp:(S&&S.getItem("theme"));if(tp!==null&&S){try{S.setItem("theme",tp)}catch(e){}}if(th&&th!=="purple")d.setAttribute("data-theme",th);
+        var lp=q.get("lang");
+        var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+        if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+        d.setAttribute("lang",lang);
+        d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+        // ?backdrop=off|on, same precedence. ?stars= is what this was called
+        // before the backdrop stopped being a starfield; still read so links
+        // shared earlier keep working. Safe to drop once none are in use.
+        var bp=q.get("backdrop");if(bp===null)bp=q.get("stars");
+        var bs=S&&(S.getItem("backdrop")||S.getItem("starfield"));
+        var bg=bp!==null?(bp==="off"?"off":"on"):(bs==="off"?"off":"on");
+        if(bp!==null&&S){try{S.setItem("backdrop",bg)}catch(e){}}
+        if(bg==="off")d.classList.add("no-backdrop");
+        // Opened directly rather than inside the shell iframe? Then this page owns
+        // the canvas and needs the site background, not the browser default.
+        if(window.self===window.top)d.classList.add("standalone");
+    })();
+    </script>
+    <noscript><style>html{background-color:#020004}</style></noscript>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
+    <script src="i18n.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Home - Ibrahim Shaheen</title>
+</head>
+<body class="transparent-bg">
+    <!-- The hero shows everything immediately. It used to be typed out character by
+         character, which took 6.4 seconds before the sentence saying who you are was
+         readable - longer than a recruiter's first scan. The only typing left is the
+         short role line, which starts already complete and never holds content back.
+
+         Every number here is already stated elsewhere on the site, and labelled the
+         way the site states it: 90% of HR processes automated is achieved, as the
+         Projects highlight and the Experience entry say. -->
+    <main class="home-container hero-page">
+        <section class="hero" aria-labelledby="hero-name">
+            <p class="hero-eyebrow" data-ar="أخصائي أول تقنيات الموارد البشرية · نيوم">People Technology Senior Specialist · NEOM</p>
+            <h2 class="hero-name" id="hero-name" data-ar="إبراهيم شاهين">Ibrahim Shaheen</h2>
+            <!-- The role line types itself in, then four focus areas, once per visit, and
+                 settles back on the full line (typewriter.js). Screen readers get the static
+                 line from the sr-only span. It shows the full line, still, with reduced
+                 motion, with the backdrop switched off, or when the line would wrap. -->
+            <p class="hero-role"><span class="sr-only" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية">Digital Transformation · AI · HRIS</span><span class="typed" aria-hidden="true" data-ar="التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية" data-phrases="[&quot;Digital Transformation · AI · HRIS&quot;, &quot;AI Agent Development&quot;, &quot;HR Digitalization&quot;, &quot;Process Optimization&quot;, &quot;People Analytics&quot;]" data-phrases-ar="[&quot;التحوّل الرقمي · الذكاء الاصطناعي · أنظمة الموارد البشرية&quot;, &quot;بناء وكلاء الذكاء الاصطناعي&quot;, &quot;رقمنة الموارد البشرية&quot;, &quot;تحسين العمليات&quot;, &quot;تحليلات الموارد البشرية&quot;]">Digital Transformation · AI · HRIS</span><span class="typed-caret" aria-hidden="true"></span></p>
+            <p class="hero-summary" data-ar="متخصّص في التحوّل الرقمي مع تركيز على الذكاء الاصطناعي وأنظمة الموارد البشرية (HRIS) والرقمنة الاستراتيجية. أعمل حاليًا في نيوم، حيث أقود مبادرات تُحوّل العمليات المعقّدة إلى أنظمة ذكية ومؤتمتة.">A Digital Transformation professional specializing in AI, HRIS, and strategic digitalization. Currently at NEOM, I lead initiatives that turn complex processes into intelligent, automated systems.</p>
+
+            <!-- Experience counts live from data-since, measured on the Riyadh wall clock
+                 (no DST there, so the arithmetic never skips or repeats an hour).
+                 Counts from his first full-time role after graduating (IT Manager,
+                 Crystal Inspection Services, Oct 2019). The part-time roles he held while
+                 studying (2016-2019) are on the Experience page but not counted here. -->
+            <ul class="hero-stats">
+                <li class="stat stat-experience" data-since="2019-10-01">
+                    <span class="stat-kicker" data-ar="الخبرة">Experience</span>
+                    <span class="sr-only exp-summary"></span>
+                    <div class="exp-counter" aria-hidden="true">
+                        <span class="seg"><span class="seg-num" data-unit="y">00</span><span class="seg-unit" data-ar="سنوات">Years</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="mo">00</span><span class="seg-unit" data-ar="أشهر">Months</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="d">00</span><span class="seg-unit" data-ar="أيام">Days</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="h">00</span><span class="seg-unit" data-ar="ساعات">Hours</span></span>
+                        <span class="seg"><span class="seg-num" data-unit="m">00</span><span class="seg-unit" data-ar="دقائق">Minutes</span></span>
+                        <span class="seg seg-live"><span class="seg-num" data-unit="s">00</span><span class="seg-unit" data-ar="ثوانٍ">Seconds</span></span>
+                    </div>
+                </li>
+                <li class="stat">
+                    <span class="stat-value" dir="ltr">90%</span>
+                    <span class="stat-label" data-ar="من عمليات الموارد البشرية مؤتمتة">of HR processes automated</span>
+                </li>
+                <li class="stat">
+                    <span class="stat-value" dir="ltr">2024</span>
+                    <span class="stat-label" data-ar="جائزة SAP لأفضل ابتكار وأتمتة في الموارد البشرية">SAP Best HCM Innovation &amp; Automation Award</span>
+                </li>
+                <li class="stat">
+                    <span class="stat-value" dir="ltr">3</span>
+                    <span class="stat-label" data-ar="لغات عمل: العربية والإنجليزية واليابانية">Working languages: Arabic, English, Japanese</span>
+                </li>
+            </ul>
+
+            <!-- Three weights for three intents: one filled primary for the action that
+                 matters most, an outline for browsing on, and a quiet download. They
+                 used to be identical, so "Get In Touch" read no louder than a nav pill. -->
+            <div class="cta-buttons">
+                <a href="contact.html" onclick="event.preventDefault(); parent.loadContent('contact.html')" class="cta-button cta-primary" data-ar="تواصل معي">Get In Touch</a>
+                <a href="projects.html" onclick="event.preventDefault(); parent.loadContent('projects.html')" class="cta-button cta-secondary" data-ar="عرض المشاريع">View Projects</a>
+                <a href="files/Ibrahim-Shaheen-CV.pdf" download target="_blank" rel="noopener" class="cta-button cta-tertiary"><i class="fas fa-download" aria-hidden="true"></i><span data-ar="تحميل السيرة الذاتية (بالإنجليزية)">Download CV</span></a>
+            </div>
+
+            <ul class="hero-focus" aria-label="Focus areas">
+                <li><i class="fas fa-chess" aria-hidden="true"></i><span data-ar="الاستراتيجية الرقمية">Digital Strategy</span></li>
+                <li><i class="fas fa-robot" aria-hidden="true"></i><span data-ar="الذكاء الاصطناعي والأتمتة">AI &amp; Automation</span></li>
+                <li><i class="fas fa-database" aria-hidden="true"></i><span>SAP SuccessFactors</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        /* Live experience counter. Calendar-true: whole years, then whole months,
+           then the remainder as days, hours, minutes and seconds, the way you would
+           say it aloud, rather than dividing milliseconds by an average month.
+
+           Everything runs on the Riyadh wall clock (UTC+3, no daylight saving), with
+           both instants shifted into it and read through the UTC getters, so a
+           visitor's own DST changes can never make it skip or repeat an hour.
+
+           The ticking digits are aria-hidden: a screen reader announcing every second
+           would be unbearable. It gets one static sentence instead. */
+        (function () {
+            var card = document.querySelector('.stat-experience');
+            if (!card) return;
+            var OFFSET = 3 * 3600 * 1000;
+            var since = Date.parse(card.getAttribute('data-since') + 'T00:00:00Z');
+            var cells = {};
+            card.querySelectorAll('.seg-num').forEach(function (el) { cells[el.dataset.unit] = el; });
+
+            function addMonthsUTC(t, n) {
+                var d = new Date(t), day = d.getUTCDate();
+                d.setUTCDate(1);
+                d.setUTCMonth(d.getUTCMonth() + n);
+                var last = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+                d.setUTCDate(Math.min(day, last));
+                return d.getTime();
+            }
+            function parts(now) {
+                var cur = since, y = 0, mo = 0;
+                while (addMonthsUTC(cur, 12) <= now) { cur = addMonthsUTC(cur, 12); y++; }
+                while (addMonthsUTC(cur, 1) <= now) { cur = addMonthsUTC(cur, 1); mo++; }
+                var ms = now - cur;
+                var d = Math.floor(ms / 864e5); ms -= d * 864e5;
+                var h = Math.floor(ms / 36e5);  ms -= h * 36e5;
+                var m = Math.floor(ms / 6e4);   ms -= m * 6e4;
+                return { y: y, mo: mo, d: d, h: h, m: m, s: Math.floor(ms / 1000) };
+            }
+            function pad(n) { return n < 10 ? '0' + n : String(n); }
+            function render() {
+                var p = parts(Date.now() + OFFSET);
+                for (var k in p) if (cells[k]) cells[k].textContent = pad(p[k]);
+                return p;
+            }
+            var first = render();
+            var ar = document.documentElement.lang === 'ar';
+            card.querySelector('.exp-summary').textContent = ar
+                ? 'أكثر من ' + first.y + (first.y >= 3 && first.y <= 10 ? ' سنوات' : ' سنة') + ' من الخبرة'
+                : 'More than ' + first.y + ' years of experience';
+            // Line the ticks up with the real second boundary, then keep time.
+            setTimeout(function () { render(); setInterval(render, 1000); }, 1000 - (Date.now() % 1000));
+        })();
+    </script>
+    <script src="typewriter.js"></script>
+</body>
+</html>

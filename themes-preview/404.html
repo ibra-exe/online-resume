@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found - Ibrahim Shaheen">
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Pre-paint setup, before the browser draws anything: language/direction and
+         the backdrop preference, from ?lang=/?backdrop= if present, else storage. -->
+    <script>
+    (function(){
+        var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+        try{S=localStorage}catch(e){}
+        // ?lang= wins over the stored preference, and is then remembered,
+        // so a shared Arabic link keeps working as the visitor browses on.
+        // ?theme= (experiment) wins over storage and is then remembered; purple is the default.
+        var tp=q.get("theme");var th=tp!==null?tp:(S&&S.getItem("theme"));if(tp!==null&&S){try{S.setItem("theme",tp)}catch(e){}}if(th&&th!=="purple")d.setAttribute("data-theme",th);
+        var lp=q.get("lang");
+        var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+        if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+        d.setAttribute("lang",lang);
+        d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+        // ?backdrop=off|on, same precedence. ?stars= is what this was called
+        // before the backdrop stopped being a starfield; still read so links
+        // shared earlier keep working. Safe to drop once none are in use.
+        var bp=q.get("backdrop");if(bp===null)bp=q.get("stars");
+        var bs=S&&(S.getItem("backdrop")||S.getItem("starfield"));
+        var bg=bp!==null?(bp==="off"?"off":"on"):(bs==="off"?"off":"on");
+        if(bp!==null&&S){try{S.setItem("backdrop",bg)}catch(e){}}
+        if(bg==="off")d.classList.add("no-backdrop");
+    })();
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet">
+    <script src="i18n.js" defer></script>
+    <script src="circuit-bg.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Page not found - Ibrahim Shaheen</title>
+</head>
+<body>
+    <!-- Same backdrop as the shell: purple wash, trace grid, slow pixel lattice.
+         The star layers are retired (see styles.css); markup kept commented so the
+         trial reverts in one step. -->
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="nebula nebula-3"></div>
+    <div class="circuit-grid"></div>
+    <canvas id="circuit-cells" class="circuit-cells" aria-hidden="true"></canvas>
+    <!--
+    <div class="stars-medium"></div>
+    <div class="stars-large"></div>
+    <div class="bright-star bright-star-1"></div>
+    <div class="bright-star bright-star-3"></div>
+    <div class="bright-star bright-star-5"></div>
+    -->
+
+    <button id="backdrop-toggle" class="backdrop-toggle" aria-pressed="true" aria-label="Turn off background &amp; animation">
+        <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.55" shape-rendering="crispEdges">
+                <path d="M8.5 0v24M15.5 0v24M0 8.5h24M0 15.5h24" />
+            </g>
+            <g fill="currentColor">
+                <rect x="2.25" y="10" width="4" height="4" />
+                <rect x="17.75" y="2.25" width="4" height="4" />
+                <rect x="10" y="17.75" width="4" height="4" />
+            </g>
+        </svg>
+    </button>
+    <!-- The 404 is a real landing page — a stale or mistyped link can drop an Arabic
+         reader straight here — so it needs the language control too, not just the
+         backdrop one. i18n.js wires whichever of the two buttons it finds, and
+         toggleLang skips the iframe reload when there is no #contentFrame. -->
+    <button id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
+
+    <header><h1 data-ar="إبراهيم">Ibrahim</h1></header>
+
+    <div class="notfound-container">
+        <div class="notfound-code" aria-hidden="true">404</div>
+        <h2 class="notfound-heading" data-ar="الصفحة غير موجودة">Page not found</h2>
+        <p class="notfound-text" data-ar="الرابط الذي فتحته لم يعد موجودًا أو لم يكن صحيحًا. لنعد بك إلى الصفحة الرئيسية.">
+            The link you followed is no longer here, or was never quite right. Let's get you back.
+        </p>
+        <div class="cta-buttons">
+            <a href="/" class="cta-button" data-ar="العودة إلى الرئيسية">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

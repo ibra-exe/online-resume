@@ -1,0 +1,5222 @@
+/* ---- Colour palette ----
+   Every brand colour on the site comes from these channels, so a theme only has to
+   redefine them (see THEMES at the end of the file). */
+:root {
+    --accent-rgb: 183, 102, 255;
+    --accent-strong-rgb: 207, 162, 255;
+    --primary-rgb: 80, 37, 128;
+    --primary-hover-rgb: 111, 51, 153;
+    --wash-3-rgb: 173, 78, 188;
+    --wash-4-rgb: 68, 14, 132;
+    --nebula-a-rgb: 132, 61, 198;
+    --nebula-b-rgb: 168, 99, 230;
+    --surface-rgb: 25, 11, 41;
+    --surface-hover-rgb: 40, 18, 64;
+    --dialog-bg: #140a22;
+    --on-accent: #14061f;
+}
+
+:root {
+    --primary-color: rgb(var(--primary-rgb));
+    --primary-hover: rgb(var(--primary-hover-rgb));
+    --text-color: #e6e6f2;
+    --glow-color: rgb(var(--accent-rgb));
+    --font-main: 'Chakra Petch', 'Arial', sans-serif;
+    --font-special: 'Orbitron', sans-serif;
+    --footer-height: 55px;
+}
+
+/* `*` does NOT match ::before/::after, and box-sizing is not inherited, so
+   pseudo-elements were silently falling back to content-box. That is what kept the
+   timeline circles off-centre: .left::after sets width:24px AND border:3px, so it
+   painted 30px wide and its visual centre sat 3px right of where `left` implied.
+   Including the pseudo-elements here makes width mean the painted width, so the
+   circle maths finally matches what you see.
+   Verified safe: the only other pseudo-elements that touch border/padding are
+   body::before / body::after, and both set `border: none; padding: 0`. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    padding-bottom: var(--footer-height);
+    border: none;
+    outline: none;
+    font-family: var(--font-main);
+    background-color: #020004;
+    color: var(--text-color);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    -webkit-tap-highlight-color: rgba(var(--accent-rgb), 0.2);
+}
+
+/* CSS-based space background */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: 
+        radial-gradient(ellipse at 30% 40%, rgba(var(--primary-rgb), 0.25) 0%, rgba(0, 0, 0, 0) 70%),
+        radial-gradient(ellipse at 80% 40%, rgba(var(--primary-hover-rgb), 0.25) 0%, rgba(0, 0, 0, 0) 70%),
+        radial-gradient(ellipse at 50% 70%, rgba(var(--wash-3-rgb), 0.15) 0%, rgba(0, 0, 0, 0) 75%),
+        radial-gradient(ellipse at 15% 60%, rgba(var(--wash-4-rgb), 0.2) 0%, rgba(0, 0, 0, 0) 60%);
+    z-index: -3;
+    pointer-events: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Stars effect - First layer (small stars) */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+        radial-gradient(1px 1px at 17px 41px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 53px 76px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 85px 112px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 119px 163px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 142px 203px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 176px 267px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 211px 321px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 237px 298px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 269px 247px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 293px 188px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 318px 143px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 342px 205px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 367px 264px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 389px 307px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 418px 371px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 437px 432px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 461px 488px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 482px 537px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 513px 583px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 546px 561px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 573px 512px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 594px 464px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 623px 423px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 651px 391px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 678px 342px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 703px 312px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 731px 356px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 763px 419px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 792px 463px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 824px 412px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 857px 367px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 889px 337px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 915px 403px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 943px 467px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 973px 517px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1px 1px at 998px 553px, #fff, rgba(0, 0, 0, 0));
+    background-size: 1000px 600px;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: 0.7;
+    pointer-events: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Second layer of stars (medium stars) */
+.stars-medium {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+        radial-gradient(1.5px 1.5px at 39px 47px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 87px 94px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 132px 158px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 183px 219px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 227px 173px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 271px 129px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 317px 203px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 361px 257px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 408px 309px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 453px 363px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 496px 312px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 543px 264px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 587px 318px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 631px 371px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 679px 427px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 723px 489px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 776px 537px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 823px 479px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 872px 417px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 916px 357px, #fff, rgba(0, 0, 0, 0));
+    background-size: 950px 650px;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: 0.35;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Third layer of stars (large stars) */
+.stars-large {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+        radial-gradient(2px 2px at 67px 83px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 132px 163px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 194px 237px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 263px 194px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 337px 283px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 413px 349px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 476px 417px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 524px 358px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 591px 293px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 657px 346px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 713px 413px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 773px 481px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 827px 423px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 895px 371px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0));
+    background-size: 900px 700px;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: 0.3;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Special bright stars - More randomly positioned */
+.bright-star {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8), 0 0 20px 6px var(--glow-color);
+    z-index: -1;
+    pointer-events: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+.bright-star-1 {
+    top: 15%;
+    left: 23%;
+}
+
+.bright-star-2 {
+    top: 42%;
+    left: 78%;
+}
+
+.bright-star-3 {
+    top: 73%;
+    left: 33%;
+}
+
+.bright-star-4 {
+    top: 27%;
+    left: 57%;
+}
+
+.bright-star-5 {
+    top: 63%;
+    left: 82%;
+}
+
+.bright-star-6 {
+    top: 82%;
+    left: 12%;
+}
+
+/* Star nebula effect */
+.nebula {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.15;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nebula-1 {
+    background: radial-gradient(ellipse at 30% 40%, rgba(var(--accent-rgb), 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.nebula-2 {
+    background: radial-gradient(ellipse at 70% 60%, rgba(var(--nebula-a-rgb), 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.nebula-3 {
+    background: radial-gradient(ellipse at 50% 20%, rgba(var(--nebula-b-rgb), 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+header {
+    font-family: var(--font-special);
+    font-size: 3rem;
+    text-align: center;
+    padding: 15px 0;
+    margin: 20px 0 10px;
+    text-shadow: 0 0 8px var(--glow-color);
+    flex-shrink: 0;
+}
+
+.navbar {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 0 10px;
+    flex-shrink: 0;
+}
+
+.navbar a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.15s, transform 0.15s;
+}
+
+/* Nav icons are for the mobile bottom bar only; hidden on desktop */
+.navbar a i {
+    display: none;
+}
+
+.navbar a:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-3px);
+}
+
+footer {
+    text-align: center;
+    padding: 6px 0;
+    background-color: rgba(var(--primary-rgb), 0.8);
+    color: var(--text-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-top: 1px solid rgba(var(--accent-rgb), 0.5);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+}
+
+.footer-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-section:last-child {
+    align-items: flex-end;
+}
+
+.copyright {
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    margin-bottom: 1px;
+    text-align: left;
+}
+
+.footer-tagline {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    text-align: left;
+}
+
+.social-links-footer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1px;
+    justify-content: flex-end;
+}
+
+.social-links-footer a {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-links-footer a:hover {
+    color: var(--glow-color);
+    transform: translateY(-2px);
+}
+
+.footer-credit {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    text-align: right;
+}
+
+.footer-credit i {
+    color: var(--glow-color);
+    margin: 0 3px;
+}
+
+footer a, footer a:hover {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #e0e0e0;
+}
+
+.home-container {
+    position: relative;
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+    padding: 15px 10px 25px;
+}
+
+.home-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 680px;
+    width: 100%;
+    z-index: 2;
+    gap: 20px;
+}
+
+.home-top-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.home-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.home-photo .profile-frame {
+    width: 220px;
+    border: 2px solid var(--glow-color);
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 0 15px var(--glow-color);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#home-profile-pic {
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 700px) {
+    .home-layout {
+        gap: 15px;
+    }
+
+    .home-top-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .home-photo .profile-frame {
+        width: 140px;
+    }
+
+    .home-text-box {
+        text-align: center;
+        width: 100%;
+    }
+
+    /* The three highlight cards deliberately do NOT stack here. They used to, from
+       700px down, which left three ~200px cards in a column with half the width
+       empty on a 610px screen. The column layout that mobile actually wants — cards
+       full width, icon beside the text rather than above it — is defined in the
+       600px block further down, and it is the only place that needs it. Everything
+       this used to declare (flex-direction, width, gap, justify-content) is either
+       restated there or comes from the base rules, so removing it lost nothing.
+       Between 601 and 700px the cards now sit in a row at max-width 180px: three of
+       those plus two 12px gaps is 564px, inside the 570px of content width a 610px
+       viewport gives, and flex-shrink covers the last few pixels down to 601. */
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .cta-button {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+.home-content-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-text-box {
+    background: rgba(var(--primary-rgb), 0.25);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    border-radius: 10px;
+    padding: 20px 25px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.1);
+    flex: 1;
+}
+
+.home-content {
+    font-family: var(--font-main);
+    font-size: 1.2rem;
+    color: var(--text-color);
+    text-align: left;
+    white-space: pre-wrap;
+    overflow: visible;
+    min-height: 80px;
+    max-width: 800px;
+    position: relative;
+    padding-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Typewriter caret.
+
+   This used to be `position: absolute` with no offsets, which leaves the browser
+   to resolve its STATIC POSITION — the spot it "would have" occupied in flow.
+   Engines disagree about that in a right-to-left context, and WebKit gets it
+   wrong: in Arabic on iOS Safari the cursor drifted to the wrong side, and the
+   out-of-flow box could paint past the content edge, nudging the layout sideways
+   a line at a time before snapping back.
+
+   Letting it flow inline removes the guesswork entirely: the inline formatter
+   puts it after the last character in LTR and to the left of it in RTL, by
+   construction. It costs one character of width on the final line, which the
+   typewriter's height measurement already accounts for since the ::after exists
+   during that measurement either way. */
+.home-content::after {
+    content: '_';
+    display: inline;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Cursor blinking animation - modified to not affect layout */
+@keyframes blink-caret {
+    from, to { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.home-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.highlight-item {
+    background-color: rgba(var(--primary-rgb), 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    flex: 1;
+    max-width: 200px;
+}
+
+.highlight-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.3);
+}
+
+.highlight-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--glow-color);
+}
+
+.highlight-text {
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.cta-button {
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 10px 20px;
+    min-width: 170px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    text-align: center;
+    border: 1px solid rgba(var(--accent-rgb), 0.5);
+}
+
+.cta-button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.3);
+}
+
+/* Media Queries for Responsive Design */
+
+@media screen and (max-width: 900px) {
+    header {
+        font-size: 2.5rem;
+        margin: 15px 0 8px;
+        padding: 10px 0;
+    }
+
+    .navbar a {
+        padding: 8px 16px;
+        margin: 3px 5px;
+        font-size: 0.9rem;
+    }
+
+    .home-content {
+        font-size: 1.2rem;
+        min-height: 100px;
+    }
+
+    .home-highlights {
+        gap: 12px;
+    }
+
+    .highlight-item {
+        padding: 12px;
+        max-width: 180px;
+    }
+
+    .highlight-text {
+        font-size: 0.8rem;
+    }
+
+    .highlight-icon {
+        font-size: 1.5rem;
+    }
+
+    .profile-container {
+        margin-bottom: 10px;
+    }
+
+    .about-info {
+        max-height: none;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .navbar {
+        gap: 0;
+        margin-bottom: 8px;
+    }
+
+    .home-container {
+        padding: 10px 8px;
+    }
+
+    .home-content {
+        font-size: 0.95rem;
+        min-height: 70px;
+        margin-bottom: 15px;
+    }
+
+    .home-content-wrapper {
+        padding: 8px;
+    }
+
+    .home-highlights {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .highlight-item {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px;
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    .highlight-icon {
+        font-size: 1.3rem;
+        margin-bottom: 0;
+    }
+
+    .highlight-text {
+        font-size: 0.8rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .cta-button {
+        font-size: 0.85rem;
+        padding: 12px 16px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-card {
+        min-height: 44px;
+        gap: 12px;
+    }
+
+    .footer-content {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .footer-tagline {
+        font-size: 0.55rem;
+    }
+
+    .social-links-footer a {
+        font-size: 1rem;
+    }
+
+    .footer-credit {
+        font-size: 0.55rem;
+    }
+
+    .project-title {
+        font-size: 1.05rem;
+    }
+
+    .project-description {
+        font-size: 0.85rem;
+    }
+
+    .project-link {
+        min-height: 44px;
+    }
+
+    footer {
+        padding: 4px 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .footer-content {
+        padding: 0 10px;
+    }
+
+    .nebula {
+        opacity: 0.08;
+    }
+
+    .star-cluster {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 380px) {
+
+    .home-content {
+        font-size: 0.85rem;
+        min-height: 60px;
+    }
+
+    .home-content-wrapper {
+        padding: 5px;
+    }
+
+    .highlight-item {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .highlight-text {
+        font-size: 0.75rem;
+    }
+
+    .highlight-icon {
+        font-size: 1.1rem;
+    }
+
+    .cta-button {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+    }
+
+    .footer-content {
+        padding: 3px 6px;
+    }
+
+    .footer-tagline {
+        font-size: 0.52rem;
+    }
+
+    .social-links-footer a {
+        font-size: 1rem;
+    }
+
+    .footer-credit {
+        font-size: 0.52rem;
+    }
+
+    .project-title {
+        font-size: 0.95rem;
+    }
+
+    .project-description {
+        font-size: 0.8rem;
+    }
+
+}
+
+.x-icon {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 15px;
+}
+
+.about-content {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.about-heading {
+    font-family: var(--font-special);
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    text-align: center;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-frame {
+    border: 2px solid var(--glow-color);
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 0 15px var(--glow-color);
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 210px;
+}
+
+#profile-pic {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    display: block;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1 !important;
+}
+
+.about-info {
+    background-color: rgba(var(--primary-rgb), 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+}
+
+/* Inner scroll box only on desktop; phones/tablets scroll the whole page in the iframe */
+@media screen and (min-width: 901px) {
+    .about-info {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+}
+
+/* Custom scrollbar for webkit browsers */
+.about-info::-webkit-scrollbar {
+    width: 8px;
+}
+.about-info::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+.about-info::-webkit-scrollbar-thumb {
+    background: rgba(var(--accent-rgb), 0.5);
+    border-radius: 4px;
+}
+
+.about-text {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    color: var(--text-color);
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    min-height: 200px;
+}
+
+.skills-section {
+    margin-top: 15px;
+}
+
+.skills-heading {
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.skill-item {
+    background-color: rgba(var(--primary-rgb), 0.4);
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skill-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 10px rgba(var(--accent-rgb), 0.3);
+}
+
+.skill-item i {
+    color: var(--glow-color);
+    font-size: 1.2rem;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.contact-heading {
+    font-family: var(--font-special);
+    font-size: 2.5rem;
+    margin-bottom: 0px;
+    text-align: center;
+    text-shadow: 0 0 8px var(--glow-color);
+}
+
+.contact-intro {
+    font-size: 1.1rem;
+    text-align: center;
+    max-width: 600px;
+    margin-bottom: 30px;
+    line-height: 1.45;
+}
+
+.contact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.contact-card {
+    flex: 0 0 calc(50% - 8px);
+    background-color: rgba(var(--primary-rgb), 0.4);
+    border-radius: 8px;
+    padding: 15px 15px;
+    text-decoration: none;
+    color: var(--text-color);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.5);
+    background-color: rgba(var(--primary-hover-rgb), 0.5);
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--glow-color);
+}
+
+.contact-label {
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.contact-description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 600px) {
+    .about-container {
+        padding: 10px 8px;
+    }
+
+    .about-heading {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .profile-container {
+        margin-bottom: 5px;
+    }
+
+    .profile-frame {
+        max-width: 180px;
+    }
+
+    .about-info {
+        padding: 14px;
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    .about-text {
+        font-size: 0.9rem;
+        min-height: auto;
+        line-height: 1.5;
+    }
+
+    .skills-grid {
+        gap: 8px;
+    }
+
+    .skill-item {
+        padding: 10px;
+        font-size: 0.85rem;
+        min-height: 44px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .about-heading {
+        font-size: 1.4rem;
+    }
+
+    .about-text {
+        font-size: 0.84rem;
+        min-height: auto;
+        line-height: 1.45;
+    }
+
+    .profile-frame {
+        max-width: 140px;
+    }
+
+    .skills-grid {
+        gap: 6px;
+    }
+
+    .skill-item {
+        padding: 8px;
+    }
+}
+
+/* Experience Page Styles */
+.experience-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+/* The vertical ruler (left rail so cards can use the full width) */
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: var(--glow-color);
+    box-shadow: 0 0 8px var(--glow-color);
+    top: 0;
+    bottom: 0;
+    left: 31px;
+    margin-left: -2px;
+    z-index: 1;
+}
+
+/* Container around content */
+.container {
+    padding: 10px 20px 10px 70px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 60px;
+}
+
+/* All entries share the full-width left-rail layout */
+.left {
+    left: 0;
+}
+
+.right {
+    left: 0;
+}
+
+/* Add circles on the timeline */
+.left::after, .right::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    border: 3px solid var(--glow-color);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--glow-color);
+    top: 20px;
+    z-index: 2;
+}
+
+/* Centre the dots on the rail. The rail is centred on x=31 (4px wide at left:31
+   with margin-left:-2px), so a 24px node starts at 31 - 12 = 19px. This only
+   actually lands on centre now that pseudo-elements are border-box (see the reset
+   at the top): before that the 3px border pushed the painted circle 3px right. */
+.left::after,
+.right::after {
+    left: 19px;
+}
+
+/* The actual content */
+.content {
+    position: relative;
+    background-color: rgba(var(--primary-rgb), 0.4);
+    border-radius: 8px;
+    padding: 20px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.3);
+}
+
+.company {
+    font-family: var(--font-main);
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.position {
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.period {
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.description {
+    line-height: 1.55;
+    margin: 0;
+    padding-inline-start: 1.2em;
+    list-style-type: disc;
+}
+
+.description li {
+    margin-bottom: 10px;
+}
+
+.description li:last-child {
+    margin-bottom: 0;
+}
+
+.description li::marker {
+    color: var(--glow-color);
+}
+
+.description-lead {
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* Expandable experience cards (reuse the .expand-btn styling from Projects) */
+.content.expandable {
+    cursor: pointer;
+}
+
+.exp-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+}
+
+.content.expanded .exp-details {
+    grid-template-rows: 1fr;
+}
+
+.exp-details-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding-top: 14px;
+}
+
+.content.expanded .expand-chevron {
+    transform: rotate(180deg);
+}
+
+.content.expanded .expand-more {
+    display: none;
+}
+
+.content.expanded .expand-less {
+    display: inline;
+}
+
+@media screen and (max-width: 900px) {
+    .timeline::before {
+        left: 31px;
+    }
+
+    .container {
+        width: 100%;
+        padding-left: 55px;
+        padding-right: 15px;
+        margin-bottom: 40px;
+    }
+
+    .right, .left {
+        left: 0;
+    }
+
+    .right::after, .left::after {
+        left: 19px;  /* border-box: 19 + 24/2 = 31 = rail centre */
+    }
+
+    .company {
+        font-size: 1.2rem;
+    }
+
+    .position {
+        font-size: 0.95rem;
+    }
+
+    .description {
+        font-size: 0.9rem;
+    }
+
+    .content {
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .experience-container {
+        padding: 10px;
+    }
+
+    .timeline {
+        padding-top: 10px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .right, .left {
+        left: 0;
+    }
+
+    .content {
+        padding: 14px 12px;
+    }
+
+    .company {
+        font-size: 1.1rem;
+    }
+
+    .position {
+        font-size: 0.92rem;
+    }
+
+    .period {
+        font-size: 0.82rem;
+    }
+
+    .description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .experience-container {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 0;
+        margin-bottom: 12px;
+    }
+
+    .content {
+        padding: 12px 10px;
+    }
+
+    .company {
+        font-size: 1rem;
+    }
+
+    .position {
+        font-size: 0.85rem;
+    }
+
+    .description {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+}
+
+/* Content iframe */
+#contentFrame {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    border: none;
+    display: block;
+    overflow-y: auto;
+    background: transparent;
+}
+
+/* Transparent background for embedded pages */
+body.transparent-bg {
+    background: transparent !important;
+    padding-bottom: 0;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+}
+
+body.transparent-bg::before,
+body.transparent-bg::after,
+body.transparent-bg .nebula,
+body.transparent-bg .stars-medium,
+body.transparent-bg .stars-large,
+body.transparent-bg .bright-star,
+body.transparent-bg .star-cluster {
+    display: none;
+}
+
+/* Projects Page Styles */
+.projects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.project-card {
+    background-color: rgba(var(--primary-rgb), 0.4);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 800px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(var(--accent-rgb), 0.3);
+}
+
+.project-title {
+    font-family: var(--font-main);
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+.project-description {
+    line-height: 1.6;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.15s;
+}
+
+.project-link:hover {
+    background-color: var(--primary-hover);
+}
+
+/* ---- Projects: section headings + expandable cards ---- */
+.projects-section-title {
+    font-family: var(--font-special);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    text-shadow: 0 0 8px var(--glow-color);
+    width: 100%;
+    max-width: 800px;
+    margin: 10px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.25);
+}
+
+.projects-section-title:not(:first-child) {
+    margin-top: 30px;
+}
+
+.projects-section-subtitle {
+    width: 100%;
+    max-width: 800px;
+    font-size: 0.9rem;
+    opacity: 0.75;
+    margin-bottom: 16px;
+}
+
+.project-card.expandable {
+    cursor: pointer;
+}
+
+.project-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-card-head .project-title {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+/* Clear "View details" button so it's obvious the card expands */
+.expand-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 7px 14px;
+    background-color: rgba(var(--accent-rgb), 0.15);
+    border: 1px solid rgba(var(--accent-rgb), 0.45);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.72rem;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.expand-btn:hover {
+    background-color: rgba(var(--accent-rgb), 0.28);
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.3);
+}
+
+.expand-chevron {
+    font-size: 0.9em;
+    line-height: 1;
+    color: var(--glow-color);
+    transition: transform 0.3s ease;
+}
+
+.project-card.expanded .expand-chevron {
+    transform: rotate(180deg);
+}
+
+/* Swap the button label based on state */
+.expand-less {
+    display: none;
+}
+
+.project-card.expanded .expand-more {
+    display: none;
+}
+
+.project-card.expanded .expand-less {
+    display: inline;
+}
+
+.project-summary {
+    margin: 8px 0 0;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+.project-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+}
+
+.project-card.expanded .project-details {
+    grid-template-rows: 1fr;
+}
+
+.project-details-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding-top: 14px;
+}
+
+.project-points {
+    margin: 0;
+    padding-inline-start: 18px;
+    line-height: 1.6;
+}
+
+.project-points li {
+    margin-bottom: 6px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.project-tags span {
+    font-size: 0.72rem;
+    font-family: var(--font-main);
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: rgba(var(--accent-rgb), 0.12);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+/* Muted, non-interactive tag for private/unavailable repos (not a button) */
+.project-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+/* Star clusters */
+.star-cluster {
+    position: fixed;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, rgba(0, 0, 0, 0) 70%);
+    opacity: 0.2;
+    z-index: -2;
+    filter: blur(5px);
+    pointer-events: none;
+    overflow: hidden;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+.star-cluster-1 {
+    top: 25%;
+    left: 20%;
+    width: 300px;
+    height: 300px;
+}
+
+.star-cluster-2 {
+    top: 60%;
+    left: 75%;
+    width: 250px;
+    height: 250px;
+}
+
+.star-cluster-3 {
+    top: 70%;
+    left: 30%;
+    width: 200px;
+    height: 200px;
+}
+
+.star-cluster-4 {
+    top: 15%;
+    left: 65%;
+    width: 350px;
+    height: 350px;
+    opacity: 0.3;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .navbar a:hover {
+        transform: none;
+    }
+
+    .highlight-item:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .cta-button:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .contact-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .content:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .skill-item:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .project-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .navbar a:active {
+        background-color: var(--primary-hover);
+        transform: scale(0.95);
+    }
+
+    .cta-button:active,
+    .contact-card:active,
+    a.project-link:active {
+        background-color: var(--primary-hover);
+        transform: scale(0.97);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   Mobile optimization pass (placed last so these win the
+   cascade over the earlier, source-order-losing mobile rules)
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    /* Top-align the home hero so it sits just under the "Ibra" header
+       (centering pushed the typewriter box too far down on tall phones) */
+    .home-container {
+        align-items: flex-start;
+        padding-top: 6px;
+    }
+
+    /* Section headings were rendering at full desktop size on mobile (dead 1.1rem override) */
+    .skills-heading {
+        font-size: 1.15rem;
+    }
+
+    /* Skills read better as a single column on phones (no cramped 2-col wrapping) */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contact cards stack full-width on phones (3 cards since X was removed) */
+
+    /* Experience dates: drop the compounding italic + heavy glow, lift opacity */
+    .period {
+        font-style: normal;
+        opacity: 0.9;
+    }
+
+    /* Footer text was ~8-10px; nudge to a more legible floor */
+    .copyright {
+        font-size: 0.68rem;
+    }
+    .footer-tagline,
+    .footer-credit {
+        font-size: 0.6rem;
+    }
+
+    /* Footer social icons: give them a 44px-tall tap target */
+    .social-links-footer {
+        gap: 6px;
+    }
+    .social-links-footer a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 4px;
+    }
+
+    /* Project links span the card width for an easy tap target */
+    .project-link {
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Keep all 5 nav links on one row on mainstream phones (390-393px) */
+
+}
+
+@media screen and (max-width: 380px) {
+    /* Tighten nav further so it stays one row down to ~320px */
+
+    /* Declutter the crammed footer on the narrowest phones */
+    .footer-tagline,
+    .footer-credit {
+        display: none;
+    }
+
+    /* Keep the smallest text legible */
+    .period {
+        font-size: 0.8rem;
+    }
+    .skill-item {
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================================
+   Mobile: bottom tab bar navigation
+   (replaces the top navbar and footer bar on phones; desktop
+   keeps the top nav + footer unchanged)
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    /* Reserve space for the fixed bottom tab bar instead of the footer */
+    :root {
+        --footer-height: 62px;
+    }
+
+    /* More breathing room at the top now that nav has moved down */
+    header {
+        font-size: 2rem;
+        margin: 16px 0 12px;
+        padding: 4px 0;
+    }
+
+    /* Turn the navbar into a fixed bottom tab bar */
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        padding: 4px 0;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        background: rgba(var(--primary-rgb), 0.92);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(var(--accent-rgb), 0.5);
+        z-index: 200;
+    }
+
+    .navbar a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        min-height: 54px;
+        padding: 4px 2px;
+        margin: 0;
+        background: transparent;
+        border-radius: 0;
+        font-size: 0.58rem;
+    }
+
+    .navbar a i {
+        display: block;
+        font-size: 1.15rem;
+        color: var(--glow-color);
+    }
+
+    .navbar a span {
+        letter-spacing: 0.2px;
+        opacity: 0.9;
+    }
+
+    /* Footer content is rehomed on phones (socials live on About/Contact);
+       the bottom tab bar replaces it entirely */
+    footer {
+        display: none;
+    }
+}
+
+/* ============================================================
+   Mobile: bring back the desktop timeline rail (single column)
+   — a vertical line + a node per card, sitting to the left of
+   the card-style entries. Placed last so it wins over the
+   earlier mobile rules that hid the rail.
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    .timeline::before {
+        display: block;
+        left: 18px;
+    }
+
+    .left::after,
+    .right::after {
+        display: block;
+        left: 9px;
+        top: 18px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .container {
+        padding-left: 42px;
+    }
+}
+
+/* ============================================================
+   Mobile Contact: compact icon-left rows so all three channels
+   fit without scrolling. Uses a grid (icon spans both text rows)
+   so no HTML change is needed. Placed last so it wins over the
+   base card styles defined earlier in the file.
+   ============================================================ */
+@media screen and (max-width: 600px) {
+    .contact-heading {
+        font-size: 1.6rem;
+    }
+
+    .contact-intro {
+        font-size: 0.92rem;
+        margin-bottom: 14px;
+    }
+
+    .contact-grid {
+        gap: 10px;
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    .contact-card {
+        flex: 0 0 100%;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "icon label"
+            "icon desc";
+        column-gap: 14px;
+        row-gap: 2px;
+        align-items: center;
+        justify-items: start;
+        text-align: left;
+        padding: 14px 16px;
+    }
+
+    .contact-icon {
+        grid-area: icon;
+        font-size: 1.8rem;
+        margin-bottom: 0;
+    }
+
+    .contact-label {
+        grid-area: label;
+        align-self: end;
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .contact-description {
+        grid-area: desc;
+        align-self: start;
+        font-size: 0.82rem;
+    }
+}
+
+/* ============================================================
+   Arabic (RTL) support
+   - Body/headings use Cairo when lang=ar (Orbitron/Chakra Petch
+     have no Arabic glyphs), the header wordmark included — it now
+     carries the name itself, which is translated, not a Latin mark.
+   - [dir="rtl"] flips the directional layout rules.
+   ============================================================ */
+html[lang="ar"] {
+    --font-main: 'Cairo', 'Chakra Petch', 'Arial', sans-serif;
+}
+
+/* Arabic content headings get the Arabic font.
+   The header wordmark is in here too now that it carries the name in Arabic rather
+   than the Latin "Ibra". It cannot be left on Orbitron: Orbitron has no Arabic
+   glyphs at all, so the browser silently falls back to whatever system Arabic face
+   it has — the default-sans look this is meant to avoid. Cairo is already loaded
+   for Arabic, so naming it costs no extra request.
+   No letter-spacing is introduced here on purpose: Arabic is cursive and spacing
+   the letters pulls the joins apart. The header inherits `normal`, so it is fine. */
+html[lang="ar"] header h1,
+html[lang="ar"] .about-heading,
+html[lang="ar"] .contact-heading,
+html[lang="ar"] .projects-section-title,
+html[lang="ar"] .skills-heading,
+html[lang="ar"] .notfound-heading {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+}
+
+/* .notfound-code is the only --font-special element deliberately left out: it is the
+   digits "404", which Orbitron does have, so there is nothing to fall back from. */
+
+/* Explicit left-aligned text flips to right in RTL
+   (text with no explicit align auto-flips via dir) */
+[dir="rtl"] .home-content,
+[dir="rtl"] .about-text,
+[dir="rtl"] .copyright,
+[dir="rtl"] .footer-tagline {
+    text-align: right;
+}
+
+/* Experience timeline rail + nodes move to the right side */
+[dir="rtl"] .timeline::before {
+    left: auto;
+    right: 31px;
+    margin-left: 0;
+    margin-right: -2px;
+}
+[dir="rtl"] .container {
+    padding-left: 20px;
+    padding-right: 70px;
+}
+[dir="rtl"] .left::after,
+[dir="rtl"] .right::after {
+    left: auto;
+    right: 19px;  /* mirrors the LTR value; border-box makes it land on centre */
+}
+
+@media screen and (max-width: 900px) {
+    [dir="rtl"] .timeline::before { right: 31px; left: auto; }
+    [dir="rtl"] .container { padding-left: 15px; padding-right: 55px; }
+    [dir="rtl"] .left::after, [dir="rtl"] .right::after { right: 19px; left: auto; }
+}
+
+@media screen and (max-width: 600px) {
+    [dir="rtl"] .timeline::before { right: 18px; left: auto; }
+    [dir="rtl"] .left::after, [dir="rtl"] .right::after { right: 9px; left: auto; }
+    [dir="rtl"] .container { padding-left: 0; padding-right: 42px; }
+}
+
+/* Language toggle button (in the shell) */
+.lang-toggle {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    z-index: 300;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: rgba(var(--primary-rgb), 0.55);
+    border: 1px solid rgba(var(--accent-rgb), 0.5);
+    color: var(--text-color);
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.lang-toggle:hover {
+    background-color: rgba(var(--primary-hover-rgb), 0.75);
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.4);
+}
+
+[dir="rtl"] .lang-toggle {
+    right: auto;
+    left: 16px;
+}
+
+/* Location line under the dates. Deliberately quieter than .period (which is
+   italic at 0.8 opacity) so the card reads company -> role -> dates -> place
+   without the place competing. No pin icon: experience.html loads no Font Awesome
+   at all, and pulling the whole icon font in for one glyph is not worth it. */
+.location {
+    font-size: 0.85rem;
+    opacity: 0.65;
+    margin-bottom: 10px;
+}
+
+/* .period already carries the gap when a location follows it */
+.period:has(+ .location) {
+    margin-bottom: 2px;
+}
+
+@media screen and (max-width: 600px) {
+    .location {
+        font-size: 0.8rem;
+    }
+}
+
+/* ---- Company logos on the Experience timeline ----
+   Each logo ships on its own white chip (baked into the image) because every one
+   of these marks is drawn for a white background: on #020004 the Cuore and
+   Crystal lockups would read as white boxes and the Misk/Tokyo type would all but
+   vanish. Chipping them keeps the brand colours untouched — recolouring someone
+   else's logo breaks their guidelines — and gives five very different marks a
+   consistent frame.
+
+   Chips are a fixed HEIGHT with automatic width, so the near-square marks (NEOM,
+   Misk, Crystal) and the wide wordmarks (Cuore, Tokyo) both stay legible instead
+   of being squashed into a common box.
+
+   Flex order handles RTL for free: in Arabic the row reverses and the chip moves
+   to the right of the name, no override needed. */
+.company-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+/* the h3 carried the spacing before it was wrapped */
+.company-row .company {
+    margin-bottom: 0;
+}
+
+.company-logo {
+    height: 40px;
+    width: auto;
+    flex-shrink: 0;      /* never let a long company name crush the logo */
+    display: block;
+    border-radius: 6px;
+}
+
+@media screen and (max-width: 600px) {
+    .company-logo {
+        height: 32px;
+    }
+    .company-row {
+        gap: 8px;
+    }
+}
+
+
+/* Nothing on a sub-page is meant to scroll sideways. Pinning that down stops a
+   stray out-of-flow box from ever shifting the layout horizontally — the second
+   half of the Arabic typewriter glitch on iOS Safari, where the box slid left as
+   each new line landed and then snapped back. Harmless in every other case,
+   since no sub-page has intentional horizontal overflow. */
+body.transparent-bg {
+    overflow-x: hidden;
+}
+
+/* Current page in the nav. Matters most for a shared ?page= link, where the
+   recipient lands mid-site and needs to see where they are. Also gives the
+   mobile tab bar the state indicator it never had. */
+.navbar a[aria-current="page"] {
+    background-color: var(--primary-hover);
+    box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
+}
+
+/* ---- Backdrop toggle ---- */
+/* Sits beside the language button and shares its look. Flexed, unlike the language
+   button, because its content is an SVG rather than a glyph: a replaced element
+   centred by text-align alone sits a couple of pixels low on its baseline. */
+.backdrop-toggle {
+    position: fixed;
+    top: 14px;
+    right: 66px;
+    z-index: 300;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: rgba(var(--primary-rgb), 0.55);
+    border: 1px solid rgba(var(--accent-rgb), 0.5);
+    color: var(--text-color);
+    line-height: 1;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.backdrop-toggle:hover {
+    background-color: rgba(var(--primary-hover-rgb), 0.75);
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.4);
+}
+
+/* The icon draws itself in the button's own colour, so there is nothing to keep in
+   sync when the button is dimmed or hovered. */
+.backdrop-icon {
+    display: block;
+}
+
+/* Dim the icon when the backdrop is switched off */
+.backdrop-toggle[aria-pressed="false"] {
+    opacity: 0.55;
+}
+
+[dir="rtl"] .backdrop-toggle {
+    right: auto;
+    left: 66px;
+}
+
+/* Backdrop toggle: fades the whole scene instead of snapping it off, ending on a
+   genuinely flat black background (body's own #020004). Everything decorative
+   goes — the purple radial wash (body::before), the nebula clouds, and the trace
+   grid and pixel lattice that replaced the stars.
+
+   Each layer declares its own resting opacity (nebula 0.15, grid and cells 1), so
+   we only ever animate TO 0 and let the transition carry each one back to whatever
+   it declared — no need to restate those values, and no risk of flattening them
+   all to 1 on the way back.
+
+   Opacity rather than `display: none` because display cannot be transitioned.
+   Nothing fights the transition: no backdrop layer is animated in CSS (the only
+   animation in this file is the typewriter caret; the pixels are drawn on canvas).
+   A fresh load with the backdrop already off does not flash either, because the
+   pre-paint script adds the class before first paint and transitions never run on
+   an element's initial style.
+
+   Reduced-motion users get an instant toggle for free — the block above clamps
+   every transition to 0.01ms. */
+.nebula,
+.circuit-grid,
+.circuit-cells,
+body::before {
+    transition: opacity 0.45s ease;
+}
+
+html.no-backdrop .nebula,
+html.no-backdrop .circuit-grid,
+html.no-backdrop .circuit-cells,
+html.no-backdrop body::before {
+    opacity: 0;
+}
+
+/* ---- Retired starfield ----
+   The star *dots* were the only thing that read as "outer space"; the purple wash
+   they sat on is just depth and brand colour, so the wash stays and the dots go.
+   Hidden here rather than deleted, because the markup in index.html and 404.html
+   is commented out on the same trial — one rule to revert. If the new backdrop is
+   kept, this rule and every star-layer block above it (the .stars-medium,
+   .stars-large, .bright-star and .star-cluster gradients, roughly 200 lines) can
+   be deleted outright.
+   body::after is the 1px star layer, not to be confused with body::before. */
+body::after,
+.stars-medium,
+.stars-large,
+.bright-star,
+.star-cluster {
+    opacity: 0;
+}
+
+/* Sub-pages are also reachable as standalone URLs (and are crawlable). Their
+   body is `transparent-bg` and `html` has no background, so the canvas fell
+   through to the browser default — white in a light-mode browser, leaving
+   near-white text on white. Give the canvas the site background, but ONLY when
+   the page is standalone: a sub-page inside the shell's iframe must stay
+   transparent so the shell's backdrop shows through.
+
+   The class is set by a tiny inline head script on each sub-page (before first
+   paint), with a <noscript> fallback for the JS-off case.
+
+   Deliberately scoped to .standalone rather than bare `html`: giving `html` a
+   background stops body-background propagation to the canvas, which changes
+   paint order so body's opaque background covers the z-index:-1 nebula and star
+   layers. The shell must keep `html` background-free. */
+html.standalone {
+    background-color: #020004;
+}
+
+/* ---- 404 page ---- */
+.notfound-container {
+    max-width: 620px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.notfound-code {
+    font-family: var(--font-special);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--text-color);
+    opacity: 0.28;
+    text-shadow: 0 0 18px var(--glow-color);
+}
+
+.notfound-heading {
+    font-family: var(--font-special);
+    font-size: 1.6rem;
+    color: var(--text-color);
+    text-shadow: 0 0 8px var(--glow-color);
+    margin: 10px 0 14px;
+}
+
+.notfound-text {
+    line-height: 1.6;
+    opacity: 0.85;
+    margin: 0 0 26px;
+}
+
+@media screen and (max-width: 600px) {
+    .notfound-code { font-size: 3.4rem; }
+    .notfound-heading { font-size: 1.3rem; }
+}
+
+/* The logo is now an <h1>; keep it visually identical to the old bare <header> text */
+header h1 {
+    font: inherit;
+    margin: 0;
+    letter-spacing: inherit;
+}
+
+/* The footer credit is a fixed English phrase ("Made with </> + 🤖").
+   In RTL the bidi algorithm reorders it to "🤖 + </> Made with", so pin it to LTR. */
+[dir="rtl"] .footer-credit {
+    direction: ltr;
+    text-align: left;
+}
+
+/* "This Website" — inert, disabled-looking pseudo-button on the Online Resume card */
+.project-link.project-link-static,
+.project-link.project-link-static:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(235, 235, 250, 0.6);
+    font-style: italic;
+    cursor: default;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: none;
+}
+
+/* ---- Trace grid + pixel lattice ----
+   The backdrop that replaced the starfield: a 60px grid with an even lattice of
+   pixels slowly fading in and out on it (circuit-bg.js), over the purple wash that
+   the stars used to sit on. Governed by the same .no-backdrop class as everything
+   else decorative, so the one header control still means "backdrop on/off".
+
+   Lives in the shell (and 404). Sub-pages are transparent inside the iframe and
+   have no backdrop markup of their own, so there is nothing to duplicate there.
+
+   Both layers sit in the negative-z band, which works because `html` deliberately
+   has no background of its own — body's background propagates to the canvas and
+   these paint above it. Grid at -3 with the purple wash, cells at -2, so the
+   pixels read as sitting on the board. */
+.circuit-grid,
+.circuit-cells {
+    position: fixed;
+    inset: 0;
+    width: 100%;         /* not 100vw: that would include a scrollbar's width */
+    height: 100%;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+    border: none;
+    outline: none;
+}
+
+.circuit-grid {
+    z-index: -3;
+    background-image:
+        linear-gradient(rgba(var(--accent-rgb), 0.07) 1px, rgba(0, 0, 0, 0) 1px),
+        linear-gradient(90deg, rgba(var(--accent-rgb), 0.07) 1px, rgba(0, 0, 0, 0) 1px);
+    background-size: 60px 60px, 60px 60px;
+    /* Fade the grid out towards the edges. Without this it reads as graph paper
+       ruled to the corners; masked, it reads as a board lit from the middle. */
+    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 40%, rgba(0, 0, 0, 0) 100%);
+    mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 40%, rgba(0, 0, 0, 0) 100%);
+}
+
+.circuit-cells {
+    z-index: -2;
+}
+
+/* No layer opacity on the cells: the subtlety is set per cell in circuit-bg.js, which
+   peaks at 0.30 alpha and spends most of each cycle well below that. Dimming the
+   whole layer on top of that put the brightest pixel at 0.17, which was invisible.
+   Both layers rest at the default opacity: 1 and are only animated down to 0 by
+   .no-backdrop, matching how the nebula and wash behave. */
+
+/* The 404's CTA sits in .notfound-container, which is a plain block with
+   text-align: center — not the flex column with align-items: center that wraps the
+   identical markup on the home page. So the shared `max-width: 280px` that
+   .cta-buttons picks up below 600px left it hugging the container's left padding:
+   measured 20px of gap on one side and 75px on the other. Auto inline margins
+   centre the block itself. Scoped to the 404 so the home page cannot be affected,
+   and a no-op above 600px where .cta-buttons has no width limit to centre within. */
+.notfound-container .cta-buttons {
+    margin-inline: auto;
+}
+
+/* The header wordmark is centred while the two controls are pinned to the right,
+   which is fine for a short mark but not for a full name: "Ibrahim Shaheen" is
+   292px at the mobile size and ran straight under the buttons on every phone —
+   measured 67px of overlap at 375px and 94px at 320px.
+
+   Centring cannot be rescued here; making the name fit between two 42px controls
+   at 320px would need roughly a 20px font, which stops reading as a logo. So on
+   small screens the header becomes the conventional mobile arrangement instead:
+   name to the left, controls to the right, with the controls' lane reserved as
+   padding (16 + 42 + 8 + 42 gets to 108, plus a 16px gap) so the name wraps to a
+   second line rather than colliding. Above 600px there is room to centre it.
+
+   Logical properties, not left/right: in Arabic the two controls mirror to the
+   other side, so a physical padding reserves the wrong lane and the name lands on
+   top of them again — which is exactly what the first attempt at this did.
+
+   End of file on purpose: the base `header` rules and the two earlier font-size
+   media blocks all come later in the source than the block this would otherwise
+   belong in, so an override has to sit after them to win. */
+@media screen and (max-width: 600px) {
+    header {
+        text-align: start;
+        padding-inline-start: 16px;
+        padding-inline-end: 124px;
+    }
+}
+
+/* ---- Arabic line boxes ----
+   Cairo's default line box is far taller than Chakra Petch's at the same font-size,
+   so every element left on `line-height: normal` grew when the language switched:
+   the Contact heading 50px -> 75px, each contact card 148px -> 190px, the shell
+   header 90px -> 120px, the nav 41px -> 50px, the footer 52px -> 68px. That put
+   Contact 86px past the viewport on a 1440x780 laptop in Arabic while English fit.
+
+   The proof it is line-height and not font-size: .contact-intro carries an explicit
+   25.52px and measures exactly 51px in BOTH languages. Only the `normal` ones moved.
+
+   So give Arabic explicit values rather than inheriting Cairo's metrics. They are set
+   a little looser than the Latin equivalents on purpose, because Arabic needs the
+   leading for descenders and tashkeel, and the text here carries both. */
+html[lang="ar"] {
+    line-height: 1.55;
+}
+
+html[lang="ar"] header h1 {
+    line-height: 1.2;
+}
+
+/* 1.3 was too tight to hold the glyphs: at 40px the box came out 52px while the
+   text needed 64px, so roughly 6px of Arabic descenders painted *below* the box.
+   Since these headings carry no bottom margin, that spill landed in the following
+   paragraph's space and "تواصل معي" sat on top of the intro. 1.6 makes the line box
+   contain its own glyphs, which fixes the clearance above the heading at the same
+   time, rather than hiding the overlap behind a margin. */
+html[lang="ar"] .contact-heading,
+html[lang="ar"] .about-heading,
+html[lang="ar"] .projects-section-title,
+html[lang="ar"] .skills-heading,
+html[lang="ar"] .notfound-heading {
+    line-height: 1.6;
+}
+
+html[lang="ar"] .navbar a {
+    line-height: 1.25;
+}
+
+html[lang="ar"] .contact-label,
+html[lang="ar"] .contact-description,
+html[lang="ar"] .copyright,
+html[lang="ar"] .footer-tagline,
+html[lang="ar"] .footer-credit {
+    line-height: 1.4;
+}
+
+/* Contact on a short laptop. The page is one screen by design, but at 1280x700 it
+   needed 487px of content in a 469px frame in English and 515px in Arabic, so both
+   scrolled. The vertical rhythm is generous enough to give that back without
+   touching type sizes: the intro's 30px gap, the grid's 20px tail, the 15px gap
+   between rows and 15px of card padding top and bottom.
+
+   Keyed on viewport HEIGHT, and floored at 701px wide so it cannot reach a phone in
+   landscape, which has its own single-column layout a few blocks up. Taller screens
+   keep the original spacing untouched. */
+@media screen and (min-width: 701px) and (max-height: 800px) {
+    .contact-container {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .contact-intro {
+        margin-bottom: 16px;
+    }
+
+    .contact-grid {
+        margin-top: 2px;
+        margin-bottom: 8px;
+        gap: 12px;
+    }
+
+    .contact-card {
+        padding-top: 11px;
+        padding-bottom: 11px;
+    }
+}
+
+/* The contact icon holds a Font Awesome glyph, not Arabic, so it has no reason to
+   inherit Arabic leading — but it did, and at 40px that cost 10px a card (62px tall
+   against English's 52px), which is most of what still made the Arabic page taller.
+   1.3 is what Chakra Petch resolves `normal` to at this size, so the two match. */
+html[lang="ar"] .contact-icon {
+    line-height: 1.3;
+}
+
+/* A second, tighter step for the shortest laptop viewports — an 11" or an older 13"
+   with a full browser chrome lands around 660px of usable height, where the step
+   above still left Arabic 6px short. Same reasoning, smaller numbers. */
+@media screen and (min-width: 701px) and (max-height: 700px) {
+    .contact-intro {
+        margin-bottom: 10px;
+    }
+
+    .contact-grid {
+        gap: 7px;
+    }
+
+    /* Taken from the cards rather than from the Arabic heading's bottom margin:
+       that margin is what stops the heading sitting on the intro, so it is the last
+       thing that should be sacrificed to make a short screen fit. */
+    .contact-card {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+
+/* .contact-heading is the only page heading with no bottom margin — .about-heading
+   has 5px, .skills-heading 10px, .projects-section-title 4px, and those absorb the
+   glyph spill. With 0 it did not: Cairo's ink runs about 6px past the line box even
+   at 1.6, so "تواصل معي" ended up 3px INTO the intro paragraph. This restores roughly
+   the 8-9px of clearance the other Arabic headings get.
+
+   Arabic only. English has no spill here and reads correctly at the existing spacing,
+   so there is nothing to fix on that side. */
+html[lang="ar"] .contact-heading {
+    margin-bottom: 12px;
+}
+
+
+/* ============================================================================
+   REDESIGN (branch: redesign)
+   Everything for the redesign lives in this one block, so it can be reviewed,
+   tuned or reverted as a unit. It is at the end of the file on purpose: earlier
+   base rules sit after several early media blocks, so only rules placed here are
+   guaranteed to win.
+   ============================================================================ */
+
+/* ---- 1. Type: one professional family instead of a sci-fi display face ----
+   Orbitron read as gaming, which worked against the business-professional brief;
+   Plex is a corporate-technical face, so it keeps a technical note without looking
+   like a game. Plex Mono carries small labels. Cairo stays for Arabic, where it
+   already pairs well with a geometric sans. */
+:root {
+    --font-main: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-special: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --accent: rgb(var(--accent-rgb));
+    --accent-strong: rgb(var(--accent-strong-rgb));       /* accent as TEXT on dark: brighter, readable */
+    --muted: rgba(230, 230, 242, 0.74);
+    /* One card surface for every page: a deep, nearly opaque purple, easy on the
+       eye, and the moving squares never show through text. --surface-solid is kept
+       as an alias for older rules. */
+    --surface: rgba(var(--surface-rgb), 0.88);
+    --surface-solid: var(--surface);
+    --surface-hover: rgba(var(--surface-hover-rgb), 0.92);
+    --surface-border: rgba(var(--accent-rgb), 0.22);
+}
+
+/* The two card types that predate the token used their own translucent purple. */
+.project-card,
+.experience-container .content {
+    background-color: var(--surface);
+    border-color: var(--surface-border);
+}
+
+html[lang="ar"] {
+    --font-main: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+    --font-special: 'Cairo', 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+/* The neon glow went with the display face. */
+header,
+.about-heading,
+.contact-heading,
+.projects-section-title,
+.notfound-heading {
+    text-shadow: none;
+}
+
+.about-heading,
+.contact-heading,
+.projects-section-title {
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+/* Plex Mono has no Arabic. Anything set in mono that carries Arabic text goes back
+   to the Arabic face in Arabic, or it would fall to a system default. */
+html[lang="ar"] .hero-eyebrow,
+html[lang="ar"] .project-outcome,
+html[lang="ar"] .company-tenure,
+html[lang="ar"] .expand-btn {
+    font-family: var(--font-main);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* ---- 1b. Page changes ----
+   The shell swaps the iframe's page, and a new document paints nothing until its
+   fonts are in, so a plain swap read as a blink. Now the old page fades out, the
+   new one loads hidden, and it rises in once its load event says it is ready. */
+#contentFrame {
+    transition: opacity 0.14s ease;
+}
+
+#contentFrame.is-leaving {
+    opacity: 0;
+}
+
+#contentFrame.is-entering {
+    animation: frame-in 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes frame-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes frame-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #contentFrame.is-entering {
+        animation: frame-fade 0.15s ease both;
+    }
+}
+
+/* ---- 2. One compact bar instead of a large name on every page ----
+   The old stacked header cost 161px (18% of a 900px screen) before any content,
+   on every page. */
+.site-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 28px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.14);
+    background: rgba(2, 0, 4, 0.35);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.site-bar header {
+    font-family: var(--font-special);
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-align: start;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.bar-name {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.bar-name:hover {
+    color: var(--accent-strong);
+}
+
+/* On Home the hero carries the name large, so the bar does not repeat it. Hidden
+   rather than removed so the nav does not shift between pages. */
+html[data-page="home"] .site-bar .bar-name {
+    visibility: hidden;
+}
+
+.bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* The toggles used to be position:fixed in the corner; in the bar they are in flow. */
+.site-bar .lang-toggle,
+.site-bar .backdrop-toggle {
+    position: static;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+/* Desktop keeps the backdrop toggle in the footer; the bar copy is for phones. */
+.site-bar .bar-only {
+    display: none;
+}
+
+/* Nav as quiet text with an underline on the current page, not a row of filled
+   pills. Desktop only: below 600px .navbar is the bottom tab bar, with its own rules. */
+@media screen and (min-width: 601px) {
+    .site-bar .navbar {
+        display: flex;
+        gap: 2px;
+        margin: 0;
+        margin-inline-start: auto;
+        padding: 0;
+        text-align: initial;
+    }
+
+    .site-bar .navbar a {
+        position: relative;
+        margin: 0;
+        padding: 8px 12px;
+        background: transparent;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-weight: 500;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .site-bar .navbar a:hover {
+        color: var(--text-color);
+        background: rgba(var(--accent-rgb), 0.08);
+        transform: none;
+    }
+
+    .site-bar .navbar a[aria-current="page"] {
+        color: var(--text-color);
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .site-bar .navbar a[aria-current="page"]::after {
+        content: '';
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 1px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--accent);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    /* No blur on phones, and this is load-bearing. Below 600px .navbar becomes the
+       bottom tab bar via position:fixed, and it now lives INSIDE .site-bar. A
+       backdrop-filter - like transform or filter - makes its element the containing
+       block for fixed descendants, so the tab bar pinned itself to the bottom of the
+       bar instead of the bottom of the screen: it rendered at the top, under the
+       toggles, with Contact hidden behind them. */
+    .site-bar {
+        padding: 10px 14px;
+        gap: 10px;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: rgba(2, 0, 4, 0.55);
+    }
+
+    /* One line on a phone instead of stranding "NEOM" on its own. */
+    .hero-eyebrow {
+        font-size: 0.7rem;
+        letter-spacing: 0.03em;
+    }
+
+    /* Override the 124px lane the old fixed toggles needed; they are in flow now. */
+    .site-bar header {
+        font-size: 1.05rem;
+        padding: 0;
+    }
+
+    .site-bar .bar-controls {
+        margin-inline-start: auto;
+    }
+
+    .site-bar .bar-only {
+        display: inline-flex;
+    }
+}
+
+/* The footer copy of the backdrop toggle, sized as one more utility icon. */
+footer .backdrop-toggle {
+    position: static;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid rgba(var(--accent-rgb), 0.35);
+}
+
+footer .backdrop-toggle .backdrop-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.social-links-footer {
+    align-items: center;
+}
+
+.footer-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(230, 230, 242, 0.25);
+}
+
+/* ---- 3. Home hero: readable at once, with proof stats ---- */
+.home-container.hero-page {
+    min-height: 100vh;              /* the iframe's own viewport: the space the shell gives it */
+    align-items: center;            /* fills the empty lower half instead of leaving it */
+    justify-content: center;
+    padding: 32px 28px 40px;
+}
+
+.hero {
+    width: 100%;
+    max-width: 880px;
+}
+
+.hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 14px;
+}
+
+.hero-name {
+    font-family: var(--font-special);
+    font-size: clamp(2.4rem, 5.6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--text-color);
+    margin: 0 0 10px;
+}
+
+.hero-role {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 0 0 16px;
+}
+
+/* The typed role line (typewriter.js). The caret is inline after the text, so it
+   follows the end of the line in either direction; it blinks while the line holds
+   and stays solid while letters are going in or out. */
+.hero-role .typed-caret {
+    display: none;
+}
+
+.hero-role.is-typing .typed-caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-inline-start: 3px;
+    margin-inline-end: -5px;        /* takes no room on the line, so it never causes a wrap */
+    vertical-align: -0.15em;
+    background: var(--accent-strong);
+    animation: caret-blink 1.05s steps(1) infinite;
+}
+
+.hero-role.is-typing.is-busy .typed-caret {
+    animation: none;
+}
+
+@keyframes caret-blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Page headings that type themselves in (typewriter.js, initTypeIn). While typing, the
+   real text is hidden visually (still read by screen readers) and an aria-hidden copy
+   types in its place; the caret is sized to the heading. */
+.type-in > .typed-caret {
+    display: none;
+}
+
+.type-in.is-typing > .typed-caret {
+    display: inline-block;
+    width: max(2px, 0.06em);
+    height: 0.78em;                 /* about cap height, sitting on the baseline: it fits */
+    margin-inline-start: 0.08em;    /* inside these tightly set headings' line box, so the */
+    margin-inline-end: calc(-0.08em - max(2px, 0.06em));   /* heading never grows */
+    vertical-align: baseline;
+    background: var(--accent-strong);
+    animation: caret-blink 1.05s steps(1) infinite;
+}
+
+.type-in.is-typing.is-busy > .typed-caret {
+    animation: none;
+}
+
+.type-in.is-typing > .type-in-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.hero-summary {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 28px;
+}
+
+/* The live Experience counter spans the full width on top; the three single-figure
+   stats share one row under it. Explicit columns, never auto-fit, which lands on
+   awkward counts at tablet widths. */
+.hero-stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 0 0 28px;
+    padding: 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.stat-value {
+    font-family: var(--font-special);
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.stat-experience {
+    grid-column: 1 / -1;
+    gap: 10px;
+}
+
+.stat-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+}
+
+html[lang="ar"] .stat-kicker {
+    font-family: var(--font-main);
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.exp-counter {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+}
+
+.seg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px 7px;
+    border-radius: 8px;
+    background: rgba(var(--accent-rgb), 0.07);
+    border: 1px solid rgba(var(--accent-rgb), 0.14);
+}
+
+/* Tabular mono digits: every digit the same width, so the counter does not jitter
+   sideways as it ticks. */
+.seg-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.35rem, 3.4vw, 2rem);
+    font-weight: 500;
+    line-height: 1;
+    color: var(--text-color);
+}
+
+.seg-live .seg-num {
+    color: var(--accent-strong);
+}
+
+.seg-unit {
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .seg-unit {
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 0.72rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Short laptop screens (a 1280x720 display leaves the iframe about 605px): the
+   counter card added a row, which pushed the focus chips below the fold. Trim the
+   spacing rather than drop anything, so the whole hero still fits in one view. */
+@media screen and (min-width: 601px) and (max-height: 700px) {
+    .home-container.hero-page {
+        padding: 18px 28px 22px;
+    }
+
+    .hero-eyebrow {
+        margin-bottom: 10px;
+    }
+
+    .hero-name {
+        font-size: clamp(2.4rem, 5vw, 3.2rem);
+        margin-bottom: 6px;
+    }
+
+    .hero-role {
+        margin-bottom: 12px;
+    }
+
+    .hero-summary {
+        margin-bottom: 18px;
+    }
+
+    .hero-stats {
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .stat {
+        padding: 10px 14px;
+        gap: 4px;
+    }
+
+    .stat-experience {
+        gap: 8px;
+    }
+
+    .stat-value {
+        font-size: 1.45rem;
+    }
+
+    .seg {
+        padding: 6px 4px 5px;
+    }
+
+    .seg-num {
+        font-size: clamp(1.3rem, 3vw, 1.65rem);
+    }
+
+    .hero .cta-buttons {
+        margin-bottom: 16px;
+    }
+}
+
+/* An older 700px rule gives every .cta-button width:100% capped at 320px, so two of
+   them cannot share a row on a tablet and they stack. Buttons size to their label
+   here; phones (below) still get full-width, which is right for thumbs. */
+@media screen and (min-width: 601px) {
+    .hero .cta-button {
+        width: auto;
+        max-width: none;
+    }
+}
+
+.hero .cta-buttons {
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: auto;
+    max-width: none;
+    margin: 0 0 24px;
+}
+
+.hero-focus {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 20px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
+.hero-focus li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-focus i {
+    color: var(--accent);
+}
+
+@media screen and (max-width: 600px) {
+    .home-container.hero-page {
+        min-height: auto;
+        align-items: flex-start;
+        padding: 22px 16px 28px;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .stat {
+        padding: 12px 13px;
+    }
+
+    .stat:not(.stat-experience) {
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .stat-value {
+        font-size: 1.4rem;
+        min-width: 2.35em;      /* as wide as "2024", so the three labels line up */
+    }
+
+    .exp-counter {
+        gap: 4px;
+    }
+
+    .seg {
+        padding: 7px 2px 6px;
+    }
+
+    .seg-unit {
+        font-size: 0.56rem;
+        letter-spacing: 0.02em;
+    }
+
+    .hero .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero .cta-button {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* ---- 4. Button hierarchy: weight follows importance ----
+   They used to share one purple fill, so "Get In Touch" - the conversion goal -
+   read no louder than a nav pill. Dark text on the primary: white on rgb(var(--accent-rgb)) is
+   about 3:1, which fails AA; dark text is well above it. */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.cta-primary {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: var(--on-accent);
+}
+
+.cta-primary:hover {
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.35);
+}
+
+.cta-secondary {
+    background: transparent;
+    border: 1px solid rgba(var(--accent-rgb), 0.55);
+    color: var(--text-color);
+}
+
+.cta-secondary:hover {
+    background: rgba(var(--accent-rgb), 0.12);
+    box-shadow: none;
+}
+
+.cta-tertiary {
+    background: rgba(var(--accent-rgb), 0.12);
+    border: 1px solid rgba(var(--accent-rgb), 0.32);
+    color: var(--text-color);
+}
+
+.cta-tertiary:hover {
+    background: rgba(var(--accent-rgb), 0.2);
+    box-shadow: none;
+}
+
+.cta-tertiary i {
+    color: var(--accent-strong);
+}
+
+/* "View details" as a text link: it is a disclosure, not an action. */
+.expand-btn {
+    padding: 4px 0;
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+}
+
+.expand-btn:hover {
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-color);
+}
+
+/* ---- 5. About: the photo leads, the credentials fill the width ----
+   Neither old option worked: boxed, 68% of About sat behind an inner scroll that
+   captured the trackpad; unboxed, one column ran on while the photo column sat empty.
+   Photo top-left beside the intro, then a grid of cards across the full width. */
+.about-container.about-v2 {
+    display: block;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 28px 40px;
+}
+
+.about-v2 .about-heading {
+    text-align: start;
+    margin: 0 0 22px;
+}
+
+.about-intro {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 28px;
+}
+
+.about-intro .profile-container {
+    align-items: flex-start;
+}
+
+.about-intro .profile-frame {
+    max-width: 250px;
+    margin-bottom: 0;
+}
+
+/* Side by side, the photo takes the full height of the text card, so their tops and
+   bottoms line up. The image is lifted out of the flow (it would otherwise set the
+   row's height itself) and cropped to fill, keeping the face in frame. */
+@media screen and (min-width: 641px) {
+    .about-intro {
+        align-items: stretch;
+    }
+
+    .about-intro .profile-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .about-intro .profile-frame {
+        flex: 1 1 auto;
+        min-height: 250px;
+    }
+
+    .about-intro #profile-pic {
+        position: absolute;
+        inset: 5px;
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+        aspect-ratio: auto;
+        object-fit: cover;
+        object-position: 50% 22%;
+    }
+}
+
+.about-v2 .about-text {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    white-space: pre-line;
+    max-width: none;
+    margin: 0;              /* an older rule's bottom margin made the row taller than the card */
+    padding: 26px 36px;     /* wide side padding keeps lines near 80 characters */
+    border-radius: 14px;
+    background: var(--surface-solid);       /* the backdrop moved behind the words */
+    border: 1px solid var(--surface-border);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.about-bento {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.bento-card {
+    position: relative;
+    padding: 18px 18px 16px;
+    border-radius: 14px;
+    background: var(--surface-solid);     /* same material as the intro card above */
+    border: 1px solid var(--surface-border);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.bento-card .skills-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+    padding-inline-end: 34px;          /* clear of the corner icon */
+}
+
+.bento-icon {
+    position: absolute;
+    top: 16px;
+    inset-inline-end: 16px;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(var(--accent-rgb), 0.14);
+    color: var(--accent-strong);
+    font-size: 0.85rem;
+}
+
+/* Inside a card the items read as a list, not a grid of pills. */
+.bento-card .skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bento-card .skill-item {
+    margin: 0;
+    background: rgba(2, 0, 4, 0.28);
+}
+
+/* The award is the strongest single credential on the page, so it gets a warm edge. */
+.bento-award {
+    border-color: rgba(255, 205, 90, 0.38);
+    background: linear-gradient(160deg, rgba(255, 205, 90, 0.10), var(--surface-solid) 55%);
+}
+
+.bento-award .bento-icon {
+    background: rgba(255, 205, 90, 0.16);
+    color: #ffd166;
+}
+
+/* Languages as chips too. As a three-row list it set the height of the whole first
+   row, leaving Education and Awards with an empty lower half. */
+.bento-languages .skills-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bento-languages .skill-item {
+    width: auto;
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+
+/* The card already carries the language icon; one per chip only made them too wide
+   to share a row. */
+.bento-languages .skill-item i {
+    display: none;
+}
+
+/* Last row: Tools & Platforms (a list, like the skill cards) beside AI Tools, which
+   spans the other two columns. Two groups of chips inside, builders first. */
+.bento-ai {
+    grid-column: span 2;
+}
+
+.ai-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ai-group-label {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .ai-group-label {
+    font-family: var(--font-main);
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.bento-ai .skills-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bento-ai .skill-item {
+    width: auto;
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+
+@media screen and (max-width: 1000px) {
+    .about-bento {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* eight cards in two columns: every card one cell, so no row has a hole */
+    .bento-ai {
+        grid-column: auto;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .about-container.about-v2 {
+        padding: 20px 16px 28px;
+    }
+
+    .about-intro {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .about-intro .profile-container {
+        align-items: center;
+    }
+
+    .about-v2 .about-text {
+        padding: 16px 18px;
+    }
+
+    .about-bento {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- 6. Experience: one employer, a visible progression ---- */
+.company-tenure {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin: 2px 0 16px;
+}
+
+.role-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.role {
+    position: relative;
+    padding-inline-start: 22px;
+    padding-bottom: 18px;
+}
+
+.role:last-child {
+    padding-bottom: 0;
+}
+
+/* Current role a filled node, earlier ones hollow, joined by a thin line: the
+   promotion path reads at a glance. */
+.role::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: transparent;
+}
+
+.role:first-child::before {
+    background: var(--accent);
+}
+
+.role::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 4px;
+    top: 19px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(var(--accent-rgb), 0.3);
+}
+
+.role:last-child::after {
+    display: none;
+}
+
+/* The existing reveal rules are all `.content.expanded ...`. The grouped roles are
+   li.role, not .content, so without these they would never open. */
+.role.expanded .exp-details {
+    grid-template-rows: 1fr;
+}
+
+.role.expanded .expand-chevron {
+    transform: rotate(180deg);
+}
+
+.role.expanded .expand-more {
+    display: none;
+}
+
+.role.expanded .expand-less {
+    display: inline;
+}
+
+/* ---- 6b. Experience: a heading, then a list of roles beside one role in focus ----
+   Laptops get the list and a detail panel (built by a script in experience.html from
+   the same markup); below 1000px the stacked timeline shows instead, since a list
+   beside a panel needs the width. An earlier version led with a time-axis strip of
+   bars; it was hard to read (three-month roles became specks, overlaps needed a
+   second lane) and has been dropped. The NEOM progression it tried to show now
+   lives in the panel as a path, which says the same thing in words.
+
+   Panels use the shared --surface (section 1), like every other card. */
+
+.exp-header {
+    margin: 4px 0 22px;
+}
+
+.exp-heading {
+    font-family: var(--font-special);
+    font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--text-color);
+    text-shadow: none;
+    margin: 0 0 6px;
+}
+
+.exp-subtitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.exp-desktop {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .exp-header {
+        margin: 0 0 14px;
+    }
+
+    .exp-heading {
+        font-size: 1.6rem;
+    }
+
+    .exp-subtitle {
+        font-size: 0.88rem;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .experience-container {
+        max-width: 1180px;
+        padding: 28px 32px 40px;
+    }
+
+    .exp-desktop {
+        display: block;
+    }
+
+    .experience-container .timeline {
+        display: none;
+    }
+
+    .exp-split {
+        display: grid;
+        grid-template-columns: minmax(300px, 370px) minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+    }
+
+    /* the list */
+    .exp-list {
+        padding: 16px 14px;
+        border-radius: 16px;
+        background: var(--surface-solid);
+        border: 1px solid var(--surface-border);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    .list-employer + .list-employer {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(var(--accent-rgb), 0.14);
+    }
+
+    .list-company {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 2px 8px 8px;
+    }
+
+    /* Logos sit in a fixed slot, centred, so wide wordmarks (Tokyo, Cuore) do not
+       push their names out of line with the square marks. */
+    .list-company img {
+        width: 58px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+    .list-company-text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .list-company-name {
+        font-size: 0.97rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .list-company-tenure {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--muted);
+    }
+
+    .list-roles {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .list-roles li {
+        position: relative;
+    }
+
+    .list-roles li + li {
+        margin-top: 2px;
+    }
+
+    /* The rail: a node per role, joined by a line from one node to the next, the
+       same marks as the phone timeline. */
+    .list-roles li:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        inset-inline-start: 22px;      /* node centre: 1px border + 16px + 6px, less 1px */
+        top: 27px;                     /* node bottom */
+        bottom: -17px;                 /* next node top: 2px gap + 1px border + 14px */
+        width: 2px;
+        background: rgba(var(--accent-rgb), 0.28);
+        pointer-events: none;
+    }
+
+    .list-role {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: 100%;
+        padding: 8px 12px;
+        padding-inline-start: 38px;
+        text-align: start;
+        font-family: var(--font-main);
+        color: var(--text-color);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .list-role::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: 16px;
+        top: 14px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface-solid);
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .list-role:hover {
+        background: rgba(var(--accent-rgb), 0.08);
+    }
+
+    .list-role.is-selected {
+        background: rgba(var(--accent-rgb), 0.16);
+        border-color: rgba(var(--accent-rgb), 0.38);
+    }
+
+    .list-role.is-selected::before {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.22);
+    }
+
+    .list-role-title {
+        font-size: 0.92rem;
+        font-weight: 500;
+        line-height: 1.35;
+    }
+
+    .list-role-period {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--muted);
+    }
+
+    /* the panel */
+    .exp-panel {
+        position: sticky;
+        top: 18px;
+        padding: 26px 30px 28px;
+        border-radius: 16px;
+        background: var(--surface-solid);
+        border: 1px solid var(--surface-border);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    .exp-panel.is-entering > * {
+        animation: exp-panel-in 0.28s ease both;
+    }
+
+    @keyframes exp-panel-in {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+    }
+
+    .panel-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(var(--accent-rgb), 0.16);
+    }
+
+    .panel-head img {
+        width: 96px;
+        height: 52px;
+        object-fit: contain;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    .panel-title {
+        margin: 0 0 4px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+    }
+
+    .panel-meta {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+    }
+
+    .panel-period {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--muted);
+    }
+
+    .panel-badge {
+        padding: 2px 9px;
+        border-radius: 999px;
+        font-family: var(--font-main);
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #8ff0b0;
+        background: rgba(143, 240, 176, 0.1);
+        border: 1px solid rgba(143, 240, 176, 0.35);
+    }
+
+    .panel-label {
+        margin: 0 0 12px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-strong);
+    }
+
+    /* The path: one step per role, oldest first, joined by a line. Steps before the
+       one in view are filled, the one in view is ringed, later ones are hollow. */
+    .panel-path {
+        margin-bottom: 22px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(var(--accent-rgb), 0.16);
+    }
+
+    .path-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    /* Earlier steps share the width; the last one is only as wide as its label and
+       sits at the far end, so the line runs the full width of the panel. */
+    .path-step {
+        position: relative;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .path-step:last-child {
+        flex: 0 0 auto;
+    }
+
+    .path-step:last-child .path-btn {
+        padding-inline-end: 0;
+    }
+
+    .path-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 7px;
+        inset-inline-start: 20px;
+        inset-inline-end: 4px;
+        height: 2px;
+        background: rgba(var(--accent-rgb), 0.22);
+        pointer-events: none;
+    }
+
+    .path-step.is-done::after {
+        background: rgba(var(--accent-rgb), 0.6);
+    }
+
+    .path-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        width: 100%;
+        padding: 0;
+        padding-inline-end: 10px;
+        text-align: start;
+        font-family: var(--font-main);
+        color: var(--text-color);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .path-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--surface-solid);
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .path-step.is-done .path-dot {
+        background: rgba(var(--accent-rgb), 0.6);
+    }
+
+    .path-step.is-current .path-dot {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.25);
+    }
+
+    .path-title {
+        font-size: 0.88rem;
+        font-weight: 500;
+        line-height: 1.3;
+        color: var(--muted);
+        transition: color 0.2s;
+    }
+
+    .path-step.is-current .path-title,
+    .path-btn:hover .path-title {
+        color: var(--text-color);
+    }
+
+    .path-year {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--muted);
+    }
+
+    .exp-panel .description-lead {
+        font-size: 1rem;
+        margin-bottom: 18px;
+    }
+
+    .exp-panel .description li {
+        margin-bottom: 10px;
+    }
+
+    html[lang="ar"] .list-company-tenure,
+    html[lang="ar"] .list-role-period,
+    html[lang="ar"] .panel-period,
+    html[lang="ar"] .panel-label {
+        font-family: var(--font-main);
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    html[lang="ar"] .panel-label {
+        font-size: 0.82rem;
+    }
+}
+
+/* Short laptop screens (1280x720 leaves the page about 605px): tighten the panel
+   so a long role still fits in view while it is pinned. */
+@media screen and (min-width: 1000px) and (max-height: 760px) {
+    .exp-header {
+        margin-bottom: 16px;
+    }
+
+    .exp-panel {
+        top: 12px;
+        padding: 20px 26px 22px;
+    }
+
+    .panel-head {
+        margin-bottom: 14px;
+        padding-bottom: 14px;
+    }
+
+    .panel-head img {
+        width: 80px;
+        height: 44px;
+    }
+
+    .panel-title {
+        font-size: 1.25rem;
+    }
+
+    .panel-path {
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+    }
+
+    .exp-panel .description li {
+        margin-bottom: 7px;
+    }
+}
+
+/* Below the laptop view: the stacked cards get the same near-opaque surface, so the
+   backdrop stops showing through the text, and lose the hover lift, which looks
+   wrong on a card as tall as NEOM's. The "select a role" line belongs to the list
+   view; here each card has its own View details. */
+@media screen and (max-width: 999px) {
+    .experience-container .content:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .exp-subtitle {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .exp-panel.is-entering > * {
+        animation: none;
+    }
+}
+
+/* ---- 7. Projects: an even grid on laptops, details in a dialog ----
+   The first two-column attempt was ragged for two reasons. Cards expanded in place,
+   so one card in a row grew and its neighbour did not. And a section whose card count
+   does not divide by the column count leaves a hole at the end of its last row.
+   On laptops a card now opens in a dialog, so every card stays the same height. The
+   FIRST card of a section widens to soak up the leftover columns, worked out from the
+   card count, so the grid stays gap-free however many projects are added later.
+   Phones keep the single column with in-place expand. */
+.project-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (min-width: 1000px) {
+    .projects-container {
+        max-width: 1180px;
+        align-items: stretch;
+    }
+
+    /* the heading rule runs the width of the grid it introduces */
+    .projects-section-title,
+    .projects-section-subtitle {
+        max-width: none;
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        align-items: stretch;
+        margin-bottom: 34px;
+    }
+
+    .project-grid > .project-card {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        max-width: none;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    /* Two columns: an odd count makes the first card a full-width lead. A lead that
+       wide would be mostly empty with just a title and a summary, so it shows its
+       details in a second column instead of behind a button (see the featured rules
+       below; the script skips the dialog when the details are already visible). */
+    .project-grid > .project-card:first-child:nth-last-child(odd) {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 34px;
+        cursor: default;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > :not(.project-details) {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / -1;
+        padding-inline-start: 30px;
+        border-inline-start: 1px solid rgba(var(--accent-rgb), 0.2);
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .expand-btn {
+        display: none;
+    }
+
+    /* Summaries clamp to three lines so cards in a row agree on height; the full
+       text is one click away in the dialog. */
+    .project-grid .project-summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .project-grid .project-details {
+        display: none;
+    }
+
+    .project-grid .expand-btn {
+        margin-top: auto;
+        padding-top: 12px;
+        align-self: flex-start;
+    }
+
+    .project-grid .expand-chevron {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1320px) {
+    .project-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Undo the two-column rule (span and featured layout), then size the lead card
+       for three columns: 3k+2 cards -> the first spans two; 3k+1 -> the first takes
+       the whole row. Either way it is wide, so it gets the featured layout. */
+    .project-grid > .project-card:first-child:nth-last-child(odd) {
+        grid-column: auto;
+        display: flex;
+        cursor: pointer;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .project-details {
+        display: none;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) .project-summary {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(odd) > .expand-btn {
+        display: inline-flex;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2),
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) {
+        grid-column: 1 / -1;  /* narrowed to two columns for 3k+2 below */
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 34px;
+        cursor: default;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) {
+        grid-column: span 2;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > :not(.project-details),
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > :not(.project-details) {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > .project-details,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 1 / -1;
+        padding-inline-start: 30px;
+        border-inline-start: 1px solid rgba(var(--accent-rgb), 0.2);
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) .project-details-inner,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) .project-summary,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+    }
+
+    .project-grid > .project-card:first-child:nth-last-child(3n+2) > .expand-btn,
+    .project-grid > .project-card:first-child:nth-last-child(3n+1) > .expand-btn {
+        display: none;
+    }
+
+}
+
+/* ---- 7b. Projects, expand in place (laptops) ----
+   The alternative to the dialog: the card the visitor picks takes its whole row
+   and grows to show everything, title across the top, summary on one side and the
+   details on the other, with an X to fold it back. The script locks the card to
+   the row it was in, so the cards that shared that row move below it and no row is
+   left with a hole. Phones keep their in-place accordion. */
+.card-close {
+    display: none;
+}
+
+@media screen and (min-width: 1000px) {
+    .project-grid > .project-card {
+        position: relative;
+    }
+
+    .project-grid > .project-card.expandable.is-open {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+        grid-template-rows: auto auto auto 1fr;
+        column-gap: 40px;
+        padding: 28px 32px 30px;
+        cursor: default;
+        border-color: rgba(var(--accent-rgb), 0.55);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+        transform: none;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-card-head {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        margin-bottom: 14px;
+        padding-inline-end: 52px;          /* clear of the X */
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-title {
+        font-size: 1.5rem;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-outcome,
+    .project-grid > .project-card.expandable.is-open > .project-summary {
+        grid-column: 1;
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-summary {
+        display: block;
+        -webkit-line-clamp: unset;
+        font-size: 1.05rem;
+        line-height: 1.65;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .project-details {
+        display: block;
+        grid-column: 2;
+        grid-row: 2 / -1;
+        padding-inline-start: 34px;
+        border-inline-start: 1px solid rgba(var(--accent-rgb), 0.2);
+    }
+
+    .project-grid > .project-card.expandable.is-open .project-details-inner {
+        padding-top: 0;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .expand-btn {
+        display: none;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .card-close {
+        position: absolute;
+        top: 18px;
+        inset-inline-end: 18px;
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 10px;
+        border: 1px solid rgba(var(--accent-rgb), 0.4);
+        background: rgba(2, 0, 4, 0.28);
+        color: var(--text-color);
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .project-grid > .project-card.expandable.is-open > .card-close:hover {
+        background: rgba(var(--accent-rgb), 0.2);
+        border-color: rgba(var(--accent-rgb), 0.7);
+    }
+}
+
+/* ---- 7d. "In progress" tag ----
+   The purple chip under a title, the same as an outcome chip, with a dot ahead of
+   the words so it reads as a status. Replaces the old "- In Progress 🚧" title
+   suffix on Ember, Momentum and Unmasked, and marks the strategy card. */
+/* .project-outcome is declared later in the file as inline-block; doubling the
+   class keeps this layout winning. */
+.project-outcome.project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.project-outcome.project-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-strong);
+    box-shadow: 0 0 0 3px rgba(var(--accent-strong-rgb), 0.2);
+    flex-shrink: 0;
+}
+
+/* ---- 7c. The highlight card (Digital Transformation Strategy) ----
+   The first card of Professional Work, always the full row on laptops, where its
+   details are always open: the vision on one side, four figures on the other, and
+   the three pillars across the full width. Phones and the dialog stack the same
+   blocks. (The full-row rule is this card's own; the count-based lead rules agree
+   with it while Professional Work has an odd number of cards.) */
+.feature-kicker {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+}
+
+.project-feature-card .project-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+}
+
+.feature-label {
+    display: block;
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .feature-kicker,
+html[lang="ar"] .feature-label {
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* the vision, set as a quote: label above, accent rule beside */
+.feature-vision-label {
+    margin: 14px 0 6px;
+}
+
+.project-feature-card .feature-vision {
+    margin: 0 0 4px;
+    padding-inline-start: 16px;
+    border-inline-start: 3px solid var(--accent);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+html[lang="ar"] .project-feature-card .feature-vision {
+    font-style: normal;
+}
+
+.feature-figures {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.figure {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(var(--accent-rgb), 0.09);
+    border: 1px solid var(--surface-border);
+}
+
+/* sized to its digits: a dir="ltr" value stretched across the tile would sit on the
+   wrong side in Arabic */
+.figure-value {
+    align-self: flex-start;
+    font-family: var(--font-special);
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--accent-strong);
+}
+
+.figure-label {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.feature-pillars {
+    display: grid;
+    gap: 12px;
+}
+
+.pillar {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.pillar-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(var(--accent-rgb), 0.14);
+    color: var(--accent-strong);
+}
+
+.pillar strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.pillar div span {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+@media screen and (min-width: 1000px) {
+    .project-grid > .project-card.project-feature-card.expandable {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        grid-template-rows: none;
+        column-gap: 48px;
+        padding: 32px 36px 32px;
+        cursor: default;
+        border-color: rgba(var(--accent-rgb), 0.45);
+    }
+
+    /* Lift the details' blocks into the card's own grid, so the figures can sit
+       beside the vision and the pillars can run the full width. */
+    .project-grid > .project-card.project-feature-card.expandable > .project-details,
+    .project-grid > .project-card.project-feature-card.expandable .project-details-inner {
+        display: contents;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-card-head {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .project-title {
+        font-size: 1.8rem;
+        letter-spacing: -0.015em;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-status {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: start;
+        margin: 10px 0 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .feature-vision-label {
+        grid-column: 1;
+        grid-row: 3;
+        margin-top: 22px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .project-summary {
+        grid-column: 1;
+        grid-row: 4;
+        align-self: start;
+        display: block;
+        -webkit-line-clamp: unset;
+        font-size: 1.12rem;
+        line-height: 1.6;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-figures {
+        grid-column: 2;
+        grid-row: 1 / span 4;
+        align-self: center;
+        margin: 0;
+        gap: 12px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .figure {
+        padding: 20px 22px 18px;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .figure-value {
+        font-size: 2.5rem;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-pillars {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px 30px;
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(var(--accent-rgb), 0.16);
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable .feature-pillars .feature-label {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+    }
+
+    .project-grid > .project-card.project-feature-card.expandable > .expand-btn {
+        display: none;
+    }
+}
+
+/* The dialog lives inside the iframe, so its backdrop cannot reach the shell's bar
+   and footer. The page tells the shell when a dialog opens; the shell dims both
+   (opacity, not filter: a filter would make the bar a containing block for the
+   fixed phone nav inside it). */
+html.frame-modal .site-bar,
+html.frame-modal footer {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.site-bar,
+footer {
+    transition: opacity 0.2s ease;
+}
+
+/* margin:auto is how the browser centres a modal dialog; the reset at the top of
+   this file zeroes every margin, which left the dialog pinned to the top-left. */
+.project-dialog {
+    margin: auto;
+    width: min(720px, calc(100vw - 48px));
+    max-height: min(84vh, 780px);
+    padding: 28px 28px 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(var(--accent-rgb), 0.35);
+    background: var(--dialog-bg);
+    color: var(--text-color);
+    overflow: auto;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.project-dialog::backdrop {
+    background: rgba(2, 0, 4, 0.66);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.project-dialog .project-title {
+    font-size: 1.45rem;
+    padding-inline-end: 70px;          /* clear of the close button */
+    margin-bottom: 10px;
+}
+
+.project-dialog .project-summary {
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.dialog-close {
+    position: absolute;
+    top: 18px;
+    inset-inline-end: 18px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(var(--accent-rgb), 0.4);
+    background: transparent;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.dialog-close:hover {
+    background: rgba(var(--accent-rgb), 0.14);
+}
+
+body.dialog-open {
+    overflow: hidden;
+}
+
+.project-outcome {
+    display: inline-block;
+    align-self: flex-start;     /* in the laptop grid the card is a flex column, which
+                                   would otherwise stretch the chip across the card */
+    justify-self: start;        /* and the featured lead card is a grid */
+    margin: 2px 0 8px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(var(--accent-rgb), 0.12);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+}
+
+/* ---- 8. Contact: two panels, centred in the space the shell gives it ----
+   The kicker spans both columns, so the two columns start together at the heading.
+   They also share a height: the action buttons sit at the bottom of the left column
+   and the channel rows share out the right one, so the bottom of the buttons and the
+   bottom of the last channel land on the same line whichever side has more text. */
+.contact-container.contact-v2 {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 0 44px;
+    align-items: stretch;
+    align-content: center;
+    max-width: 1040px;
+    min-height: 100vh;               /* the iframe's own viewport */
+    margin: 0 auto;
+    padding: 32px 28px;
+}
+
+.contact-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0 0 16px;           /* the heading below is trimmed to its cap height */
+    grid-column: 1 / -1;
+}
+
+.contact-lead {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-lead .contact-actions {
+    margin-top: auto;
+}
+
+/* Letter-spacing pulls Arabic letters apart and breaks the joins between them. */
+html[lang="ar"] .contact-kicker {
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* text-box trims the line box to the cap height, so the top of the letters, not
+   the top of the line, is what lines up with the first channel row. */
+.contact-v2 .contact-heading {
+    text-align: start;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin: 0 0 20px;
+    text-box: trim-both cap alphabetic;
+}
+
+/* The trim measures the gap from the baseline, and Arabic letters such as ع and ي
+   dip well below it, so Arabic needs more room before the intro. (Also outranks the
+   older html[lang="ar"] .contact-heading margin, which is more specific.) */
+html[lang="ar"] .contact-v2 .contact-heading {
+    margin-bottom: 30px;
+}
+
+.contact-v2 .contact-intro {
+    text-align: start;
+    max-width: 46ch;
+    margin: 0 0 24px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.contact-facts {
+    display: grid;
+    gap: 0;
+    margin: 0 0 24px;
+}
+
+.contact-facts div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.14);
+}
+
+.contact-facts div:first-child {
+    border-top: 1px solid rgba(var(--accent-rgb), 0.14);
+}
+
+.contact-facts dt {
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.contact-facts dd {
+    margin: 0;
+    font-weight: 500;
+    text-align: end;
+}
+
+.based-in .fa-arrows-left-right {
+    font-size: 0.8em;
+    margin: 0 0.2em;
+    color: var(--accent-strong);
+}
+
+.local-time {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+}
+
+.contact-facts .ampm {
+    font-size: 0.85em;
+    margin-inline-start: 0.3em;
+}
+
+.tz {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-inline-start: 4px;
+}
+
+.contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Fill the row, so the pair lines up with the edges of the facts above, and a button
+   that wraps (the longer Arabic label) still spans the column instead of hanging. */
+.contact-actions .cta-button {
+    flex: 1 1 auto;
+    justify-content: center;
+    width: auto;
+    max-width: none;            /* an older phone rule caps every .cta-button at 320px */
+}
+
+.channels {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.channel {
+    flex: 1 1 auto;               /* rows share the column's height evenly */
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.channel-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--text-color);
+    text-decoration: none;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.channel-main:hover {
+    border-color: rgba(var(--accent-rgb), 0.55);
+    background: var(--surface-hover);
+}
+
+.channel-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(var(--accent-rgb), 0.14);
+    color: var(--accent-strong);
+    font-size: 1.15rem;
+}
+
+.channel-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.channel-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+/* Sized to its text rather than stretched: a value marked dir="ltr" (phone, handles)
+   aligns to ITS start, the left, so stretched it sat on the far side in Arabic while
+   the email beside it sat on the right. */
+.channel-value {
+    align-self: flex-start;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.channel-go {
+    color: var(--muted);
+    transition: transform 0.2s, color 0.2s;
+}
+
+.channel-main:hover .channel-go {
+    color: var(--accent-strong);
+    transform: translateX(3px);
+}
+
+/* The arrow points the way the page reads. */
+[dir="rtl"] .channel-go i {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .channel-main:hover .channel-go {
+    transform: translateX(-3px);
+}
+
+.channel-copy {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--muted);
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.channel-copy:hover {
+    color: var(--text-color);
+    border-color: rgba(var(--accent-rgb), 0.55);
+    background: rgba(var(--accent-rgb), 0.08);
+}
+
+.channel-copy.copied {
+    color: #8ff0b0;
+    border-color: rgba(143, 240, 176, 0.5);
+}
+
+@media screen and (max-width: 900px) {
+    .contact-container.contact-v2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+        min-height: auto;
+        padding: 22px 16px 28px;
+    }
+
+    .channels {
+        margin-top: 26px;
+    }
+
+    .channel-main {
+        gap: 12px;
+        padding: 12px 13px;
+    }
+
+    .channel-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .channel-value {
+        font-size: 0.92rem;
+    }
+
+    /* Icon-only Copy on phones, so the address keeps the width; the button still has
+       its aria-label, so it is not anonymous. */
+    .channel-copy {
+        padding: 0 13px;
+    }
+
+    .channel-copy .copy-text {
+        display: none;
+    }
+
+}
+
+/* ---- 9. Keyboard focus you can actually see ----
+   The stylesheet had no :focus rule at all, so tabbing through gave no indication
+   of where you were. :focus-visible keeps rings off mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent-strong);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* ---- THEMES (experiment, branch: themes) ----
+   Each theme redefines the palette channels at the top of this file. Picked with
+   ?theme=<name> or the temporary picker in the shell; purple is the default. */
+html[data-theme="indigo"] {
+    --accent-rgb: 129, 140, 248;
+    --accent-strong-rgb: 165, 180, 252;
+    --primary-rgb: 49, 46, 129;
+    --primary-hover-rgb: 67, 56, 202;
+    --wash-3-rgb: 99, 102, 241;
+    --wash-4-rgb: 30, 27, 75;
+    --nebula-a-rgb: 79, 70, 229;
+    --nebula-b-rgb: 129, 140, 248;
+    --surface-rgb: 14, 15, 36;
+    --surface-hover-rgb: 24, 26, 58;
+    --dialog-bg: #0e0f24;
+    --on-accent: #0b0c1f;
+}
+
+html[data-theme="blue"] {
+    --accent-rgb: 96, 165, 250;
+    --accent-strong-rgb: 147, 197, 253;
+    --primary-rgb: 30, 58, 138;
+    --primary-hover-rgb: 37, 99, 235;
+    --wash-3-rgb: 59, 130, 246;
+    --wash-4-rgb: 23, 37, 84;
+    --nebula-a-rgb: 37, 99, 235;
+    --nebula-b-rgb: 96, 165, 250;
+    --surface-rgb: 10, 18, 36;
+    --surface-hover-rgb: 18, 32, 60;
+    --dialog-bg: #0a1224;
+    --on-accent: #06101f;
+}
+
+html[data-theme="teal"] {
+    --accent-rgb: 45, 212, 191;
+    --accent-strong-rgb: 153, 246, 228;
+    --primary-rgb: 17, 94, 89;
+    --primary-hover-rgb: 15, 118, 110;
+    --wash-3-rgb: 20, 184, 166;
+    --wash-4-rgb: 4, 47, 46;
+    --nebula-a-rgb: 13, 148, 136;
+    --nebula-b-rgb: 45, 212, 191;
+    --surface-rgb: 7, 24, 26;
+    --surface-hover-rgb: 12, 40, 42;
+    --dialog-bg: #071a1c;
+    --on-accent: #032321;
+}
+
+html[data-theme="amber"] {
+    --accent-rgb: 245, 184, 74;
+    --accent-strong-rgb: 252, 211, 133;
+    --primary-rgb: 120, 53, 15;
+    --primary-hover-rgb: 146, 64, 14;
+    --wash-3-rgb: 217, 119, 6;
+    --wash-4-rgb: 69, 26, 3;
+    --nebula-a-rgb: 180, 83, 9;
+    --nebula-b-rgb: 245, 158, 11;
+    --surface-rgb: 28, 18, 8;
+    --surface-hover-rgb: 46, 30, 12;
+    --dialog-bg: #1c1208;
+    --on-accent: #1f1203;
+}
+
+html[data-theme="graphite"] {
+    --accent-rgb: 203, 213, 225;
+    --accent-strong-rgb: 241, 245, 249;
+    --primary-rgb: 51, 65, 85;
+    --primary-hover-rgb: 71, 85, 105;
+    --wash-3-rgb: 100, 116, 139;
+    --wash-4-rgb: 30, 41, 59;
+    --nebula-a-rgb: 71, 85, 105;
+    --nebula-b-rgb: 148, 163, 184;
+    --surface-rgb: 17, 20, 26;
+    --surface-hover-rgb: 30, 35, 44;
+    --dialog-bg: #11141a;
+    --on-accent: #0f172a;
+}
+
+html[data-theme="emerald"] {
+    --accent-rgb: 52, 211, 153;
+    --accent-strong-rgb: 167, 243, 208;
+    --primary-rgb: 6, 95, 70;
+    --primary-hover-rgb: 4, 120, 87;
+    --wash-3-rgb: 16, 185, 129;
+    --wash-4-rgb: 2, 44, 34;
+    --nebula-a-rgb: 5, 150, 105;
+    --nebula-b-rgb: 52, 211, 153;
+    --surface-rgb: 6, 24, 18;
+    --surface-hover-rgb: 11, 40, 30;
+    --dialog-bg: #06180f;
+    --on-accent: #022c22;
+}
+
+html[data-theme="sky"] {
+    --accent-rgb: 56, 189, 248;
+    --accent-strong-rgb: 186, 230, 253;
+    --primary-rgb: 7, 89, 133;
+    --primary-hover-rgb: 3, 105, 161;
+    --wash-3-rgb: 14, 165, 233;
+    --wash-4-rgb: 8, 47, 73;
+    --nebula-a-rgb: 2, 132, 199;
+    --nebula-b-rgb: 56, 189, 248;
+    --surface-rgb: 6, 20, 30;
+    --surface-hover-rgb: 10, 34, 50;
+    --dialog-bg: #06141e;
+    --on-accent: #04263a;
+}
+
+html[data-theme="rose"] {
+    --accent-rgb: 251, 113, 133;
+    --accent-strong-rgb: 254, 205, 211;
+    --primary-rgb: 136, 19, 55;
+    --primary-hover-rgb: 159, 18, 57;
+    --wash-3-rgb: 244, 63, 94;
+    --wash-4-rgb: 76, 5, 25;
+    --nebula-a-rgb: 190, 18, 60;
+    --nebula-b-rgb: 251, 113, 133;
+    --surface-rgb: 30, 8, 14;
+    --surface-hover-rgb: 50, 14, 24;
+    --dialog-bg: #1e080e;
+    --on-accent: #2a0510;
+}
+
+html[data-theme="crimson"] {
+    --accent-rgb: 239, 68, 68;
+    --accent-strong-rgb: 252, 165, 165;
+    --primary-rgb: 127, 29, 29;
+    --primary-hover-rgb: 153, 27, 27;
+    --wash-3-rgb: 220, 38, 38;
+    --wash-4-rgb: 69, 10, 10;
+    --nebula-a-rgb: 185, 28, 28;
+    --nebula-b-rgb: 239, 68, 68;
+    --surface-rgb: 28, 8, 8;
+    --surface-hover-rgb: 48, 14, 14;
+    --dialog-bg: #1c0808;
+    --on-accent: #2b0505;
+}
+
+html[data-theme="fuchsia"] {
+    --accent-rgb: 232, 121, 249;
+    --accent-strong-rgb: 245, 208, 254;
+    --primary-rgb: 112, 26, 117;
+    --primary-hover-rgb: 134, 25, 143;
+    --wash-3-rgb: 217, 70, 239;
+    --wash-4-rgb: 60, 10, 64;
+    --nebula-a-rgb: 192, 38, 211;
+    --nebula-b-rgb: 232, 121, 249;
+    --surface-rgb: 28, 8, 30;
+    --surface-hover-rgb: 46, 14, 50;
+    --dialog-bg: #1c081e;
+    --on-accent: #2a052e;
+}
+
+html[data-theme="copper"] {
+    --accent-rgb: 251, 146, 60;
+    --accent-strong-rgb: 254, 215, 170;
+    --primary-rgb: 124, 45, 18;
+    --primary-hover-rgb: 154, 52, 18;
+    --wash-3-rgb: 234, 88, 12;
+    --wash-4-rgb: 67, 20, 7;
+    --nebula-a-rgb: 194, 65, 12;
+    --nebula-b-rgb: 251, 146, 60;
+    --surface-rgb: 28, 14, 8;
+    --surface-hover-rgb: 46, 24, 12;
+    --dialog-bg: #1c0e08;
+    --on-accent: #2a1205;
+}
+
+html[data-theme="sage"] {
+    --accent-rgb: 134, 197, 152;
+    --accent-strong-rgb: 201, 230, 208;
+    --primary-rgb: 45, 80, 58;
+    --primary-hover-rgb: 58, 102, 74;
+    --wash-3-rgb: 101, 163, 120;
+    --wash-4-rgb: 22, 40, 29;
+    --nebula-a-rgb: 74, 124, 89;
+    --nebula-b-rgb: 134, 197, 152;
+    --surface-rgb: 14, 22, 17;
+    --surface-hover-rgb: 24, 36, 28;
+    --dialog-bg: #0e1611;
+    --on-accent: #0f2416;
+}
+
+/* Temporary theme picker (shell only, this branch only). */
+.theme-picker {
+    position: fixed;
+    inset-block-end: 70px;
+    inset-inline-start: 16px;
+    z-index: 2000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(10, 10, 14, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-family: var(--font-main);
+}
+
+.theme-picker span {
+    flex-basis: 100%;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-picker button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 0.76rem;
+    cursor: pointer;
+}
+
+.theme-picker button i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.theme-picker button[aria-pressed="true"] {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+@media screen and (max-width: 600px) {
+    .theme-picker {
+        inset-block-end: 84px;
+        max-width: calc(100% - 32px);
+    }
+}

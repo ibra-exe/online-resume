@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta name="robots" content="noindex, nofollow">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Ibrahim Shaheen - Digital Transformation professional specializing in AI, HRIS, and strategic digitalization."
+        />
+        <meta property="og:title" content="Ibrahim Shaheen - Digital Transformation & AI" />
+        <meta
+            property="og:description"
+            content="Digital Transformation professional specializing in AI, HRIS, and strategic digitalization."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ibra.technology/" />
+        <meta property="og:site_name" content="Ibra" />
+        <!-- Pointed at a new filename rather than overwriting og-image.jpg, for two
+             reasons: the starfield version is kept as-is so it can be switched back
+             to, and social platforms cache preview images by URL — a new path forces
+             LinkedIn and X to re-scrape instead of serving the old stars for weeks.
+             Regenerate with tools/make-og-image.py. -->
+        <meta property="og:image" content="https://ibra.technology/files/og-image-circuit.jpg" />
+        <meta property="og:image:secure_url" content="https://ibra.technology/files/og-image-circuit.jpg" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Ibrahim Shaheen - Digital Transformation, AI & HRIS" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://ibra.technology/files/og-image-circuit.jpg" />
+        <title>Ibrahim Shaheen - Digital Transformation, AI &amp; HRIS</title>
+        <link rel="icon" href="favicon.ico" sizes="any" />
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+        <!-- Pre-paint setup, before the browser draws anything: language/direction and
+             the backdrop preference, each taken from the URL (?lang=, ?backdrop=) if
+             present and otherwise from storage, then remembered. Doing it here rather
+             than in i18n.js means a shared link opens already in the right language
+             and the backdrop never flashes in before being hidden. -->
+        <script>
+        (function(){
+            var d=document.documentElement,q=new URLSearchParams(location.search),S=null;
+            try{S=localStorage}catch(e){}
+            // ?lang= wins over the stored preference, and is then remembered,
+            // so a shared Arabic link keeps working as the visitor browses on.
+            // ?theme= (experiment) wins over storage and is then remembered; purple is the default.
+            var tp=q.get("theme");var th=tp!==null?tp:(S&&S.getItem("theme"));if(tp!==null&&S){try{S.setItem("theme",tp)}catch(e){}}if(th&&th!=="purple")d.setAttribute("data-theme",th);
+            var lp=q.get("lang");
+            var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
+            if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}
+            d.setAttribute("lang",lang);
+            d.setAttribute("dir",lang==="ar"?"rtl":"ltr");
+            // ?backdrop=off|on, same precedence. ?stars= is what this was called
+            // before the backdrop stopped being a starfield; still read so links
+            // shared earlier keep working. Safe to drop once none are in use.
+            var bp=q.get("backdrop");if(bp===null)bp=q.get("stars");
+            var bs=S&&(S.getItem("backdrop")||S.getItem("starfield"));
+            var bg=bp!==null?(bp==="off"?"off":"on"):(bs==="off"?"off":"on");
+            if(bp!==null&&S){try{S.setItem("backdrop",bg)}catch(e){}}
+            if(bg==="off")d.classList.add("no-backdrop");
+        })();
+        </script>
+        <link rel="stylesheet" href="styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=block" rel="stylesheet" />
+        <script src="i18n.js" defer></script>
+        <script src="circuit-bg.js" defer></script>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Ibrahim Shaheen",
+            "alternateName": "Ibra",
+            "url": "https://ibra.technology/",
+            "image": "https://ibra.technology/files/profile-thobe.webp",
+            "email": "mailto:contact@ibra.technology",
+            "jobTitle": "People Technology Senior Specialist",
+            "description": "Digital Transformation professional specializing in AI, HRIS, and strategic digitalization.",
+            "worksFor": { "@type": "Organization", "name": "NEOM" },
+            "alumniOf": { "@type": "CollegeOrUniversity", "name": "Tokyo University of Technology" },
+            "knowsLanguage": ["ar", "en", "ja"],
+            "knowsAbout": [
+                "Digital Transformation",
+                "HRIS",
+                "SAP SuccessFactors",
+                "Applied AI",
+                "Automation & RPA",
+                "People Analytics"
+            ],
+            "award": "SAP Best HCM Innovation & Automation Award - KSA (2024)",
+            "sameAs": [
+                "https://github.com/ibra-exe",
+                "https://www.linkedin.com/in/ibrahim-shaheen/"
+            ]
+        }
+        </script>
+    </head>
+
+    <body>
+        <!-- The purple wash and nebula clouds: depth and brand colour, kept. -->
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <div class="nebula nebula-3"></div>
+
+        <!-- Trace grid plus the slow pixel lattice on it (circuit-bg.js). These replace
+             the literal starfield: the star *dots* were the only thing that read as
+             "outer space", while the purple wash behind them is just depth. -->
+        <div class="circuit-grid"></div>
+        <canvas id="circuit-cells" class="circuit-cells" aria-hidden="true"></canvas>
+
+        <!-- Retired star layers. Commented out rather than deleted so this is a
+             one-line revert while the new backdrop is on trial; the markup and the
+             now-dead CSS go for good if it is kept.
+        <div class="stars-medium"></div>
+        <div class="stars-large"></div>
+        <div class="star-cluster star-cluster-1"></div>
+        <div class="star-cluster star-cluster-2"></div>
+        <div class="star-cluster star-cluster-3"></div>
+        <div class="star-cluster star-cluster-4"></div>
+        <div class="bright-star bright-star-1"></div>
+        <div class="bright-star bright-star-2"></div>
+        <div class="bright-star bright-star-3"></div>
+        <div class="bright-star bright-star-4"></div>
+        <div class="bright-star bright-star-5"></div>
+        <div class="bright-star bright-star-6"></div>
+        -->
+
+        
+
+        <!-- One compact bar on every page: name (also the way home), nav, controls.
+             The large name used to sit on its own row above the nav on every page,
+             costing 161px - 18% of a 900px screen - before any content started.
+             It now appears large only in the Home hero, where it is the headline.
+
+             The backdrop toggle is in the footer on desktop; it is a preference, not
+             something anyone visits a CV to do, so it does not earn the top-right
+             corner. Phones hide the footer, so they keep a copy here (.bar-only), and
+             i18n.js wires every .backdrop-toggle rather than a single id. -->
+        <div class="site-bar">
+            <header><h1><a href="home.html" class="bar-name" onclick="event.preventDefault(); loadContent('home.html')" data-ar="إبراهيم شاهين">Ibrahim Shaheen</a></h1></header>
+            <nav class="navbar" aria-label="Primary">
+            <a href="home.html" onclick="event.preventDefault(); loadContent('home.html')"><i class="fas fa-house"></i><span data-ar="الرئيسية">Home</span></a>
+            <a href="about.html" onclick="event.preventDefault(); loadContent('about.html')"><i class="fas fa-user"></i><span data-ar="نبذة">About</span></a>
+            <a href="experience.html" onclick="event.preventDefault(); loadContent('experience.html')"><i class="fas fa-briefcase"></i><span data-ar="الخبرة">Experience</span></a>
+            <a href="projects.html" onclick="event.preventDefault(); loadContent('projects.html')"><i class="fas fa-folder-open"></i><span data-ar="المشاريع">Projects</span></a>
+            <a href="contact.html" onclick="event.preventDefault(); loadContent('contact.html')"><i class="fas fa-envelope"></i><span data-ar="تواصل">Contact</span></a>
+        </nav>
+            <div class="bar-controls">
+                <button type="button" class="backdrop-toggle bar-only" aria-pressed="true" aria-label="Turn off background &amp; animation">
+                    <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.55" shape-rendering="crispEdges">
+                    <path d="M8.5 0v24M15.5 0v24M0 8.5h24M0 15.5h24" />
+                </g>
+                <g fill="currentColor">
+                    <rect x="2.25" y="10" width="4" height="4" />
+                    <rect x="17.75" y="2.25" width="4" height="4" />
+                    <rect x="10" y="17.75" width="4" height="4" />
+                </g>
+            </svg>
+                </button>
+                <button type="button" id="lang-toggle" class="lang-toggle" aria-label="التبديل إلى العربية">ع</button>
+            </div>
+        </div>
+
+        <iframe id="contentFrame" src="home.html" title="Page Content" allowtransparency="true"></iframe>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="copyright">© <span id="year">2026</span> <span data-ar="إبراهيم شاهين">Ibrahim Shaheen</span></div>
+                    <div class="footer-tagline" data-ar="التحوّل الرقمي، الذكاء الاصطناعي، وأنظمة الموارد البشرية">
+                        Digital Transformation, AI &amp; HRIS
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <div class="social-links-footer">
+                        <button type="button" class="backdrop-toggle footer-only" aria-pressed="true" aria-label="Turn off background &amp; animation">
+                            <svg class="backdrop-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.55" shape-rendering="crispEdges">
+                    <path d="M8.5 0v24M15.5 0v24M0 8.5h24M0 15.5h24" />
+                </g>
+                <g fill="currentColor">
+                    <rect x="2.25" y="10" width="4" height="4" />
+                    <rect x="17.75" y="2.25" width="4" height="4" />
+                    <rect x="10" y="17.75" width="4" height="4" />
+                </g>
+            </svg>
+                        </button>
+                        <span class="footer-divider" aria-hidden="true"></span>
+                        <a
+                            href="https://github.com/ibra-exe"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="GitHub"
+                            ><i class="fab fa-github"></i
+                        ></a>
+                        <a
+                            href="https://www.linkedin.com/in/ibrahim-shaheen/"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="LinkedIn"
+                            ><i class="fab fa-linkedin"></i
+                        ></a>
+                        <!-- X (hidden for now)
+                        <a
+                            href="https://x.com/ibrahimium"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="X"
+                            class="x-icon"
+                            >𝕏</a
+                        >
+                        -->
+                        <a href="mailto:contact@ibra.technology" aria-label="Email"
+                            ><i class="far fa-envelope"></i
+                        ></a>
+                    </div>
+                    <div class="footer-credit">
+                        Made with <i class="fas fa-code"></i> +
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+        <script>
+            // Keep the footer year current without touching the markup each January
+            (function () {
+                const y = document.getElementById("year");
+                if (y) y.textContent = new Date().getFullYear();
+            })();
+
+            const frame = document.getElementById("contentFrame");
+
+            /* Page changes animate (styles.css, 1b): fade the current page out, run the
+               navigation, and let the load handler below rise the new page in. The
+               frame starts hidden so the first page gets the same entrance instead of
+               painting and then animating. A safety timer shows the frame again if a
+               load event never arrives. Also used by i18n.js for the language switch. */
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+            let leaveTimer = null, safetyTimer = null;
+            frame.classList.add("is-leaving");
+            function swapFrame(navigate, instant) {
+                clearTimeout(leaveTimer);
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-entering");
+                frame.classList.add("is-leaving");
+                leaveTimer = setTimeout(navigate, instant || reduceMotion.matches ? 0 : 140);
+                safetyTimer = setTimeout(function () { frame.classList.remove("is-leaving"); }, 4000);
+            }
+            window.swapFrame = swapFrame;
+
+            function resizeFrame() {
+                try {
+                    const body = frame.contentDocument && frame.contentDocument.body;
+                    if (body) {
+                        frame.style.height = "0px";
+                        frame.style.height = body.scrollHeight + "px";
+                    }
+                } catch(e) {}
+            }
+
+            /* ---- Shareable URLs ----
+               The visible page lives in the query string (?page=projects) rather
+               than a #fragment, on purpose: assigning location.hash triggers the
+               browser's scroll-to-fragment behaviour, which is the same class of
+               bug as the iOS viewport jump that `href="#"` used to cause here.
+               pushState never scrolls.
+               Preferences (?lang, ?stars) are read pre-paint in <head> and are
+               kept in the URL by i18n.js, so whatever is in the address bar is
+               always a faithful, shareable snapshot of what you are looking at. */
+            const PAGES = ["home", "about", "experience", "projects", "contact"];
+            const TITLES = {
+                home: "Ibrahim Shaheen - Digital Transformation, AI & HRIS",
+                about: "About - Ibrahim Shaheen",
+                experience: "Experience - Ibrahim Shaheen",
+                projects: "Projects - Ibrahim Shaheen",
+                contact: "Contact - Ibrahim Shaheen"
+            };
+
+            /* Whitelisted so ?page= can never point the iframe somewhere unintended
+               (e.g. a protocol-relative //host path). */
+            function pageFromUrl() {
+                const p = new URLSearchParams(location.search).get("page");
+                return PAGES.indexOf(p) !== -1 ? p : "home";
+            }
+
+            function setActiveNav(page) {
+                document.querySelectorAll(".navbar a").forEach(function (a) {
+                    if (a.getAttribute("href") === page + ".html") {
+                        a.setAttribute("aria-current", "page");
+                    } else {
+                        a.removeAttribute("aria-current");
+                    }
+                });
+            }
+
+            /* Tracked in a variable, not read back off the src attribute: writing to
+               src (even to the value it already has) starts a navigation and pushes a
+               history entry. Seeded with the value hardcoded in the markup. */
+            let currentPage = "home";
+            document.documentElement.dataset.page = "home";
+
+            function applyPage(page, history_mode, instant) {
+                if (currentPage !== page) {
+                    /* location.replace, not frame.src: assigning src pushes a session
+                       history entry for the iframe, so every tab change cost TWO
+                       entries and Back rewound the iframe while the parent URL stood
+                       still. replace() swaps the frame's entry in place, leaving our
+                       pushState entries as the only ones Back/Forward walks. */
+                    const target = page + ".html";
+                    swapFrame(function () {
+                        try { frame.contentWindow.location.replace(target); }
+                        catch (e) { frame.src = target; }
+                    }, instant);
+                    frame.dataset.page = page;
+                    document.documentElement.dataset.page = page;
+                    currentPage = page;
+                }
+                document.title = TITLES[page];
+                frame.setAttribute("title", TITLES[page]);
+                setActiveNav(page);
+                if (history_mode) {
+                    const q = new URLSearchParams(location.search);
+                    if (page === "home") q.delete("page"); else q.set("page", page);
+                    const qs = q.toString();
+                    history[history_mode](
+                        { page: page },
+                        "",
+                        location.pathname + (qs ? "?" + qs : "")
+                    );
+                }
+            }
+
+            // Accepts "projects" or the legacy "projects.html" used by in-page links
+            function loadContent(page) {
+                applyPage(String(page).replace(/\.html$/, ""), "pushState");
+            }
+
+            // Back/Forward should walk the tabs, not desync from them
+            window.addEventListener("popstate", function () {
+                applyPage(pageFromUrl(), null);
+            });
+
+            // Honour ?page= on arrival (the iframe's hardcoded src covers no-JS).
+            // Instant: the frame is already hidden, so there is nothing to fade out.
+            applyPage(pageFromUrl(), "replaceState", true);
+
+            // Projects opens its details in a dialog inside the frame; dim the bar and
+            // footer around it. Same-origin messages only.
+            window.addEventListener("message", function (e) {
+                if (e.origin !== location.origin || !e.data || e.data.type !== "project-dialog") return;
+                document.documentElement.classList.toggle("frame-modal", !!e.data.open);
+            });
+
+            frame.addEventListener("load", function () {
+                document.documentElement.classList.remove("frame-modal");
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-leaving", "is-entering");
+                void frame.offsetWidth;            // restart the entrance animation
+                frame.classList.add("is-entering");
+                resizeFrame();
+                try { window.i18nApply(frame.contentDocument); } catch(e) {}
+                try {
+                    const observer = new ResizeObserver(resizeFrame);
+                    observer.observe(frame.contentDocument.body);
+                } catch(e) {}
+            });
+        </script>
+        <!-- Theme picker: an experiment on the themes branch, not for the live site. -->
+        <script>
+            (function () {
+                var THEMES = [["purple", "Purple", "#b766ff"], ["indigo", "Indigo", "#818cf8"], ["blue", "Blue", "#60a5fa"],
+                              ["teal", "Teal", "#2dd4bf"], ["amber", "Amber", "#f5b84a"], ["graphite", "Graphite", "#cbd5e1"], ["emerald", "Emerald", "#34d399"], ["sky", "Sky", "#38bdf8"], ["rose", "Rose", "#fb7185"], ["crimson", "Crimson", "#ef4444"], ["fuchsia", "Fuchsia", "#e879f9"], ["copper", "Copper", "#fb923c"], ["sage", "Sage", "#86c598"]];
+                var box = document.createElement("div");
+                box.className = "theme-picker";
+                box.innerHTML = "<span>Theme (preview only)</span>";
+                function current() { return document.documentElement.getAttribute("data-theme") || "purple"; }
+                function set(doc, name) {
+                    if (!doc) return;
+                    if (name === "purple") doc.documentElement.removeAttribute("data-theme");
+                    else doc.documentElement.setAttribute("data-theme", name);
+                }
+                function apply(name) {
+                    try { localStorage.setItem("theme", name); } catch (e) {}
+                    set(document, name);
+                    try { set(document.getElementById("contentFrame").contentDocument, name); } catch (e) {}
+                    if (window.circuitBgTheme) window.circuitBgTheme();
+                    try {
+                        var u = new URL(location.href);
+                        if (name === "purple") u.searchParams.delete("theme"); else u.searchParams.set("theme", name);
+                        history.replaceState(history.state, "", u);
+                    } catch (e) {}
+                    sync();
+                }
+                function sync() {
+                    box.querySelectorAll("button").forEach(function (b) {
+                        b.setAttribute("aria-pressed", b.dataset.theme === current() ? "true" : "false");
+                    });
+                }
+                THEMES.forEach(function (t) {
+                    var b = document.createElement("button");
+                    b.type = "button";
+                    b.dataset.theme = t[0];
+                    b.innerHTML = '<i style="background:' + t[2] + '"></i>' + t[1];
+                    b.addEventListener("click", function () { apply(t[0]); });
+                    box.appendChild(b);
+                });
+                document.body.appendChild(box);
+                sync();
+            })();
+        </script>
+    </body>
+</html>

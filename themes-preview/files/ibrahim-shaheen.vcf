@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Shaheen;Ibrahim;;;
+FN:Ibrahim Shaheen
+ORG:NEOM
+TITLE:People Technology Senior Specialist
+EMAIL;TYPE=INTERNET,WORK:contact@ibra.technology
+TEL;TYPE=CELL,WORK:+966505502594
+URL:https://ibra.technology
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/ibrahim-shaheen/
+ADR;TYPE=WORK:;;;NEOM;;;Saudi Arabia
+NOTE:Digital Transformation\, AI & HRIS
+END:VCARD
