@@ -24,6 +24,8 @@
         try{S=localStorage}catch(e){}
         // ?lang= wins over the stored preference, and is then remembered,
         // so a shared Arabic link keeps working as the visitor browses on.
+        // ?theme= (experiment) wins over storage and is then remembered; purple is the default.
+        var tp=q.get("theme");var th=tp!==null?tp:(S&&S.getItem("theme"));if(tp!==null&&S){try{S.setItem("theme",tp)}catch(e){}}if(th&&th!=="purple")d.setAttribute("data-theme",th);
         var lp=q.get("lang");
         var lang=((lp!==null?lp:(S&&S.getItem("lang")))==="ar")?"ar":"en";
         if(lp!==null&&S){try{S.setItem("lang",lang)}catch(e){}}

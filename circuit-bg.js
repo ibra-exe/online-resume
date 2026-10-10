@@ -101,6 +101,15 @@
         }
     }
 
+    // The pixels take the theme's accent; re-read when the theme changes.
+    var accentRgb = "183, 102, 255";
+    function readAccent() {
+        var v = getComputedStyle(document.documentElement).getPropertyValue("--accent-rgb").trim();
+        if (v) accentRgb = v;
+    }
+    readAccent();
+    window.circuitBgTheme = readAccent;
+
     function draw(now) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -123,7 +132,7 @@
             var bucket = buckets[lv];
             if (!bucket.length) continue;
             var alpha = ((lv / (LEVELS - 1)) * PEAK_MAX).toFixed(3);
-            ctx.fillStyle = "rgba(183, 102, 255, " + alpha + ")";
+            ctx.fillStyle = "rgba(" + accentRgb + ", " + alpha + ")";
             for (i = 0; i < bucket.length; i++) {
                 var c = bucket[i];
                 ctx.fillRect(xs[c] * dpr, ys[c] * dpr, s, s);
