@@ -4982,3 +4982,107 @@ button:focus-visible,
     outline-offset: 3px;
     border-radius: 6px;
 }
+
+/* ---- 10. Project details: paragraphs, a features list and a tech-stack table ----
+   Personal projects read as: summary, one or more paragraphs, an optional Features
+   list, then Tech stack as label/detail rows. The rows are a two-column grid on each
+   <li>, so the list keeps its list semantics (display:contents would drop them in
+   Safari). Sizes follow .project-description, which the phone blocks above shrink. */
+.project-description + .project-description {
+    margin-top: 10px;
+}
+
+.project-subhead {
+    display: block;
+    margin: 18px 0 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+html[lang="ar"] .project-subhead {
+    font-family: var(--font-main);
+    font-size: 0.82rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.project-list {
+    margin: 0;
+    padding-inline-start: 18px;
+    line-height: 1.6;
+}
+
+.project-list li + li {
+    margin-top: 2px;
+}
+
+.project-stack {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+.project-stack li {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 14px;
+    padding: 6px 0;
+    border-top: 1px solid rgba(230, 230, 242, 0.08);
+}
+
+.project-stack li:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.stack-label {
+    color: var(--accent-strong);
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    padding-top: 0.15em;
+}
+
+html[lang="ar"] .stack-label {
+    font-family: var(--font-main);
+    font-size: 0.9em;
+    padding-top: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .project-list,
+    .project-stack {
+        font-size: 0.85rem;
+    }
+
+    .project-stack li {
+        grid-template-columns: 6.25rem minmax(0, 1fr);
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .project-list,
+    .project-stack {
+        font-size: 0.8rem;
+    }
+}
+
+/* Only the narrowest phones run out of room for two columns. */
+@media screen and (max-width: 340px) {
+    .project-stack li {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+/* A card with an outcome chip but no summary (AI Assistants for HR): on phones the
+   card is a block, so the inline chip and the inline-flex button would share a line. */
+.project-outcome + .expand-btn {
+    display: flex;
+    width: fit-content;
+}
