@@ -4327,6 +4327,7 @@ html[lang="ar"] .ai-group-label {
     }
 
     .project-grid > .project-card.expandable.is-open > .project-outcome,
+    .project-grid > .project-card.expandable.is-open > .project-chips,
     .project-grid > .project-card.expandable.is-open > .project-summary {
         grid-column: 1;
     }
@@ -5386,4 +5387,45 @@ html[lang="ar"] .stack-label {
 .project-outcome + .expand-btn {
     display: flex;
     width: fit-content;
+}
+
+/* ---- 11. Project type tag ----
+   Personal projects say what they are (iOS App, Web App, Website, Game) in an
+   outlined chip ahead of the purple status chip; the outline keeps the two from
+   reading as the same kind of label. The row replaces the status chip's own margin. */
+.project-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 2px 0 8px;
+}
+
+.project-chips > .project-outcome {
+    margin: 0;
+}
+
+.project-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(230, 230, 242, 0.24);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+}
+
+.project-type svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    color: var(--accent-strong);
+}
+
+html[lang="ar"] .project-type {
+    font-family: var(--font-main);
+    letter-spacing: 0;
 }
