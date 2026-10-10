@@ -5061,6 +5061,111 @@ html[data-theme="graphite"] {
     --on-accent: #0f172a;
 }
 
+html[data-theme="emerald"] {
+    --accent-rgb: 52, 211, 153;
+    --accent-strong-rgb: 167, 243, 208;
+    --primary-rgb: 6, 95, 70;
+    --primary-hover-rgb: 4, 120, 87;
+    --wash-3-rgb: 16, 185, 129;
+    --wash-4-rgb: 2, 44, 34;
+    --nebula-a-rgb: 5, 150, 105;
+    --nebula-b-rgb: 52, 211, 153;
+    --surface-rgb: 6, 24, 18;
+    --surface-hover-rgb: 11, 40, 30;
+    --dialog-bg: #06180f;
+    --on-accent: #022c22;
+}
+
+html[data-theme="sky"] {
+    --accent-rgb: 56, 189, 248;
+    --accent-strong-rgb: 186, 230, 253;
+    --primary-rgb: 7, 89, 133;
+    --primary-hover-rgb: 3, 105, 161;
+    --wash-3-rgb: 14, 165, 233;
+    --wash-4-rgb: 8, 47, 73;
+    --nebula-a-rgb: 2, 132, 199;
+    --nebula-b-rgb: 56, 189, 248;
+    --surface-rgb: 6, 20, 30;
+    --surface-hover-rgb: 10, 34, 50;
+    --dialog-bg: #06141e;
+    --on-accent: #04263a;
+}
+
+html[data-theme="rose"] {
+    --accent-rgb: 251, 113, 133;
+    --accent-strong-rgb: 254, 205, 211;
+    --primary-rgb: 136, 19, 55;
+    --primary-hover-rgb: 159, 18, 57;
+    --wash-3-rgb: 244, 63, 94;
+    --wash-4-rgb: 76, 5, 25;
+    --nebula-a-rgb: 190, 18, 60;
+    --nebula-b-rgb: 251, 113, 133;
+    --surface-rgb: 30, 8, 14;
+    --surface-hover-rgb: 50, 14, 24;
+    --dialog-bg: #1e080e;
+    --on-accent: #2a0510;
+}
+
+html[data-theme="crimson"] {
+    --accent-rgb: 239, 68, 68;
+    --accent-strong-rgb: 252, 165, 165;
+    --primary-rgb: 127, 29, 29;
+    --primary-hover-rgb: 153, 27, 27;
+    --wash-3-rgb: 220, 38, 38;
+    --wash-4-rgb: 69, 10, 10;
+    --nebula-a-rgb: 185, 28, 28;
+    --nebula-b-rgb: 239, 68, 68;
+    --surface-rgb: 28, 8, 8;
+    --surface-hover-rgb: 48, 14, 14;
+    --dialog-bg: #1c0808;
+    --on-accent: #2b0505;
+}
+
+html[data-theme="fuchsia"] {
+    --accent-rgb: 232, 121, 249;
+    --accent-strong-rgb: 245, 208, 254;
+    --primary-rgb: 112, 26, 117;
+    --primary-hover-rgb: 134, 25, 143;
+    --wash-3-rgb: 217, 70, 239;
+    --wash-4-rgb: 60, 10, 64;
+    --nebula-a-rgb: 192, 38, 211;
+    --nebula-b-rgb: 232, 121, 249;
+    --surface-rgb: 28, 8, 30;
+    --surface-hover-rgb: 46, 14, 50;
+    --dialog-bg: #1c081e;
+    --on-accent: #2a052e;
+}
+
+html[data-theme="copper"] {
+    --accent-rgb: 251, 146, 60;
+    --accent-strong-rgb: 254, 215, 170;
+    --primary-rgb: 124, 45, 18;
+    --primary-hover-rgb: 154, 52, 18;
+    --wash-3-rgb: 234, 88, 12;
+    --wash-4-rgb: 67, 20, 7;
+    --nebula-a-rgb: 194, 65, 12;
+    --nebula-b-rgb: 251, 146, 60;
+    --surface-rgb: 28, 14, 8;
+    --surface-hover-rgb: 46, 24, 12;
+    --dialog-bg: #1c0e08;
+    --on-accent: #2a1205;
+}
+
+html[data-theme="sage"] {
+    --accent-rgb: 134, 197, 152;
+    --accent-strong-rgb: 201, 230, 208;
+    --primary-rgb: 45, 80, 58;
+    --primary-hover-rgb: 58, 102, 74;
+    --wash-3-rgb: 101, 163, 120;
+    --wash-4-rgb: 22, 40, 29;
+    --nebula-a-rgb: 74, 124, 89;
+    --nebula-b-rgb: 134, 197, 152;
+    --surface-rgb: 14, 22, 17;
+    --surface-hover-rgb: 24, 36, 28;
+    --dialog-bg: #0e1611;
+    --on-accent: #0f2416;
+}
+
 /* Temporary theme picker (shell only, this branch only). */
 .theme-picker {
     position: fixed;
@@ -5070,7 +5175,7 @@ html[data-theme="graphite"] {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-width: 230px;
+    max-width: 300px;
     padding: 10px;
     border-radius: 12px;
     background: rgba(10, 10, 14, 0.92);
