@@ -5168,6 +5168,15 @@ html[data-theme="sage"] {
 
 /* Temporary theme menu (preview only): a button in the top bar showing the current
    theme's colour and name, opening a dropdown list of every theme. */
+/* The page below the bar is an iframe, painted after the bar; without this it covers
+   the dropdown and swallows taps on the lower options. Lifting the bar keeps the
+   menu above it (position + z-index make no containing block, so the fixed phone
+   tab bar inside the site bar is unaffected). */
+.site-bar {
+    position: relative;
+    z-index: 50;
+}
+
 .theme-menu {
     position: relative;
 }
