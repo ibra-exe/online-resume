@@ -2913,6 +2913,40 @@ footer .backdrop-toggle .backdrop-icon {
     }
 }
 
+/* Page headings that type themselves in (typewriter.js, initTypeIn). While typing, the
+   real text is hidden visually (still read by screen readers) and an aria-hidden copy
+   types in its place; the caret is sized to the heading. */
+.type-in > .typed-caret {
+    display: none;
+}
+
+.type-in.is-typing > .typed-caret {
+    display: inline-block;
+    width: max(2px, 0.06em);
+    height: 0.78em;                 /* about cap height, sitting on the baseline: it fits */
+    margin-inline-start: 0.08em;    /* inside these tightly set headings' line box, so the */
+    margin-inline-end: calc(-0.08em - max(2px, 0.06em));   /* heading never grows */
+    vertical-align: baseline;
+    background: var(--accent-strong);
+    animation: caret-blink 1.05s steps(1) infinite;
+}
+
+.type-in.is-typing.is-busy > .typed-caret {
+    animation: none;
+}
+
+.type-in.is-typing > .type-in-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .hero-summary {
     font-size: 1.02rem;
     line-height: 1.65;
