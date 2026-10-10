@@ -5166,57 +5166,93 @@ html[data-theme="sage"] {
     --on-accent: #0f2416;
 }
 
-/* Temporary theme picker (shell only, this branch only). */
+/* Temporary theme picker (shell only, preview only): one slim row of colour dots
+   plus a pill naming the current theme, which collapses the row. */
 .theme-picker {
     position: fixed;
-    inset-block-end: 70px;
-    inset-inline-start: 16px;
+    inset-block-end: 64px;
+    inset-inline-start: 12px;
     z-index: 2000;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    max-width: 300px;
-    padding: 10px;
-    border-radius: 12px;
-    background: rgba(10, 10, 14, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    align-items: center;
+    gap: 8px;
+    max-width: calc(100% - 24px);
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(10, 10, 14, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     font-family: var(--font-main);
 }
 
-.theme-picker span {
-    flex-basis: 100%;
-    font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.theme-picker button {
+.tp-toggle {
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 9px;
+    padding: 5px 10px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.06);
     color: #fff;
     font: inherit;
-    font-size: 0.76rem;
+    font-size: 0.78rem;
     cursor: pointer;
 }
 
-.theme-picker button i {
+.tp-toggle i {
     width: 10px;
     height: 10px;
     border-radius: 50%;
 }
 
-.theme-picker button[aria-pressed="true"] {
-    border-color: #fff;
-    background: rgba(255, 255, 255, 0.12);
+.tp-toggle b {
+    font-weight: 600;
 }
 
+.tp-toggle em {
+    font-style: normal;
+    opacity: 0.6;
+    font-size: 0.7rem;
+}
+
+.tp-swatches {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 2px;
+}
+
+.tp-swatches::-webkit-scrollbar {
+    display: none;
+}
+
+.tp-swatches button {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+}
+
+.tp-swatches button[aria-pressed="true"] {
+    border-color: #fff;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.theme-picker.is-collapsed .tp-swatches {
+    display: none;
+}
+
+/* phones: just above the bottom tab bar */
 @media screen and (max-width: 600px) {
     .theme-picker {
-        inset-block-end: 84px;
-        max-width: calc(100% - 32px);
+        inset-block-end: 76px;
+        inset-inline-start: 8px;
+        max-width: calc(100% - 16px);
     }
 }
