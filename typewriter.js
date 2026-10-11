@@ -47,13 +47,18 @@ function graphemes(s, ar) {
     }
     return Array.from(s);
 }
-// Calls fn once this page can be seen: loaded (that is what makes the shell fade the
-// frame in), fonts ready, and the tab in front.
+// Calls fn once this page can be seen: DOM parsed and fonts in (the moment i18n.js
+// tells the shell to fade the frame in), and the tab in front. Not the load event,
+// which also waits for images. Reading offsetHeight lays the page out so its fonts
+// are requested before fonts.ready is asked.
 function whenVisible(fn) {
-    var loaded = new Promise(function (r) {
-        if (document.readyState === 'complete') r(); else window.addEventListener('load', r, { once: true });
+    var ready = new Promise(function (r) {
+        if (document.readyState !== 'loading') r(); else document.addEventListener('DOMContentLoaded', r, { once: true });
+    }).then(function () {
+        void document.body.offsetHeight;
+        return document.fonts && document.fonts.ready;
     });
-    Promise.all([loaded, document.fonts && document.fonts.ready]).then(function () {
+    ready.then(function () {
         function go() { setTimeout(fn, 160); }               // the shell's fade-in
         if (!document.hidden) { go(); return; }
         document.addEventListener('visibilitychange', function v() {

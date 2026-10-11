@@ -164,6 +164,25 @@
     function init() {
         applyLang(document);
         wireControls(document);
+        signalShell();
+    }
+
+    /* Inside the shell's frame, tell the shell this page can be shown: the DOM is
+       parsed and in the right language (above), and the fonts it uses are in. The
+       shell used to wait for the frame's load event, which also waits for every
+       image. Reading offsetHeight first lays the page out, which is what requests
+       its fonts; before that, fonts.ready can resolve with nothing loaded yet. */
+    function signalShell() {
+        var shell = null;
+        try {
+            if (window.parent !== window && typeof window.parent.frameReady === "function") shell = window.parent;
+        } catch (e) {}
+        if (!shell) return;
+        void document.body.offsetHeight;
+        var fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+        fonts.then(function () {
+            try { shell.frameReady(document); } catch (e) {}
+        });
     }
 
     if (document.readyState === "loading") {

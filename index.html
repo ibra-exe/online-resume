@@ -238,22 +238,98 @@
             const frame = document.getElementById("contentFrame");
 
             /* Page changes animate (styles.css, 1b): fade the current page out, run the
-               navigation, and let the load handler below rise the new page in. The
-               frame starts hidden so the first page gets the same entrance instead of
-               painting and then animating. A safety timer shows the frame again if a
-               load event never arrives. Also used by i18n.js for the language switch. */
+               navigation, and rise the new page in once it is ready. The frame starts
+               hidden so the first page gets the same entrance instead of painting and
+               then animating. Also used by i18n.js for the language switch.
+
+               "Ready" is the new page's own signal (i18n.js calls frameReady once its
+               DOM is parsed and translated and its fonts are in), not the frame's load
+               event: load also waits for every image, which held About blank for the
+               photo. load stays as the fallback, and a safety timer shows the frame
+               if neither arrives. leavingDoc is the page being replaced, so a late
+               signal from it can never reveal the frame early. */
             const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
             let leaveTimer = null, safetyTimer = null;
+            let leavingDoc = null, pendingReveal = true;
             frame.classList.add("is-leaving");
             function swapFrame(navigate, instant) {
                 clearTimeout(leaveTimer);
                 clearTimeout(safetyTimer);
+                leavingDoc = frame.contentDocument;
+                pendingReveal = true;
+                /* Settle on the resting style before the exit starts. Removing the
+                   entrance animation and adding is-leaving in one style change gives
+                   the transition nothing to start from, so the old page just vanished. */
                 frame.classList.remove("is-entering");
+                void frame.offsetWidth;
                 frame.classList.add("is-leaving");
                 leaveTimer = setTimeout(navigate, instant || reduceMotion.matches ? 0 : 140);
                 safetyTimer = setTimeout(function () { frame.classList.remove("is-leaving"); }, 4000);
             }
             window.swapFrame = swapFrame;
+
+            function revealFrame() {
+                if (!pendingReveal) return;
+                pendingReveal = false;
+                document.documentElement.classList.remove("frame-modal");
+                clearTimeout(safetyTimer);
+                frame.classList.remove("is-leaving", "is-entering");
+                void frame.offsetWidth;            // restart the entrance animation
+                frame.classList.add("is-entering");
+                settleFrame();
+                schedulePrefetch();
+            }
+            window.frameReady = function (doc) {
+                if (doc === frame.contentDocument && doc !== leavingDoc) revealFrame();
+            };
+
+            /* Height follows the page's body, which also changes after reveal as
+               images and the Experience builder fill in. */
+            let bodyObserver = null;
+            function settleFrame() {
+                resizeFrame();
+                try {
+                    if (bodyObserver) bodyObserver.disconnect();
+                    bodyObserver = new ResizeObserver(resizeFrame);
+                    bodyObserver.observe(frame.contentDocument.body);
+                } catch(e) {}
+            }
+
+            /* Fetch the other pages, their images and the font files they use while
+               the visitor reads the first one, so the first visit to each page is as
+               quick as a repeat visit (GitHub Pages lets the browser reuse them for ten
+               minutes). Waits for the first page to show and the browser to go idle,
+               and skips Data Saver and 2G connections. */
+            let prefetchQueued = false;
+            function schedulePrefetch() {
+                if (prefetchQueued) return;
+                prefetchQueued = true;
+                const conn = navigator.connection;
+                if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ""))) return;
+                const idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1200); };
+                idle(prefetchPages, { timeout: 2500 });
+            }
+            function prefetchPages() {
+                PAGES.forEach(function (p) {
+                    if (p !== currentPage) fetch(p + ".html", { credentials: "same-origin" }).catch(function () {});
+                });
+                ["profile-thobe", "logo-neom", "logo-tokyo", "logo-cuore", "logo-misk", "logo-crystal"].forEach(function (f) {
+                    new Image().src = "files/" + f + ".webp";
+                });
+                // The Latin faces of the two families the pages use (and Cairo's
+                // Arabic faces when reading in Arabic), not every subset Google lists.
+                try {
+                    const ar = document.documentElement.lang === "ar";
+                    document.fonts.forEach(function (face) {
+                        const fam = face.family.replace(/["']/g, "");
+                        const latin = /U\+0+-0*FF\b/i.test(face.unicodeRange);
+                        const arabic = /U\+06/i.test(face.unicodeRange);
+                        if ((/^IBM Plex/.test(fam) && latin) || (ar && fam === "Cairo" && arabic)) {
+                            face.load().catch(function () {});
+                        }
+                    });
+                } catch(e) {}
+            }
 
             function resizeFrame() {
                 try {
@@ -358,18 +434,12 @@
                 document.documentElement.classList.toggle("frame-modal", !!e.data.open);
             });
 
+            // Normally the page has already been revealed by its ready signal; this
+            // covers a page that never sends one.
             frame.addEventListener("load", function () {
-                document.documentElement.classList.remove("frame-modal");
-                clearTimeout(safetyTimer);
-                frame.classList.remove("is-leaving", "is-entering");
-                void frame.offsetWidth;            // restart the entrance animation
-                frame.classList.add("is-entering");
-                resizeFrame();
+                if (frame.contentDocument !== leavingDoc) revealFrame();
+                settleFrame();
                 try { window.i18nApply(frame.contentDocument); } catch(e) {}
-                try {
-                    const observer = new ResizeObserver(resizeFrame);
-                    observer.observe(frame.contentDocument.body);
-                } catch(e) {}
             });
         </script>
     </body>

@@ -2653,12 +2653,16 @@ html[lang="ar"] .expand-btn {
    The shell swaps the iframe's page, and a new document paints nothing until its
    fonts are in, so a plain swap read as a blink. Now the old page fades out, the
    new one loads hidden, and it rises in once its load event says it is ready. */
+/* The exit mirrors the entrance: the old page lifts a few pixels as it fades, the
+   new one rises in from below, so a change reads as one upward motion. Same 0.14s
+   the shell waits before navigating, so the exit costs no extra time. */
 #contentFrame {
-    transition: opacity 0.14s ease;
+    transition: opacity 0.14s cubic-bezier(0.4, 0, 1, 1), transform 0.14s cubic-bezier(0.4, 0, 1, 1);
 }
 
 #contentFrame.is-leaving {
     opacity: 0;
+    transform: translateY(-8px);
 }
 
 #contentFrame.is-entering {
@@ -2685,6 +2689,10 @@ html[lang="ar"] .expand-btn {
 @media (prefers-reduced-motion: reduce) {
     #contentFrame.is-entering {
         animation: frame-fade 0.15s ease both;
+    }
+
+    #contentFrame.is-leaving {
+        transform: none;
     }
 }
 
